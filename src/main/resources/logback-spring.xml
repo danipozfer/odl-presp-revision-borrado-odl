@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration>
+<configuration debug="false" scan="true">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="com/santalucia/arq/ams/componentes/logging/logback-appenders-std.xml" />
+
+  <root>
+    <appender-ref ref="ASYNC_CONSOLE" />
+  </root>
+
+	<!-- traslada las trazas JUL a logback y trasmite los cambios de log en caliente -->
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+
+</configuration>

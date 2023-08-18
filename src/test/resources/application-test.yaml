@@ -1,0 +1,54 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - test
+  cloud:
+    task:
+      closecontext-enabled: false
+      initialize-enabled: true
+  batch:
+    jdbc:
+      initialize-schema: embedded
+    job:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          recibosodl:
+            client-authentication-method: post
+            client-id: ${spring.application.name}
+            client-secret: ${spring.application.name}
+            authorization-grant-type: client_credentials
+            scope:
+              - read-dynamic:recibos-odl
+        provider:
+          recibosodl:
+            issuer-uri: https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri: https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+  test:
+    database:
+      replace: none
+  datasource:
+    primary:
+      hikari:
+        driver-class-name: org.h2.Driver
+        pool-name: informix-pool
+        jdbc-url: jdbc:h2:mem:db-informix;DB_CLOSE_DELAY=-1;MODE=DB2;DEFAULT_NULL_ORDERING=HIGH
+#    secondary:
+#      hikari:
+#        driver-class-name: org.h2.Driver
+#        pool-name: oracle-pool
+#        jdbc-url: jdbc:h2:mem:db-oracle;DB_CLOSE_DELAY=-1;MODE=Oracle;DEFAULT_NULL_ORDERING=HIGH 
+    scdf:
+      hikari:
+        driver-class-name: org.h2.Driver
+        pool-name: scdf-pool
+        jdbc-url: jdbc:h2:mem:db-scdf;DB_CLOSE_DELAY=-1;MODE=Oracle;DEFAULT_NULL_ORDERING=HIGH
+
+santalucia:
+  ams:
+    features:
+      guardium:
+        enabled: false

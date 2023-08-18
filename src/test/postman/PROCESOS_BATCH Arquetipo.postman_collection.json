@@ -1,0 +1,585 @@
+{
+	"info": {
+		"_postman_id": "2297caf9-e2ec-4863-83a2-cf39375a1ef9",
+		"name": "PROCESOS_BATCH Arquetipo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3223020"
+	},
+	"item": [
+		{
+			"name": "<app-name>  con informix",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://sso-sldev.santalucia.es/auth/realms/scdf/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "3a198f85-274d-46f3-b35f-a669c83a6835",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "scdf-credentials-dev",
+							"type": "string"
+						},
+						{
+							"key": "challengeAlgorithm",
+							"value": "S256",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MDI2NjU1NzQsImlhdCI6MTYwMjY2NDY3NCwianRpIjoiNzAxOGE1ZWUtYjBkMi00Mzk4LWEyMmYtMjI3OTFlZWNlMzY3IiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMTkyMzU4LTRlZWQtNDI4OC05ODQ0LWI1ZDIzNjI2Yzc0OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.HY36g3-oml4c8SHGCMklsKZTG2jvzBfF65czPswyLMpjuONsV0tCA5glCwGeK5Ce0ayN1dilMQuX9W_VnsGqAHVG8ok41V9pWJJgDIqRbFoJBmwOcg_BFfCmPL5MvltNluNkMFCIq_K5v1QXRJBPZdiCWbk_Ec9U35iRhPi75P2T6pq32QqnYVzomtZ0SOyyCh0NStuJALFdz6OluW2lPWnMaOd2EFX5PwM_VQ79iTqMegsmSAnDR0P4cb0ZiSQ8BwlL8_0VAdx4a2Qrt-wFHGMQHANpDiXU8y7skfNxJbtK-Ng4yfna1mf3seyU0LLqVeRrCRiCww9TGpLkGyu-Rw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MTA3MDM4MzQsImlhdCI6MTYxMDcwMjkzNCwianRpIjoiNDZhOGI3N2QtZmYzZC00MTE1LTllM2QtZTA4MWY1NGY0MjZkIiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImMwNjI0MDY0LTFkZTQtNDE0My04ZjM0LTg5NWZjZmJjN2Q4NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.O4HGXFa3c-0zMKusX2P78xPFMsM43BaBao6aIqCHv5GMz-tea_7tJVAha6IsKEn63psVQECLS16mh55AykFJXngfxnIB65gMgJuX2qAq28ly3pSw2A-ll_eLIaseAtG9NVuHWgcZi61NtYglFiV8-_Bso7mqDVOZ14EKkr1NvpVP_923wjUgMGb8SmIQXNCEdEvswthDwIjjgBZWMAkJLChG1bdAmOaH1DJ3rC1DXP890ps4QxpyeCYAIJcnGrSl_NgQnszC-_DdtwXpUHH_k6GNO4LFj0jCdCTlBC8DhqeABRdzCajZ3akWWNoe4iTe-AoEQZyjs42ls53g0M3qMg"
+					},
+					{
+						"key": "fechEntrada",
+						"value": "2020-02",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "<app-name>",
+							"type": "text"
+						},
+						{
+							"key": "namespace",
+							"value": "<namespace>",
+							"type": "text"
+						},
+						{
+							"key": "arguments",
+							"value": "fechEntrada=2020-02",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "properties",
+							"value": "deployer.<app-name>.kubernetes.entryPointStyle=boot,deployer.<app-name>.kubernetes.secretKeyRefs=[{envVarName: 'INFORMIX_DB_USER', secretName: '<app-name>-db', dataKey: 'SPRING_DATASOURCE_PRIMARY_HIKARI_USERNAME'},{envVarName: 'INFORMIX_DB_PASS', secretName: '<app-name>-db', dataKey: 'SPRING_DATASOURCE_PRIMARY_HIKARI_PASSWORD'}],deployer.<app-name>.kubernetes.volumeMounts=[{name: 'sqlhosts-volume', mountPath: '/deployments/config/sqlhosts',subPath: sqlhosts, readOnly: true},{name: 'logback-volume', mountPath: '/deployments/logback-spring.xml',subPath: logback-spring.xml, readOnly: true},{name: 'application-volume', mountPath: '/deployments/application.yaml',subPath: application.yaml, readOnly: true}],deployer.<app-name>.kubernetes.volumes=[{name: 'sqlhosts-volume', configMap: {name: '<app-name>', defaultMode: 420 }},{name: 'logback-volume', configMap: { name: '<app-name>', defaultMode: 420 }},{name: 'application-volume', configMap: { name: '<app-name>', defaultMode: 420 }}]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://scdf-server-ams-batch-dev.app-dev.santalucia.net/tasks/executions",
+					"protocol": "https",
+					"host": [
+						"scdf-server-ams-batch-dev",
+						"app-dev",
+						"santalucia",
+						"net"
+					],
+					"path": [
+						"tasks",
+						"executions"
+					],
+					"query": [
+						{
+							"key": "fechEntrada",
+							"value": "2020-02",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "<app-name> con oracle",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://sso-sldev.santalucia.es/auth/realms/scdf/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "3a198f85-274d-46f3-b35f-a669c83a6835",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "scdf-credentials-dev",
+							"type": "string"
+						},
+						{
+							"key": "challengeAlgorithm",
+							"value": "S256",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MDI2NjU1NzQsImlhdCI6MTYwMjY2NDY3NCwianRpIjoiNzAxOGE1ZWUtYjBkMi00Mzk4LWEyMmYtMjI3OTFlZWNlMzY3IiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMTkyMzU4LTRlZWQtNDI4OC05ODQ0LWI1ZDIzNjI2Yzc0OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.HY36g3-oml4c8SHGCMklsKZTG2jvzBfF65czPswyLMpjuONsV0tCA5glCwGeK5Ce0ayN1dilMQuX9W_VnsGqAHVG8ok41V9pWJJgDIqRbFoJBmwOcg_BFfCmPL5MvltNluNkMFCIq_K5v1QXRJBPZdiCWbk_Ec9U35iRhPi75P2T6pq32QqnYVzomtZ0SOyyCh0NStuJALFdz6OluW2lPWnMaOd2EFX5PwM_VQ79iTqMegsmSAnDR0P4cb0ZiSQ8BwlL8_0VAdx4a2Qrt-wFHGMQHANpDiXU8y7skfNxJbtK-Ng4yfna1mf3seyU0LLqVeRrCRiCww9TGpLkGyu-Rw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MTA3MDM4MzQsImlhdCI6MTYxMDcwMjkzNCwianRpIjoiNDZhOGI3N2QtZmYzZC00MTE1LTllM2QtZTA4MWY1NGY0MjZkIiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImMwNjI0MDY0LTFkZTQtNDE0My04ZjM0LTg5NWZjZmJjN2Q4NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.O4HGXFa3c-0zMKusX2P78xPFMsM43BaBao6aIqCHv5GMz-tea_7tJVAha6IsKEn63psVQECLS16mh55AykFJXngfxnIB65gMgJuX2qAq28ly3pSw2A-ll_eLIaseAtG9NVuHWgcZi61NtYglFiV8-_Bso7mqDVOZ14EKkr1NvpVP_923wjUgMGb8SmIQXNCEdEvswthDwIjjgBZWMAkJLChG1bdAmOaH1DJ3rC1DXP890ps4QxpyeCYAIJcnGrSl_NgQnszC-_DdtwXpUHH_k6GNO4LFj0jCdCTlBC8DhqeABRdzCajZ3akWWNoe4iTe-AoEQZyjs42ls53g0M3qMg"
+					},
+					{
+						"key": "fechEntrada",
+						"value": "2020-02",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "<app-name>",
+							"type": "text"
+						},
+						{
+							"key": "namespace",
+							"value": "<namespace>",
+							"type": "text"
+						},
+						{
+							"key": "arguments",
+							"value": "fechEntrada=2020-02",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "properties",
+							"value": "deployer.<app-name>.kubernetes.entryPointStyle=boot,deployer.<app-name>.kubernetes.secretKeyRefs=[{envVarName: 'ORACLE_DB_USER', secretName: '<app-name>1-db', dataKey: 'SPRING_DATASOURCE_PRIMARY_HIKARI_USERNAME'},{envVarName: 'ORACLE_DB_PASS', secretName: '<app-name>-db', dataKey: 'SPRING_DATASOURCE_PRIMARY_HIKARI_PASSWORD'}],deployer.<app-name>.kubernetes.volumeMounts=[{name: 'logback-volume', mountPath: '/deployments/logback-spring.xml',subPath: logback-spring.xml, readOnly: true},{name: 'application-volume', mountPath: '/deployments/application.yaml',subPath: application.yaml, readOnly: true}],deployer.<app-name>.kubernetes.volumes=[{name: 'logback-volume', configMap: { name: '<app-name>', defaultMode: 420 }},{name: 'application-volume', configMap: { name: '<app-name>', defaultMode: 420 }}]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://scdf-server-ams-batch-dev.app-dev.santalucia.net/tasks/executions",
+					"protocol": "https",
+					"host": [
+						"scdf-server-ams-batch-dev",
+						"app-dev",
+						"santalucia",
+						"net"
+					],
+					"path": [
+						"tasks",
+						"executions"
+					],
+					"query": [
+						{
+							"key": "fechEntrada",
+							"value": "2020-02",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "<app-name> con cliente api",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://sso-sldev.santalucia.es/auth/realms/scdf/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "3a198f85-274d-46f3-b35f-a669c83a6835",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "scdf-credentials-dev",
+							"type": "string"
+						},
+						{
+							"key": "challengeAlgorithm",
+							"value": "S256",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MDI2NjU1NzQsImlhdCI6MTYwMjY2NDY3NCwianRpIjoiNzAxOGE1ZWUtYjBkMi00Mzk4LWEyMmYtMjI3OTFlZWNlMzY3IiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMTkyMzU4LTRlZWQtNDI4OC05ODQ0LWI1ZDIzNjI2Yzc0OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.HY36g3-oml4c8SHGCMklsKZTG2jvzBfF65czPswyLMpjuONsV0tCA5glCwGeK5Ce0ayN1dilMQuX9W_VnsGqAHVG8ok41V9pWJJgDIqRbFoJBmwOcg_BFfCmPL5MvltNluNkMFCIq_K5v1QXRJBPZdiCWbk_Ec9U35iRhPi75P2T6pq32QqnYVzomtZ0SOyyCh0NStuJALFdz6OluW2lPWnMaOd2EFX5PwM_VQ79iTqMegsmSAnDR0P4cb0ZiSQ8BwlL8_0VAdx4a2Qrt-wFHGMQHANpDiXU8y7skfNxJbtK-Ng4yfna1mf3seyU0LLqVeRrCRiCww9TGpLkGyu-Rw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MTA3MDM4MzQsImlhdCI6MTYxMDcwMjkzNCwianRpIjoiNDZhOGI3N2QtZmYzZC00MTE1LTllM2QtZTA4MWY1NGY0MjZkIiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImMwNjI0MDY0LTFkZTQtNDE0My04ZjM0LTg5NWZjZmJjN2Q4NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.O4HGXFa3c-0zMKusX2P78xPFMsM43BaBao6aIqCHv5GMz-tea_7tJVAha6IsKEn63psVQECLS16mh55AykFJXngfxnIB65gMgJuX2qAq28ly3pSw2A-ll_eLIaseAtG9NVuHWgcZi61NtYglFiV8-_Bso7mqDVOZ14EKkr1NvpVP_923wjUgMGb8SmIQXNCEdEvswthDwIjjgBZWMAkJLChG1bdAmOaH1DJ3rC1DXP890ps4QxpyeCYAIJcnGrSl_NgQnszC-_DdtwXpUHH_k6GNO4LFj0jCdCTlBC8DhqeABRdzCajZ3akWWNoe4iTe-AoEQZyjs42ls53g0M3qMg"
+					},
+					{
+						"key": "fechEntrada",
+						"value": "2020-02",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "<app-name>",
+							"type": "text"
+						},
+						{
+							"key": "namespace",
+							"value": "<namespace>",
+							"type": "text"
+						},
+						{
+							"key": "arguments",
+							"value": "fechEntrada=2020-02",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "properties",
+							"value": "deployer.<app-name>.kubernetes.entryPointStyle=boot,deployer.<app-name>.kubernetes.secretKeyRefs=[{envVarName: 'SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENTID', secretName: '<app-name>', dataKey: 'SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENTID'}, {envVarName: 'SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENTSECRET', secretName: '<app-name>', dataKey: 'SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENTSECRET'}],deployer.<app-name>.kubernetes.volumeMounts=[{name: 'logback-volume', mountPath: '/deployments/logback-spring.xml',subPath: logback-spring.xml, readOnly: true},{name: 'application-volume', mountPath: '/deployments/application.yaml',subPath: application.yaml, readOnly: true}],deployer.<app-name>.kubernetes.volumes=[{name: 'logback-volume', configMap: { name: '<app-name>', defaultMode: 420 }},{name: 'application-volume', configMap: { name: '<app-name>', defaultMode: 420 }}]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://scdf-server-ams-batch-dev.app-dev.santalucia.net/tasks/executions",
+					"protocol": "https",
+					"host": [
+						"scdf-server-ams-batch-dev",
+						"app-dev",
+						"santalucia",
+						"net"
+					],
+					"path": [
+						"tasks",
+						"executions"
+					],
+					"query": [
+						{
+							"key": "fechEntrada",
+							"value": "2020-02",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "<app-name> con Kafka",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://sso-sldev.santalucia.es/auth/realms/scdf/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "3a198f85-274d-46f3-b35f-a669c83a6835",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "scdf-credentials-dev",
+							"type": "string"
+						},
+						{
+							"key": "challengeAlgorithm",
+							"value": "S256",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MDI2NjU1NzQsImlhdCI6MTYwMjY2NDY3NCwianRpIjoiNzAxOGE1ZWUtYjBkMi00Mzk4LWEyMmYtMjI3OTFlZWNlMzY3IiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMTkyMzU4LTRlZWQtNDI4OC05ODQ0LWI1ZDIzNjI2Yzc0OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.HY36g3-oml4c8SHGCMklsKZTG2jvzBfF65czPswyLMpjuONsV0tCA5glCwGeK5Ce0ayN1dilMQuX9W_VnsGqAHVG8ok41V9pWJJgDIqRbFoJBmwOcg_BFfCmPL5MvltNluNkMFCIq_K5v1QXRJBPZdiCWbk_Ec9U35iRhPi75P2T6pq32QqnYVzomtZ0SOyyCh0NStuJALFdz6OluW2lPWnMaOd2EFX5PwM_VQ79iTqMegsmSAnDR0P4cb0ZiSQ8BwlL8_0VAdx4a2Qrt-wFHGMQHANpDiXU8y7skfNxJbtK-Ng4yfna1mf3seyU0LLqVeRrCRiCww9TGpLkGyu-Rw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MTA3MDM4MzQsImlhdCI6MTYxMDcwMjkzNCwianRpIjoiNDZhOGI3N2QtZmYzZC00MTE1LTllM2QtZTA4MWY1NGY0MjZkIiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImMwNjI0MDY0LTFkZTQtNDE0My04ZjM0LTg5NWZjZmJjN2Q4NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.O4HGXFa3c-0zMKusX2P78xPFMsM43BaBao6aIqCHv5GMz-tea_7tJVAha6IsKEn63psVQECLS16mh55AykFJXngfxnIB65gMgJuX2qAq28ly3pSw2A-ll_eLIaseAtG9NVuHWgcZi61NtYglFiV8-_Bso7mqDVOZ14EKkr1NvpVP_923wjUgMGb8SmIQXNCEdEvswthDwIjjgBZWMAkJLChG1bdAmOaH1DJ3rC1DXP890ps4QxpyeCYAIJcnGrSl_NgQnszC-_DdtwXpUHH_k6GNO4LFj0jCdCTlBC8DhqeABRdzCajZ3akWWNoe4iTe-AoEQZyjs42ls53g0M3qMg"
+					},
+					{
+						"key": "fechEntrada",
+						"value": "2020-02",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "<app-name>",
+							"type": "text"
+						},
+						{
+							"key": "namespace",
+							"value": "<namespace>",
+							"type": "text"
+						},
+						{
+							"key": "arguments",
+							"value": "fechEntrada=2020-02",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "properties",
+							"value": "deployer.<app-name>.kubernetes.entryPointStyle=boot,deployer.<app-name>.kubernetes.volumeMounts=[{name: 'secrettruststore', mountPath: '/mnt/secrets/truststore', readOnly: true},{name: 'secretkeystore', mountPath: '/mnt/secrets/keystore', readOnly: true},{name: 'logback-volume', mountPath: '/deployments/logback-spring.xml',subPath: logback-spring.xml, readOnly: true},{name: 'application-volume', mountPath: '/deployments/application.yaml',subPath: application.yaml, readOnly: true}], deployer.<app-name>.kubernetes.volumes=[{name: 'secrettruststore', secret: { secretName: '<app-name>.kafka.client.truststore.jks', defaultMode: 420 }},{name: 'secretkeystore', secret: { secretName: '<app-name>.kafka.client.keystore.jks', defaultMode: 420 }},{name: 'logback-volume', configMap: { name: '<app-name>', defaultMode: 420 }},{name: 'application-volume', configMap: { name: '<app-name>', defaultMode: 420 }}]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://scdf-server-ams-batch-dev.app-dev.santalucia.net/tasks/executions",
+					"protocol": "https",
+					"host": [
+						"scdf-server-ams-batch-dev",
+						"app-dev",
+						"santalucia",
+						"net"
+					],
+					"path": [
+						"tasks",
+						"executions"
+					],
+					"query": [
+						{
+							"key": "fechEntrada",
+							"value": "2020-02",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "<app-name> con logback",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://sso-sldev.santalucia.es/auth/realms/scdf/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "3a198f85-274d-46f3-b35f-a669c83a6835",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "scdf-credentials-dev",
+							"type": "string"
+						},
+						{
+							"key": "challengeAlgorithm",
+							"value": "S256",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MDI2NjU1NzQsImlhdCI6MTYwMjY2NDY3NCwianRpIjoiNzAxOGE1ZWUtYjBkMi00Mzk4LWEyMmYtMjI3OTFlZWNlMzY3IiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImZjMTkyMzU4LTRlZWQtNDI4OC05ODQ0LWI1ZDIzNjI2Yzc0OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.HY36g3-oml4c8SHGCMklsKZTG2jvzBfF65czPswyLMpjuONsV0tCA5glCwGeK5Ce0ayN1dilMQuX9W_VnsGqAHVG8ok41V9pWJJgDIqRbFoJBmwOcg_BFfCmPL5MvltNluNkMFCIq_K5v1QXRJBPZdiCWbk_Ec9U35iRhPi75P2T6pq32QqnYVzomtZ0SOyyCh0NStuJALFdz6OluW2lPWnMaOd2EFX5PwM_VQ79iTqMegsmSAnDR0P4cb0ZiSQ8BwlL8_0VAdx4a2Qrt-wFHGMQHANpDiXU8y7skfNxJbtK-Ng4yfna1mf3seyU0LLqVeRrCRiCww9TGpLkGyu-Rw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIwdVl2azdvQUhCQkxZZVZCaldUMm5oclRUVUQ0aGdzR1d1M3RXcDNHaENJIn0.eyJleHAiOjE2MTA3MDM4MzQsImlhdCI6MTYxMDcwMjkzNCwianRpIjoiNDZhOGI3N2QtZmYzZC00MTE1LTllM2QtZTA4MWY1NGY0MjZkIiwiaXNzIjoiaHR0cHM6Ly9zc28tc2xkZXYuc2FudGFsdWNpYS5lcy9hdXRoL3JlYWxtcy9zY2RmIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk1NjE5ZDhiLTg3MTQtNDAyYy1iNjNlLTFkMzJjNjdkYTlhOSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNjZGYtY3JlZGVudGlhbHMtZGV2Iiwic2Vzc2lvbl9zdGF0ZSI6ImMwNjI0MDY0LTFkZTQtNDE0My04ZjM0LTg5NWZjZmJjN2Q4NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InNjZGYtY3JlZGVudGlhbHMtZGV2Ijp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxOTIuMTY4LjI0Ni4zMyIsImNsaWVudElkIjoic2NkZi1jcmVkZW50aWFscy1kZXYiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc2NkZi1jcmVkZW50aWFscy1kZXYiLCJjbGllbnRBZGRyZXNzIjoiMTkyLjE2OC4yNDYuMzMifQ.O4HGXFa3c-0zMKusX2P78xPFMsM43BaBao6aIqCHv5GMz-tea_7tJVAha6IsKEn63psVQECLS16mh55AykFJXngfxnIB65gMgJuX2qAq28ly3pSw2A-ll_eLIaseAtG9NVuHWgcZi61NtYglFiV8-_Bso7mqDVOZ14EKkr1NvpVP_923wjUgMGb8SmIQXNCEdEvswthDwIjjgBZWMAkJLChG1bdAmOaH1DJ3rC1DXP890ps4QxpyeCYAIJcnGrSl_NgQnszC-_DdtwXpUHH_k6GNO4LFj0jCdCTlBC8DhqeABRdzCajZ3akWWNoe4iTe-AoEQZyjs42ls53g0M3qMg"
+					},
+					{
+						"key": "fechEntrada",
+						"value": "2020-02",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "<app-name>",
+							"type": "text"
+						},
+						{
+							"key": "namespace",
+							"value": "<namespace>",
+							"type": "text"
+						},
+						{
+							"key": "arguments",
+							"value": "fechEntrada=2020-02",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "properties",
+							"value": "deployer.<app-name>.kubernetes.entryPointStyle=boot,deployer.<app-name>.kubernetes.volumeMounts=[{name: 'logback-volume', mountPath: '/deploymentslogback-spring.xml',subPath: logback-spring.xml, readOnly: true},{name: 'application-volume', mountPath: '/deployments/application.yaml',subPath: application.yaml, readOnly: true}],deployer.<app-name>.kubernetes.volumes=[{name: 'logback-volume', configMap: { name: '<app-name>', defaultMode: 420 }},{name: 'application-volume', configMap: { name: '<app-name>', defaultMode: 420 }}]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://scdf-server-ams-batch-dev.app-dev.santalucia.net/tasks/executions",
+					"protocol": "https",
+					"host": [
+						"scdf-server-ams-batch-dev",
+						"app-dev",
+						"santalucia",
+						"net"
+					],
+					"path": [
+						"tasks",
+						"executions"
+					],
+					"query": [
+						{
+							"key": "fechEntrada",
+							"value": "2020-02",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

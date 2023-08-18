@@ -1,0 +1,78 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <!-- **************************************************************************
+  	** INFO: Para ejecutar en maven usar el comando:
+  	** WARN: Es necesario poner comillas para escapar caracteres
+    **    - Informix: mvn -Dmybatis.generator.contexts=informix mybatis-generator:generate -Dmybatis.generator.jdbcUserId= -Dmybatis.generator.jdbcPassword= -Dmybatis.generator.jdbcURL=''
+    **    - Oracle:   mvn -Dmybatis.generator.contexts=oracle mybatis-generator:generate -Dmybatis.generator.jdbcUserId= -Dmybatis.generator.jdbcPassword= -Dmybatis.generator.jdbcURL=''
+  	** el reference se encuentra en https://mybatis.org/generator/configreference/xmlconfig.html
+
+  	************************************************************************** -->
+  <!-- !!!! Configuracion del contexto INFORMIX !!!! -->
+  <context id="informix" targetRuntime="MyBatis3DynamicSql" >
+
+    <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
+         <property name="builder" value="true"/>
+    </plugin>
+
+    <commentGenerator>
+      <property name="suppressDate" value="true" />
+    </commentGenerator>
+
+    <!-- El usuario y password debe pasan-->
+    <jdbcConnection driverClass="com.informix.jdbc.IfxDriver"
+      connectionURL="${mybatis.generator.jdbcURL}"
+      userId="${mybatis.generator.jdbcUserId}"
+      password="${mybatis.generator.jdbcPassword}"
+      />
+
+    <!-- !!!! Configuracion del modelo !!!! -->
+    <javaModelGenerator targetPackage="com.santalucia.cdc.infrastructure.entity" targetProject="src/main/java" />
+
+    <!-- !!!! Configuracion del cliente !!!! -->
+    <!-- WARNING: Cambiar el package a primary o secondary dependiendo de si es informix o oracle; depende de cada app -->
+    <javaClientGenerator targetPackage="com.santalucia.cdc.infrastructure.mybatis.primary" targetProject="src/main/java"/>
+
+     <!-- !!!! Tablas a exportar !!!! -->
+    <table tableName="personas">
+    	<!-- WARNING: Descomentar si la tabla contiene campos de tipo LVARCHAR; Solo aplicable a Informix
+    	<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" javaType="java.lang.String" />
+    	<columnOverride column="finvaldt" jdbcType="DATE" javaType="java.time.LocalDate" />
+    	<columnOverride column="finvaldt" jdbcType="DATE" javaType="java.time.LocalDate" />-->
+    </table>
+
+  </context>
+
+  <context id="oracle" targetRuntime="MyBatis3DynamicSql">
+
+    <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
+      <property name="builder" value="true"/>
+    </plugin>
+
+    <commentGenerator>
+      <property name="suppressDate" value="true" />
+    </commentGenerator>
+
+    <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+                    connectionURL="${mybatis.generator.jdbcURL}"
+                    userId="${mybatis.generator.jdbcUserId}"
+                    password="${mybatis.generator.jdbcPassword}" />
+
+    <javaTypeResolver>
+      <property name="useJSR310Types" value="true" />
+    </javaTypeResolver>
+
+    <!-- !!!! Configuracion del modelo !!!! -->
+    <javaModelGenerator targetPackage="com.santalucia.cdc.infrastructure.entity" targetProject="src/main/java" />
+
+    <!-- !!!! Configuracion del cliente !!!! -->
+    <!-- WARNING: Cambiar el package a primary o secondary dependiendo de si es informix o oracle; depende de cada app -->
+    <javaClientGenerator targetPackage="com.santalucia.cdc.infrastructure.mybatis.secondary" targetProject="src/main/java"/>
+
+    <!-- !!!! Tablas a exportar !!!! -->
+    <table tableName="employee" />
+
+  </context>
+</generatorConfiguration>

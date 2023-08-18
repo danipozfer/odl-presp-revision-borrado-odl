@@ -1,0 +1,599 @@
+{
+
+        "cabecera": {
+          "datosIdentificativos": {
+            "numRecibo": "2104548925",
+            "idReciboODL": "1-1-2104548925",
+            "idReciboOrigen": "2104548925",
+            "versReciboODL": 1,
+            "estadoRegistroODL": "VIG",
+            "codCiaOrigen": "1",
+            "descCiaOrigen": "Santalucia",
+            "codSistOrigen": "1",
+            "descSistOrigen": "SIIS",
+            "codSistActual": "1",
+            "descSistActual": "SIIS",
+            "idPolizaODL": "1-1-7466661",
+            "idPolizaOrigen": "7466661",
+            "numPoliza": "70182",
+            "versPolizaOrigen": 0,
+            "numCertificado": "0",
+            "numOrdRiesgo": "0",
+            "codTipoRecibo": "RPA",
+            "descTipoRecibo": "Recibos de Prima",
+            "numPack": "3364",
+            "codTipoProced": "F",
+            "descTipoProced": "Fuera de Emisión",
+            "numPaquete": "8217732",
+            "indDestino": " ",
+            "descDestino": " ",
+            "codTipoSolicitud": "PN",
+            "descTipoSolicitud": "Poliza Nueva",
+            "numAnticipo": "0",
+            "tipoSiniestro": " ",
+            "numSiniestro": "0",
+            "indRecRecargoExt": "N",
+            "indCompAgencia": "N",
+            "indRecCaducado": "N",
+            "indRecReinversion": "N",
+            "indRecCoaseguro": "N",
+            "indRecAporExtra": "N",
+            "porcAporExtra": 0.0,
+            "idMovEconomico": 0
+          },
+          "producto": {
+            "codRamo": "28",
+            "descRamo": "Combinado de Animales de Compañía",
+            "codProductoTecnico": " ",
+            "descProductoTecnico": " ",
+            "codProducto": " ",
+            "descProducto": " ",
+            "codModalidad": "2",
+            "descModalidad": "Mascotas"
+          },
+          "fechasYEstados": {
+            "fechas": {
+              "fecEfectoRec": "2021-04-15T00:00:00.000Z",
+              "fecVencimRec": "2021-05-15T00:00:00.000Z",
+              "fecEmisionRec": "0001-01-01T00:00:00.000Z",
+              "fecMovEconomico": "0001-01-01T00:00:00.000Z"
+            },
+            "estados": [
+              {
+                "codTipoEstadoRec": "CA",
+                "descTipoEstadoRec": "Cargado",
+                "codCausaEstadoRec": "FE",
+                "descCausaEstadoRec": "Fuera Emisión",
+                "codOpinionAge": " ",
+                "descOpinionAge": " ",
+                "numOrdenEstado": 1,
+                "codTipoGestCont": "C",
+                "descTipoGestCont": "Centralizada",
+                "subestado": {
+                  "codSubestRec": "CA",
+                  "descSubestRec": "Cargado",
+                  "codCausaSubestRec": "PL",
+                  "descCausaSubestRec": "Pendiente",
+                  "fecSubestRec": "2021-06-07T00:00:00.000Z"
+                },
+                "fechas": {
+                  "fecEstadoRec": "2021-06-01T00:00:00.000Z",
+                  "fecLiquiRec": "2021-06-01T00:00:00.000Z"
+                },
+                "estructuraComercial": {
+                  "codCanal": "0",
+                  "descCanal": " ",
+                  "codAgencia": "191",
+                  "descAgencia": "Corredor/Corredurías",
+                  "codZona": " ",
+                  "descZona": "Zona Principal",
+                  "codDistrito": "000",
+                  "descDistrito": " ",
+                  "codMediador": "8542",
+                  "codTipoMediador": "C",
+                  "descTipoMediador": "Corredor / Correduría",
+                  "codTipoColab": "M",
+                  "descTipoColab": "Monitor",
+                  "codColab": "2BZ1",
+                  "codMonitor": "2BZ1"
+                }
+              },
+              {
+                "codTipoEstadoRec": "CA",
+                "descTipoEstadoRec": "Cargado",
+                "codCausaEstadoRec": "PE",
+                "descCausaEstadoRec": "Formar Pendiente",
+                "codOpinionAge": " ",
+                "descOpinionAge": " ",
+                "numOrdenEstado": 2,
+                "codTipoGestCont": "C",
+                "descTipoGestCont": "Centralizada",
+                "subestado": {
+                  "codSubestRec": "PP",
+                  "descSubestRec": "Pte mes proximo",
+                  "codCausaSubestRec": "PM",
+                  "descCausaSubestRec": "Pendiente Mes",
+                  "fecSubestRec": "2021-06-26T00:00:00.000Z"
+                },
+                "fechas": {
+                  "fecEstadoRec": "2021-06-01T00:00:00.000Z",
+                  "fecLiquiRec": "2021-06-01T00:00:00.000Z"
+                },
+                "estructuraComercial": {
+                  "codCanal": "0",
+                  "descCanal": " ",
+                  "codAgencia": "191",
+                  "descAgencia": "Corredor/Corredurías",
+                  "codZona": " ",
+                  "descZona": "Zona Principal",
+                  "codDistrito": "000",
+                  "descDistrito": " ",
+                  "codMediador": "8542",
+                  "codTipoMediador": "C",
+                  "descTipoMediador": "Corredor / Correduría",
+                  "codTipoColab": "M",
+                  "descTipoColab": "Monitor",
+                  "codColab": "2BZ1",
+                  "codMonitor": "2BZ1"
+                }
+              },
+              {
+                "codTipoEstadoRec": "CA",
+                "descTipoEstadoRec": "Cargado",
+                "codCausaEstadoRec": "PE",
+                "descCausaEstadoRec": "Formar Pendiente",
+                "codOpinionAge": " ",
+                "descOpinionAge": " ",
+                "numOrdenEstado": 3,
+                "codTipoGestCont": "C",
+                "descTipoGestCont": "Centralizada",
+                "subestado": {
+                  "codSubestRec": "PP",
+                  "descSubestRec": "Pte mes proximo",
+                  "codCausaSubestRec": "PM",
+                  "descCausaSubestRec": "Pendiente Mes",
+                  "fecSubestRec": "2021-07-26T00:00:00.000Z"
+                },
+                "fechas": {
+                  "fecEstadoRec": "2021-07-01T00:00:00.000Z",
+                  "fecLiquiRec": "2021-07-01T00:00:00.000Z"
+                },
+                "estructuraComercial": {
+                  "codCanal": "0",
+                  "descCanal": " ",
+                  "codAgencia": "191",
+                  "descAgencia": "Corredor/Corredurías",
+                  "codZona": " ",
+                  "descZona": "Zona Principal",
+                  "codDistrito": "000",
+                  "descDistrito": " ",
+                  "codMediador": "8542",
+                  "codTipoMediador": "C",
+                  "descTipoMediador": "Corredor / Correduría",
+                  "codTipoColab": "M",
+                  "descTipoColab": "Monitor",
+                  "codColab": "2BZ1",
+                  "codMonitor": "2BZ1"
+                }
+              },
+              {
+                "codTipoEstadoRec": "CA",
+                "descTipoEstadoRec": "Cargado",
+                "codCausaEstadoRec": "PE",
+                "descCausaEstadoRec": "Formar Pendiente",
+                "codOpinionAge": " ",
+                "descOpinionAge": " ",
+                "numOrdenEstado": 4,
+                "codTipoGestCont": "C",
+                "descTipoGestCont": "Centralizada",
+                "subestado": {
+                  "codSubestRec": "PP",
+                  "descSubestRec": "Pte mes proximo",
+                  "codCausaSubestRec": "PM",
+                  "descCausaSubestRec": "Pendiente Mes",
+                  "fecSubestRec": "2021-08-27T00:00:00.000Z"
+                },
+                "fechas": {
+                  "fecEstadoRec": "2021-08-01T00:00:00.000Z",
+                  "fecLiquiRec": "2021-08-01T00:00:00.000Z"
+                },
+                "estructuraComercial": {
+                  "codCanal": "0",
+                  "descCanal": " ",
+                  "codAgencia": "191",
+                  "descAgencia": "Corredor/Corredurías",
+                  "codZona": " ",
+                  "descZona": "Zona Principal",
+                  "codDistrito": "000",
+                  "descDistrito": " ",
+                  "codMediador": "8542",
+                  "codTipoMediador": "C",
+                  "descTipoMediador": "Corredor / Correduría",
+                  "codTipoColab": "M",
+                  "descTipoColab": "Monitor",
+                  "codColab": "2BZ1",
+                  "codMonitor": "2BZ1"
+                }
+              }
+            ]
+          },
+          "eventos": [
+            {
+              "numOrdenEven": 1,
+              "codEvenRec": "EF",
+              "descEvenRec": "Emisión física",
+              "codCausaEvenRec": " ",
+              "descCausaEvenRec": " ",
+              "codProxEvenRec": "CB",
+              "descProxEvenRec": "Cobrado",
+              "fechas": {
+                "fecEvenRec": "2021-06-07T00:00:00.000Z",
+                "fecProxEvenRec": "0001-01-01T00:00:00.000Z",
+                "fecEnvioBanco": "0001-01-01T00:00:00.000Z",
+                "fecCobroAut": "0001-01-01T00:00:00.000Z",
+                "fecValorRec": "0001-01-01T00:00:00.000Z"
+              }
+            },
+            {
+              "numOrdenEven": 2,
+              "codEvenRec": "DV",
+              "descEvenRec": "Devuelto",
+              "codCausaEvenRec": "GC",
+              "descCausaEvenRec": "Gestión cobro",
+              "codProxEvenRec": " ",
+              "descProxEvenRec": "Cobrado",
+              "fechas": {
+                "fecEvenRec": "2021-09-17T00:00:00.000Z",
+                "fecProxEvenRec": "0001-01-01T00:00:00.000Z",
+                "fecEnvioBanco": "0001-01-01T00:00:00.000Z",
+                "fecCobroAut": "0001-01-01T00:00:00.000Z",
+                "fecValorRec": "0001-01-01T00:00:00.000Z"
+              }
+            }
+          ],
+          "datosCobro": {
+            "datosPagador": {
+              "figuras": {
+                "codTipoRol": "TM",
+                "descTipoRol": "Tomador",
+                "numOrdRol": "0",
+                "idPersona": "18706460",
+                "codTipoPersona": "F",
+                "descTipoPersona": "Física",
+                "nombre": "N_18706460",
+                "primerApellido": "A1_18706460",
+                "segundoApellido": "A2_18706460",
+                "razonSocial": " ",
+                "codTipoDocumento": "N",
+                "descTipoDocumento": "N.I.F",
+                "numDocumento": "11778951F",
+                "fecNacimiento": "1977-04-30T00:00:00.000Z",
+                "codSexo": "M",
+                "descSexo": "Mujer",
+                "codProvinciaPag": "46"
+              }
+            },
+            "gestionCobro": {
+              "datosGenerales": {
+                "codTipoComision": "CN",
+                "descTipoComision": "Comisión Normal",
+                "codPeriodPago": "M",
+                "descPeriodPago": "Mensual",
+                "indCobroPago": "C",
+                "codMedioPago": "",
+                "descMedioPago": ""
+              },
+              "datosMedioCobro": {
+                "codCobroInterno": " ",
+                "descCobroInterno": " ",
+                "datosCobroFisico": {
+                  "codPais": "",
+                  "descPais": "",
+                  "codPostal": "0",
+                  "codProvincia": "0",
+                  "descProvincia": "",
+                  "codLocalidad": "0",
+                  "descLocalidad": "",
+                  "codMunicipio": "0",
+                  "descMunicipio": "",
+                  "codEntColectiva": "0",
+                  "codEntSingular": "0",
+                  "codNucPobla": "0",
+                  "descPoblacion": "",
+                  "codTipoVia": "",
+                  "descTipoVia": "",
+                  "descDomicilio": "",
+                  "numDomicilio": "0",
+                  "compNumDomic": "",
+                  "bloqueDomic": "",
+                  "portalDomic": "",
+                  "escalDomic": "",
+                  "pisoDomic": "",
+                  "puertaDomic": "",
+                  "otrosDatosDomic": "",
+                  "indTipoDomicCobro": "",
+                  "descTipoDomicCobro": ""
+                }
+              }
+            }
+          },
+          "importes": {
+            "codMoneda": "EU",
+            "primas": {
+              "impPrimaTarifa": 6.88,
+              "impPrimaCobPpal": 6.88,
+              "impPrimaComp": 0.0,
+              "impTotalRecibo": 7.43,
+              "impPrimaPura": 0.0,
+              "impPrimaInventario": 0.0
+            },
+            "bonificacionesYDescuentos": [
+              {
+                "codBonificacion": "NS",
+                "descBonificacion": "No Siniestralidad",
+                "impBonificacion": 0.0
+              }
+            ],
+            "recargosEImpuestos": [
+              {
+                "codRecargo": "DG",
+                "descRecargo": "Impuesto DGS",
+                "impRecargo": 0.0
+              },
+              {
+                "codRecargo": "PS",
+                "descRecargo": "Impuesto Seguro",
+                "impRecargo": 0.55
+              },
+              {
+                "codRecargo": "CO",
+                "descRecargo": "Consorcio",
+                "impRecargo": 0.0
+              }
+            ],
+            "comisiones": [
+              {
+                "codTipoComision": "PROD",
+                "descTipoComision": "Producción",
+                "impComision": 1.1
+              }
+            ]
+          }
+        },
+        "coaseguro": {
+          "codMoneda": "EU",
+          "recibo": [
+            {
+              "codCiaCoas": "20",
+              "descCiaCoas": "Seguros Bilbao",
+              "codTipoCuentaCoas": "A",
+              "descTipoCuentaCoas": "Coaseguro Abridora",
+              "primas": {
+                "impPrimaTarifa": 2.2,
+                "impPrimaCobPpal": 2.2,
+                "impPrimaComp": 3.0
+              },
+              "comisiones": [
+                {
+                  "codTipoComision": "BASI",
+                  "descTipoComision": "Importe Comisión Baja Siniestralidad",
+                  "impComision": 3.0
+                }
+              ],
+              "bonificacionesYDescuentos": [
+                {
+                  "codBonificacion": "NA",
+                  "descBonificacion": "No intervencion de Agente",
+                  "impBonificacion": 35.4
+                }
+              ],
+              "recargosEImpuestos": [
+                {
+                  "codRecargo": "DG",
+                  "descRecargo": "Recargo D.G.S.",
+                  "impRecargo": 1.2
+                }
+              ]
+            }
+          ],
+          "objetoAsegurado": [
+            {
+              "codObjAsegur": "1",
+              "codCiaCoas": "20",
+              "descCiaCoas": "Seguros Bilbao",
+              "codTipoCuentaCoas": "A",
+              "descTipoCuentaCoas": "Coaseguro Abridora",
+              "primas": {
+                "impPrimaTarifa": 2.2,
+                "impPrimaCobPpal": 2.2,
+                "impPrimaComp": 3.0
+              },
+              "comisiones": [
+                {
+                  "codTipoComision": "BASI",
+                  "descTipoComision": "Importe Comisión Baja Siniestralidad",
+                  "impComision": 3.0
+                }
+              ],
+              "bonificacionesYDescuentos": [
+                {
+                  "codBonificacion": "NA",
+                  "descBonificacion": "No intervencion de Agente",
+                  "impBonificacion": 35.4
+                }
+              ],
+              "recargosEImpuestos": [
+                {
+                  "codRecargo": "DG",
+                  "descRecargo": "Recargo D.G.S.",
+                  "impRecargo": 1.2
+                }
+              ],
+              "ramoContable": [
+                {
+                  "codRamoCont": "3",
+                  "descRamoCont": "Robo",
+                  "codModCont": "1",
+                  "descModCont": "En la Profesión y en la Vida Privada",
+                  "primas": {
+                    "impPrimaTarifa": 2.2,
+                    "impPrimaCobPpal": 2.2,
+                    "impPrimaComp": 3.0,
+                    "porcGastComision": 0.02
+                  },
+                  "comisiones": [
+                    {
+                      "codTipoComision": "BASI",
+                      "descTipoComision": "Importe Comisión Baja Siniestralidad",
+                      "impComision": 3.0
+                    }
+                  ],
+                  "bonificacionesYDescuentos": [
+                    {
+                      "codBonificacion": "NA",
+                      "descBonificacion": "No intervencion de Agente",
+                      "impBonificacion": 35.4
+                    }
+                  ],
+                  "recargosEImpuestos": [
+                    {
+                      "codRecargo": "DG",
+                      "descRecargo": "Recargo D.G.S.",
+                      "impRecargo": 1.2
+                    }
+                  ]
+                }
+              ],
+              "agrupacionGarantia": [
+                {
+                  "codAgrupGarant": "DP",
+                  "descAgrupGarant": "Cio. DP",
+                  "primas": {
+                    "impPrimaTarifa": 2.2
+                  },
+                  "comisiones": [
+                    {
+                      "codTipoComision": "BASI",
+                      "descTipoComision": "Importe Comisión Baja Siniestralidad",
+                      "impComision": 3.0
+                    }
+                  ],
+                  "bonificacionesYDescuentos": [
+                    {
+                      "codBonificacion": "NA",
+                      "descBonificacion": "No intervencion de Agente",
+                      "impBonificacion": 35.4
+                    }
+                  ],
+                  "recargosEImpuestos": [
+                    {
+                      "codRecargo": "DG",
+                      "descRecargo": "Recargo D.G.S.",
+                      "impRecargo": 1.2
+                    }
+                  ]
+                }
+              ],
+              "garantia": [
+                {
+                  "codGarantia": "SER",
+                  "descGarantia": "Servicio",
+                  "primas": {
+                    "impPrimaTarifa": 2.2
+                  },
+                  "comisiones": [
+                    {
+                      "codTipoComision": "BASI",
+                      "descTipoComision": "Importe Comisión Baja Siniestralidad",
+                      "impComision": 3.0
+                    }
+                  ],
+                  "bonificacionesYDescuentos": [
+                    {
+                      "codBonificacion": "NA",
+                      "descBonificacion": "No intervencion de Agente",
+                      "impBonificacion": 35.4
+                    }
+                  ],
+                  "recargosEImpuestos": [
+                    {
+                      "codRecargo": "DG",
+                      "descRecargo": "Recargo D.G.S.",
+                      "impRecargo": 1.2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "detalle": {
+          "codMoneda": "EU",
+          "objetoAsegurado": [
+            {
+              "codObjAsegur": "0",
+              "codTipoObjAsegur": " ",
+              "descTipoObjAsegur": " ",
+              "primas": {
+                "impPrimaTarifa": 6.88,
+                "impTotalRecibo": 7.43
+              },
+              "comisiones": [
+                {
+                  "codTipoComision": "PROD",
+                  "descTipoComision": "Producción",
+                  "impComision": 1.1
+                }
+              ],
+              "bonificacionesYDescuentos": [
+                {
+                  "codBonificacion": "NS",
+                  "descBonificacion": "No Siniestralidad",
+                  "impBonificacion": 0.0
+                }
+              ],
+              "recargosEImpuestos": [
+                {
+                  "codRecargo": "DG",
+                  "descRecargo": "Impuesto DGS",
+                  "impRecargo": 0.0
+                },
+                {
+                  "codRecargo": "PS",
+                  "descRecargo": "Impuesto Seguro",
+                  "impRecargo": 0.55
+                },
+                {
+                  "codRecargo": "CO",
+                  "descRecargo": "Consorcio",
+                  "impRecargo": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "metadata": {
+          "estructura": [
+            {
+              "claveEstrMetad": "csistema",
+              "codValorEstrMetad": "age",
+              "descValorEstrMetad": "Sistema de Agencias"
+            },
+            {
+              "claveEstrMetad": "csubsist",
+              "codValorEstrMetad": "sg",
+              "descValorEstrMetad": "Seguros Generales"
+            },
+            {
+              "claveEstrMetad": "cproceso",
+              "codValorEstrMetad": "223",
+              "descValorEstrMetad": "Seguimiento de Cobro"
+            }
+          ],
+          "numUltUsuario": "0",
+          "fecHoraRegistro": "2021-09-17T13:46:56.000Z",
+          "marcaMigracion": "N",
+          "version": 1
+        }
+      }
+

@@ -1,0 +1,28 @@
+# Santalucia
+# Template distribuido a modo de ejemplo para evidenciar el uso de configuracion
+# local de proyecto
+# En este directorio deberan incluirse todos los usuarios y passwords que no
+# deban versionarse en git.
+# Para su uso basta renombrar application.yaml.template a application.yaml
+# Spring de forma interna concatenara config/application.yaml y
+# src/main/resources/application.yaml
+#
+# Descripcion y uso:
+# * config/application.yaml                    : Configuracion NO PERSISTIDA en git
+# * src/main/resources/application.yaml        : Configuracion PERSISTIDA en git
+spring:
+  datasource:
+    primary:
+      hikari:
+        username:
+        password:
+    secondary:
+      hikari:
+        username:
+        password:
+    scdf:
+      hikari:
+        driver-class-name: org.h2.Driver
+        pool-name: OracleCP
+        jdbc-url: jdbc:h2:mem:db-scdf;DB_CLOSE_DELAY=-1;MODE=Oracle
+

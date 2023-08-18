@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.santalucia.arq.ams</groupId>
+    <artifactId>ams-parent-sl-sw</artifactId>
+    <version>2.2.0-RELEASE</version>
+    <relativePath />
+  </parent>
+
+  <groupId>com.santalucia.cdc</groupId>
+  <artifactId>odl-presp-revision-borrado-odl</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>odl-presp-revision-borrado-odl</name>
+  <!-- TODO: Sustituir proyecto y repositorio por el id de bitbucket, cuando se disponga del repositorio del proyecto-->
+  <url>https://git.santalucia.net/scm/${proyecto}/${repositorio}.git</url>
+
+  <organization>
+    <name>Santalucia Seguros</name>
+    <url>https://https://www.santalucia.es/</url>
+  </organization>
+
+  <!-- TODO: Sustituir User por nombre de los desarrolladores -->
+  <developers>
+    <developer>
+      <name>User</name>
+      <email>desarrolladores@santalucia.es</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:${project.url}</connection>
+    <developerConnection>scm:git:${project.url}</developerConnection>
+    <tag>HEAD</tag>
+    <url>${project.url}</url>
+  </scm>
+
+  <!-- TODO: Sustituir User por nombre de los desarrolladores -->
+  <ciManagement>
+    <system>jenkins</system>
+    <url>https://jenkins-devops.app-dev.santalucia.net/</url>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <address>desarrolladores@santalucia.es</address>
+        <sendOnSuccess>false</sendOnSuccess>
+        <sendOnWarning>false</sendOnWarning>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+
+  <properties>
+    <git.hooks.skip>false</git.hooks.skip>
+    <recibos.odl.api.client.version>2.2.1-RELEASE</recibos.odl.api.client.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- IBM Informix JDBC Driver -->
+    <!-- BORRAR EN CASO DE NO USAR INFORMIX -->
+    <dependency>
+      <groupId>com.ibm.informix</groupId>
+      <artifactId>jdbc</artifactId>
+    </dependency>
+
+
+
+    <!-- descomentar en caso de necesidad
+    <dependency>
+      <groupId>com.santalucia.arq.ams.batch</groupId>
+      <artifactId>ams-batch-integration-sftp</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.batch</groupId>
+      <artifactId>ams-batch-kafka</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams</groupId>
+      <artifactId>ams-componentes-distributed-cache</artifactId>
+    </dependency>
+
+    -->
+
+    <!-- SL retry component -->
+    <dependency>
+      <groupId>com.santalucia.arq.ams</groupId>
+      <artifactId>ams-componentes-retry</artifactId>
+    </dependency>
+
+    <!-- SL Feign components -->
+    <!--Borrar en caso de no usar Feign -->
+    <dependency>
+      <groupId>com.santalucia.arq.ams</groupId>
+      <artifactId>ams-componentes-feign</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams</groupId>
+      <artifactId>ams-componentes-feign-security</artifactId>
+    </dependency>
+    <!--fin SL Feign components -->
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.batch</groupId>
+      <artifactId>ams-batch-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams</groupId>
+      <artifactId>ams-componentes-logging</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.batch</groupId>
+      <artifactId>ams-batch-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Api client -->
+    <!--API CLIENT SE INCLUYE CON CARACTER DEMOSTRATIVO BORRAR O ADAPTAR EN CASO DE NECESIDAD-->
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.recibos</groupId>
+      <artifactId>recibos-odl-api-client</artifactId>
+      <version>${recibos.odl.api.client.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

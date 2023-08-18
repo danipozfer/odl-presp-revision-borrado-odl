@@ -1,0 +1,154 @@
+###########################
+#                         #
+# spring properties       #
+#                         #
+###########################
+spring:
+  integration:
+    jdbc:
+      initialize-schema: never
+  main:
+    allow-bean-definition-overriding: true
+    lazy-initialization: false
+  application:
+    name: odl-presp-revision-borrado-odl
+  banner:
+    location: classpath:santalucia-banner.txt
+  mandatory-file-encoding: UTF-8
+  cloud:
+    task:
+      initialize-enabled: false
+      batch:
+        fail-on-job-failure: true
+      name: ${spring.application.name}
+  security:
+    oauth2:
+      client:
+        registration:
+          recibosodl:
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope:
+              - read-dynamic:recibos-odl
+        provider:
+          recibosodl:
+            issuer-uri: https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri: https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+  batch:
+    jdbc:
+      initialize-schema: never
+      isolation-level-for-create: read-committed
+  task:
+    execution:
+      pool:
+        core-size: 10
+        max-size: 10
+        queue-capacity: 10
+
+  #########################################################################
+  #                                                                       #
+  # Datasource Configuration                                              #
+  # !!! Eliminar los datasources en caso de que no vayan a ser utilizados #
+  # !!! En caso de informix sustituir en ocp el jdbc-url por sqlhosts     #
+  #########################################################################
+  datasource:
+    primary:
+      hikari:
+        driver-class-name: com.informix.jdbc.IfxDriver
+        pool-name: informix-pool
+        jdbc-url: jdbc:informix-sqli://192.168.204.226:20101/siis:INFORMIXSERVER=fun_jdbc
+#    secondary:
+#      hikari:
+#       driver-class-name: oracle.jdbc.OracleDriver
+#        pool-name: oracle-pool
+#        jdbc-url: jdbc:oracle:thin:@slbdorad15.servidores.net:1548/DB12UTF8D.DES.SANTALUCIA.ES 
+
+###########################
+#                         #
+# Batch Configuration     #
+#                         #
+###########################
+santalucia:
+  ams:
+    features:
+      mybatis:
+        primary:
+          base-packages: com.santalucia.cdc.infrastructure.mybatis.primary
+      retryers:
+        definitions:
+          recibos-reader:
+            delay-expression: 1000
+            max-delay-expression: 5000
+            multiplier-expression: 2
+            max-attempts-expression: 10
+            retry-status-codes: 500,502,503,504
+      feign:
+        base-packages: com.santalucia
+
+# Configurar caracteristicas propias de la aplicacion
+app:
+  custom:
+    features:
+      chunk-size: 1000
+      cvs-path: ../../test/resources/data/csv/dummyFile.csv
+
+###########################
+#                         #
+# micrometer properties   #
+#                         #
+###########################
+management:
+  metrics:
+    tags:
+      #Needed by micrometer +1.1.0
+      application: ${spring.application.name}
+
+###########################
+#                         #
+# info properties         #
+#                         #
+###########################
+info:
+  app:
+    name: ${spring.application.name}
+    encoding: UTF-8
+    java:
+      source: 17
+      target: 17
+
+###########################
+#                         #
+# logging properties      #
+#                         #
+###########################
+logging:
+  level:
+    root: INFO
+    "[com.santalucia]": DEBUG
+    "[org.springframework]": INFO
+---
+#Profile habilitado de forma automatica cuando se despliega en OCP
+spring:
+  config:
+    activate:
+      on-profile:
+        - kubernetes
+  banner:
+    location: classpath:santalucia-banner.json
+  cloud:
+    kubernetes:
+      enabled: true
+      reload:
+        enabled: false
+
+---
+#Profile habilitado de forma automatica cuando se compila en jenkins
+spring:
+  config:
+    activate:
+      on-profile:
+        - devops
+
+  cloud:
+    kubernetes:
+      enabled: false
