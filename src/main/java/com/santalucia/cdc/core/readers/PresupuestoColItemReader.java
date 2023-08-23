@@ -5,6 +5,7 @@ import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.securedObject.ObjetoAseguradoDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
+import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.mappers.EventoPresupuestoColMapper;
 import com.santalucia.cdc.infrastructure.entity.Presupuestos;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,7 @@ public class PresupuestoColItemReader extends PaginatedDataItemReader<EventoPres
     for (PresupuestoColectivoDomain pres : list2){
       EventoPresupuestoColDomain ev = new EventoPresupuestoColDomain();
       ev.setPresupuestoColectivo(pres);
-      List<ObjetoAseguradoDomain> objs = apiObjectoAsegurado.getOBjecto(pres.getDatoIdentificativo().getIdPresupuestoODL());
+      List<ObjetosAseguradosDomain> objs = apiObjectoAsegurado.getOBjecto(pres.getDatoIdentificativo().getIdPresupuestoODL());
       ev.setObjetosAsegurados(objs);
       List<DeclaracionDomain> declaracionDomains = apiDeclacion.getDeclaracion(pres.getDatoIdentificativo().getIdPresupuestoODL());
       ev.setDeclaracion(declaracionDomains);

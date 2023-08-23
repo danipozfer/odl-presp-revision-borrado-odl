@@ -30,7 +30,6 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
   public DefaultDeclaracionClientService(DeclaracionDomainMapper declaracionDomainMapper, PresupuestosDeclaracionesApiClient dClient,
                                          PresupuestosUtilsService pUtils, AppCustomFeaturesProperties prop) {
     this.declaracionDomainMapper = declaracionDomainMapper;
-
     this.declaracionApiClient = dClient;
     this.properties = prop;
     this.presupuestosUtils = pUtils;

@@ -2,6 +2,7 @@ package com.santalucia.cdc.core.processors;
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.TipoMDLDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.batch.item.ItemProcessor;
@@ -77,9 +78,23 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       datos.setNumDigContrNumCuent(ANONIMO);
       datos.setNumDigContrEntidOfic(ANONIMO);
       datos.setTitulCuentBanc(ANONIMO);
+      datos.setNumCuentaBanc(ANONIMO);
       datos.setEntidadBancOtroCob(tipoMDLDomainAnonimizado);
       datos.setTipoDomBancOtroCob(tipoMDLDomainAnonimizado);
     }
+
+    for (DatoPersonalDomain datoPersonalDomain : eventoPresupuestoColDomain.getPresupuestoColectivo().getFigura().getDatosPersonales()){
+      datoPersonalDomain.setTipoRol(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setNumOrdenRol();
+      datoPersonalDomain.setNumIdPersona();
+      datoPersonalDomain.setNumIdCliente();
+      datoPersonalDomain.setTipoPersona(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setTipoDocumento(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setNumDocumento();
+      datoPersonalDomain.setSexoPersona(tipoMDLDomainAnonimizado);
+    }
+
+    eventoPresupuestoColDomain.getPresupuestoColectivo().getFigura().getDatosPersonales()
 
 
 
