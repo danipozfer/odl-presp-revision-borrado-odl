@@ -43,9 +43,9 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
     log.info("Buscando objetoAsegurado con idPresupuestoODL {}", idPresupuestoODL);
 
     int pageNum = 1;
-    List<DeclaracionDomain> declaraciones = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = declaracionApiClient
-      .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
+    List<DeclaracionDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
+    com.santalucia.arq.ams.odl.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = objetoAseguradoApiClient
+      .findAllPresupuestosObjetoAseguradoGET(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idPresupuestoODL),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
@@ -53,10 +53,10 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
     boolean end = false;
     if (result != null) {
       Long maxPages = result.getPage().getTotalPages();//busca las declaraciones por id
-      declaraciones.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
+      objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
       while (pageNum < maxPages && !end) {
         result = objetoAseguradoApiClient
-          .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
+          .findAllPresupuestosObjetoAseguradoGET(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(idPresupuestoODL),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
@@ -64,12 +64,12 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
           end = true;
         } else {
           pageNum++;//añade las declaraciones encontradas
-          declaraciones.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getDatosEconomicos()));
+          objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getDatosEconomicos()));
         }
       }
     }
 
-    return declaraciones;
+    return objetosAsegurados;
   }
 
   /**
