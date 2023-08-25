@@ -2,11 +2,20 @@ package com.santalucia.cdc.core.processors;
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.TipoMDLDomain;
+import com.santalucia.cdc.core.domain.budgets.common.DomicilioPersDomain;
+import com.santalucia.cdc.core.domain.budgets.common.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
+import com.santalucia.cdc.core.domain.budgets.common.geograph.CoordenadaDomain;
+import com.santalucia.cdc.core.domain.budgets.common.geograph.DomicilioPresupuestoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
+import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedObject.characteristics.CaracteristicaDomain;
+import com.santalucia.cdc.core.domain.securedObject.characteristics.DomicilioDomain;
+import com.santalucia.cdc.core.domain.securedObject.identif.DatoIdentificativoDomain;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.batch.item.ItemProcessor;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,22 +92,106 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       datos.setTipoDomBancOtroCob(tipoMDLDomainAnonimizado);
     }
 
-    for (DatoPersonalDomain datoPersonalDomain : eventoPresupuestoColDomain.getPresupuestoColectivo().getFigura().getDatosPersonales()){
+    for (DatoPersonalDomain datoPersonalDomain : eventoPresupuestoColDomain.getPresupuestoColectivo().getFigura().getDatosPersonales()) {
       datoPersonalDomain.setTipoRol(tipoMDLDomainAnonimizado);
-      datoPersonalDomain.setNumOrdenRol();
-      datoPersonalDomain.setNumIdPersona();
-      datoPersonalDomain.setNumIdCliente();
+      datoPersonalDomain.setNumOrdenRol(ANONIMO);
+      datoPersonalDomain.setNumIdPersona(ANONIMO);
+      datoPersonalDomain.setNumIdCliente(ANONIMO);
       datoPersonalDomain.setTipoPersona(tipoMDLDomainAnonimizado);
       datoPersonalDomain.setTipoDocumento(tipoMDLDomainAnonimizado);
-      datoPersonalDomain.setNumDocumento();
+      datoPersonalDomain.setNumDocumento(ANONIMO);
       datoPersonalDomain.setSexoPersona(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setTxtNombre(ANONIMO);
+      datoPersonalDomain.setTxtPrimerApellido(ANONIMO);
+      datoPersonalDomain.setTxtSegundoApellido(ANONIMO);
+      datoPersonalDomain.setTxtRazonSocial(ANONIMO);
+      datoPersonalDomain.setFecNacimiento();
+      datoPersonalDomain.setProfesion(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setAgrupProfesion(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setNacionalidad(tipoMDLDomainAnonimizado);
+      datoPersonalDomain.setIndEstadoCivil(ANONIMO);
+
+      DomicilioPersDomain domicilioPersDomainAnonimizado = new DomicilioPersDomain();
+      domicilioPersDomainAnonimizado.setIdDomicilio(ANONIMO);
+      domicilioPersDomainAnonimizado.setPaisDomPers(tipoMDLDomainAnonimizado);
+      domicilioPersDomainAnonimizado.setLocalidadDomPers(tipoMDLDomainAnonimizado);
+      domicilioPersDomainAnonimizado.setProvinciaDomPers(tipoMDLDomainAnonimizado);
+      domicilioPersDomainAnonimizado.setCodMunicipio(ANONIMO);
+      domicilioPersDomainAnonimizado.setCodEntColectiva(ANONIMO);
+      domicilioPersDomainAnonimizado.setCodEntSingular(ANONIMO);
+      domicilioPersDomainAnonimizado.setCodNucPobla(ANONIMO);
+      domicilioPersDomainAnonimizado.setDenomPoblaDomPers(tipoMDLDomainAnonimizado);
+      domicilioPersDomainAnonimizado.setCodPostal(ANONIMO);
+      domicilioPersDomainAnonimizado.setTipoViaDomPers(tipoMDLDomainAnonimizado);
+      domicilioPersDomainAnonimizado.setDesDomicilio(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumDomicilio(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumComplemento(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumBloque(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumPortal(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumEscalera(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumPuerta(ANONIMO);
+      domicilioPersDomainAnonimizado.setNumPiso(ANONIMO);
+      domicilioPersDomainAnonimizado.setBlNormalizado(ANONIMO);
+      domicilioPersDomainAnonimizado.setDesOtrosDatos(ANONIMO);
+
+      datoPersonalDomain.setDomicilioPers(domicilioPersDomainAnonimizado);
+
+      for (MedioDeContactoDomain medioDeContactoDomain : datoPersonalDomain.getMediosDeContactos()) {
+        medioDeContactoDomain.setMedioContacto(tipoMDLDomainAnonimizado);
+        medioDeContactoDomain.setPaisOrigen(tipoMDLDomainAnonimizado);
+        medioDeContactoDomain.setNumTelefono(ANONIMO);
+        medioDeContactoDomain.setNomCorreoElectronico(ANONIMO);
+      }
     }
 
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getFigura().getDatosPersonales()
+    DomicilioPresupuestoDomain domicilioPresupuestoDomain = new DomicilioPresupuestoDomain();
+    domicilioPresupuestoDomain.setIdDomicilio(ANONIMO);
+    domicilioPresupuestoDomain.setPais(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setLocalidad(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setProvincia(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setCodMunicipio(ANONIMO);
+    domicilioPresupuestoDomain.setCodEntColectiva(ANONIMO);
+    domicilioPresupuestoDomain.setCodEntSingular(ANONIMO);
+    domicilioPresupuestoDomain.setCodNucPobla(ANONIMO);
+    domicilioPresupuestoDomain.setDenomPobla(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setCodPostal(ANONIMO);
+    domicilioPresupuestoDomain.setTipoVia(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setDesDomicilio(ANONIMO);
+    domicilioPresupuestoDomain.setNumNumero(ANONIMO);
+    domicilioPresupuestoDomain.setNumComplemento(ANONIMO);
+    domicilioPresupuestoDomain.setNumBloque(ANONIMO);
+    domicilioPresupuestoDomain.setNumPortal(ANONIMO);
+    domicilioPresupuestoDomain.setNumEscalera(ANONIMO);
+    domicilioPresupuestoDomain.setNumPuerta(ANONIMO);
+    domicilioPresupuestoDomain.setNumPiso(ANONIMO);
+    domicilioPresupuestoDomain.setBlNormalizado(ANONIMO);
+    domicilioPresupuestoDomain.setDesOtrosDatos(ANONIMO);
+
+    eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setDomicilioPresupuesto(domicilioPresupuestoDomain);
+
+    CoordenadaDomain coordenadaDomainAnonimizada = new CoordenadaDomain();
+    coordenadaDomainAnonimizada.setTipoCoordenada(tipoMDLDomainAnonimizado);
+    coordenadaDomainAnonimizada.setIndSistema(ANONIMO);
+    coordenadaDomainAnonimizada.setNumCoordX();
+    coordenadaDomainAnonimizada.setNumCoordY();
+    eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
+      //Para fechas 0001-01-01 y para double 0.0 y para integer 0
 
 
+    // OBJETO ASEGURADO
 
 
-    //Para fechas 0001-01-01 y para double 0.0 y para integer 0
+    for (ObjetosAseguradosDomain obj : eventoPresupuestoColDomain.getObjetosAsegurados()){
+
+      CaracteristicaDomain caracteristicaDomainAnonima = new CaracteristicaDomain();
+      List<DomicilioDomain> domicilioDomains = new ArrayList<>();
+      for(DomicilioDomain domicilios : caracteristicaDomainAnonima.getDomicilios()) {
+        domicilios.setPais(tipoMDLDomainAnonimizado);
+        domicilios.set
+        domicilioDomains.add(domicilios);
+      }
+      obj.getCaracteristica().setDomicilios(domicilioDomains);
+      obj.setCaracteristica(caracteristicaDomainAnonima);
+    }
   }
 }
