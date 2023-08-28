@@ -8,9 +8,13 @@ import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.CoordenadaDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.DomicilioPresupuestoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
+import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
+import com.santalucia.cdc.core.domain.declaration.RespuestaDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedObject.characteristics.AnimalDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.DomicilioDomain;
+import com.santalucia.cdc.core.domain.securedObject.characteristics.FiguraDomain;
 import com.santalucia.cdc.core.domain.securedObject.identif.DatoIdentificativoDomain;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.batch.item.ItemProcessor;
@@ -187,11 +191,101 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       List<DomicilioDomain> domicilioDomains = new ArrayList<>();
       for(DomicilioDomain domicilios : caracteristicaDomainAnonima.getDomicilios()) {
         domicilios.setPais(tipoMDLDomainAnonimizado);
-        domicilios.set
+        domicilios.setProvincia(tipoMDLDomainAnonimizado);
+        domicilios.setLocalidad(tipoMDLDomainAnonimizado);
+        domicilios.setCodMunicipio(ANONIMO);
+        domicilios.setCodEntColectiva(ANONIMO);
+        domicilios.setCodEntSingular(ANONIMO);
+        domicilios.setCodNucPobla(ANONIMO);
+        domicilios.setDenomPobla(tipoMDLDomainAnonimizado);
+        domicilios.setCodPostal(ANONIMO);
+        domicilios.setTipoVia(tipoMDLDomainAnonimizado);
+        domicilios.setDesDomicilio(ANONIMO);
+        domicilios.setNumNumero(ANONIMO);
+        domicilios.setNumComplemento(ANONIMO);
+        domicilios.setNumBloque(ANONIMO);
+        domicilios.setNumPortal(ANONIMO);
+        domicilios.setNumEscalera(ANONIMO);
+        domicilios.setNumPiso(ANONIMO);
+        domicilios.setNumPuerta(ANONIMO);
+        domicilios.setBlNormalizado(ANONIMO);
+        domicilios.setDesOtrosDatos(ANONIMO);
+
         domicilioDomains.add(domicilios);
       }
       obj.getCaracteristica().setDomicilios(domicilioDomains);
+
+
+      List<FiguraDomain> figuraDomainList = new ArrayList<>();
+
+      for (FiguraDomain figura : caracteristicaDomainAnonima.getFiguras()){
+        figura.setIdPersona(ANONIMO);
+        figura.setTipoPersona(tipoMDLDomainAnonimizado);
+        figura.setTxtNombre(ANONIMO);
+        figura.setTxtPrimerApellido(ANONIMO);
+        figura.setTxtSegundoApellido(ANONIMO);
+        figura.setTxtRazonSocial(ANONIMO);
+        figura.setTipoDocumento(tipoMDLDomainAnonimizado);
+        figura.setNumDocumento(ANONIMO);
+        figura.setFecNacimiento();
+        figura.setSexo(tipoMDLDomainAnonimizado);
+        figura.setNacionalidad(tipoMDLDomainAnonimizado);
+        figura.setProfesion(tipoMDLDomainAnonimizado);
+        figura.setGrupoProfesion(tipoMDLDomainAnonimizado);
+        figura.setIndEstadoCivil(ANONIMO);
+        figura.setBeneficiario(tipoMDLDomainAnonimizado);
+
+        figuraDomainList.add(figura);
+      }
+
+      obj.getCaracteristica().setFiguras(figuraDomainList);
+
+      List<AnimalDomain> animalDomainsList = new ArrayList<>();
+
+      for (AnimalDomain animal: caracteristicaDomainAnonima.getAnimales()){
+        animal.setIndTipoEspecie(ANONIMO);
+        animal.setRaza(tipoMDLDomainAnonimizado);
+        animal.setIndTipoAnimalComp(ANONIMO);
+        animal.setNumIdentAnimalComp(ANONIMO);
+        animal.setNomMascota(ANONIMO);
+        animal.setNumChip(ANONIMO);
+        animal.setFecNacimiento();
+        animal.setImpValorMascota();
+        animal.setIndPerroMestizo(ANONIMO);
+        animal.setIndPerfEstadoSalud(ANONIMO);
+      }
+
+
+
+      obj.getCaracteristica().setAnimales(animalDomainsList);
       obj.setCaracteristica(caracteristicaDomainAnonima);
     }
+
+    //DECLARACION
+
+
+
+    for(DeclaracionDomain dec : eventoPresupuestoColDomain.getDeclaracion()){
+
+      List<com.santalucia.cdc.core.domain.declaration.CaracteristicaDomain> caracList = new ArrayList<>();
+
+      for (com.santalucia.cdc.core.domain.declaration.CaracteristicaDomain caracteristicaDomain: dec.getCaracteristicas()){
+
+        caracteristicaDomain.setPregunta(tipoMDLDomainAnonimizado);
+        caracteristicaDomain.setIndAplicPregunta(ANONIMO);
+
+        List<RespuestaDomain> respuestaDomainList = new ArrayList<>();
+        for (RespuestaDomain res: caracteristicaDomain.getRespuestas()){
+          res.setRespFacilitada(tipoMDLDomainAnonimizado);
+          res.setIndTipoRespuesta(ANONIMO);
+          respuestaDomainList.add(res);
+        }
+        caracteristicaDomain.setRespuestas(respuestaDomainList);
+      }
+      dec.setCaracteristicas(caracList);
+
+    }
+
+    return eventoPresupuestoColDomain;
   }
 }
