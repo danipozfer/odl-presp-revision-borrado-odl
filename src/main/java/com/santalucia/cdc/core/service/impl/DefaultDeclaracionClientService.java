@@ -2,7 +2,7 @@ package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.mappers.DeclaracionDomainMapper;
+import com.santalucia.cdc.core.mappers.budget.DeclaracionDomainMapper;
 import com.santalucia.cdc.core.service.DeclaracionClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import com.santalucia.cdc.reload.AppCustomFeaturesProperties;

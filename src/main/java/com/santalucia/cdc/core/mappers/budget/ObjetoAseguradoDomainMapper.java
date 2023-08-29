@@ -1,4 +1,4 @@
-package com.santalucia.cdc.core.mappers;
+package com.santalucia.cdc.core.mappers.budget;
 
 import com.santalucia.cdc.core.domain.budgets.common.securedObject.ObjetoAseguradoDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;

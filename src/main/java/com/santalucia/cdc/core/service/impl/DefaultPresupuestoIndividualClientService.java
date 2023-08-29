@@ -2,7 +2,7 @@ package com.santalucia.cdc.core.service.impl;
 
 import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.exception.BudgetNotFoundException;
-import com.santalucia.cdc.core.mappers.HistPresupuestoIndividualDomainMapper;
+import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.mappers.PresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
