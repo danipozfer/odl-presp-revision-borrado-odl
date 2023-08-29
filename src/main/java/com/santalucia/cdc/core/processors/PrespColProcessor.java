@@ -176,13 +176,15 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
     CoordenadaDomain coordenadaDomainAnonimizada = new CoordenadaDomain();
     coordenadaDomainAnonimizada.setTipoCoordenada(tipoMDLDomainAnonimizado);
     coordenadaDomainAnonimizada.setIndSistema(ANONIMO);
-    coordenadaDomainAnonimizada.setNumCoordX();
-    coordenadaDomainAnonimizada.setNumCoordY();
+    coordenadaDomainAnonimizada.setNumCoordX(0.0);
+    coordenadaDomainAnonimizada.setNumCoordY(0.0);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
       //Para fechas 0001-01-01 y para double 0.0 y para integer 0
 
 
     // OBJETO ASEGURADO
+
+    List<ObjetosAseguradosDomain> objetosAseguradosDomainList = new ArrayList<>();
 
 
     for (ObjetosAseguradosDomain obj : eventoPresupuestoColDomain.getObjetosAsegurados()){
@@ -250,7 +252,7 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
         animal.setNomMascota(ANONIMO);
         animal.setNumChip(ANONIMO);
         animal.setFecNacimiento();
-        animal.setImpValorMascota();
+        animal.setImpValorMascota(0.0);
         animal.setIndPerroMestizo(ANONIMO);
         animal.setIndPerfEstadoSalud(ANONIMO);
       }
@@ -259,11 +261,14 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
 
       obj.getCaracteristica().setAnimales(animalDomainsList);
       obj.setCaracteristica(caracteristicaDomainAnonima);
+      objetosAseguradosDomainList.add(obj);
     }
+
+    eventoPresupuestoColDomain.setObjetosAsegurados(objetosAseguradosDomainList);
 
     //DECLARACION
 
-
+    List<DeclaracionDomain> declaracionDomainList = new ArrayList<>();
 
     for(DeclaracionDomain dec : eventoPresupuestoColDomain.getDeclaracion()){
 
@@ -284,7 +289,10 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       }
       dec.setCaracteristicas(caracList);
 
+      declaracionDomainList.add(dec);
     }
+
+    eventoPresupuestoColDomain.setDeclaracion(declaracionDomainList);
 
     return eventoPresupuestoColDomain;
   }
