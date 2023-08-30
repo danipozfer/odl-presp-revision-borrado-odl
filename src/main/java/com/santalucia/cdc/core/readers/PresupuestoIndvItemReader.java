@@ -2,7 +2,7 @@ package com.santalucia.cdc.core.readers;
 
 import com.santalucia.arq.ams.batch.core.readers.PaginatedDataItemReader;
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
-import com.santalucia.cdc.core.mappers.EventoPresupuestoIndvMapper;
+import com.santalucia.cdc.core.mappers.budget.EventoPresupuestoIndvMapper;
 import lombok.NoArgsConstructor;
 
 import java.util.Iterator;

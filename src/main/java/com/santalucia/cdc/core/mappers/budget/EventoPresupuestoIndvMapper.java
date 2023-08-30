@@ -1,4 +1,4 @@
-package com.santalucia.cdc.core.mappers;
+package com.santalucia.cdc.core.mappers.budget;
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;

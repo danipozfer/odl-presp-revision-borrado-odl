@@ -7,6 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+/**
+ * Objeto presupuesto
+ *
+ * @author Nfq
+ *
+ */
 @Data
 @NoArgsConstructor
 @SuppressWarnings("NullAway.Init")
