@@ -5,21 +5,22 @@ import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.service.*;
+import com.santalucia.cdc.core.service.DeclaracionClientService;
+import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
+import com.santalucia.cdc.core.service.PresupuestoColectivoClientService;
+import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PresupuestoColItemReader extends PaginatedDataItemReader<EventoPresupuestoColDomain> {
-
-
+public class HistPresupuestoColItemReader extends PaginatedDataItemReader<EventoPresupuestoColDomain> {
   private final PresupuestosUtilsService utils;
   private final PresupuestoColectivoClientService presupuestoApiClient;
   private final DeclaracionClientService declaracionApiClient;
   private final ObjetoAseguradoClientService objetoAseguradoApiClient;
 
-  public PresupuestoColItemReader(PresupuestosUtilsService utils,
+  public HistPresupuestoColItemReader(PresupuestosUtilsService utils,
                                   PresupuestoColectivoClientService presupuestoApiClient,
                                   DeclaracionClientService declaracionApiClient,
                                   ObjetoAseguradoClientService objetoAseguradoApiClient) {
@@ -36,19 +37,18 @@ public class PresupuestoColItemReader extends PaginatedDataItemReader<EventoPres
   @Override
   protected Iterator<EventoPresupuestoColDomain> doPageRead() {
 
-    List<PresupuestoColectivoDomain> list2 = presupuestoApiClient.findCollectiveBudgets(null, "N");
+    List<PresupuestoColectivoDomain> list2 = presupuestoApiClient.findAllHistoricCollectiveBudget(null, "N");
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
     for (PresupuestoColectivoDomain pres : list2){
       EventoPresupuestoColDomain ev = new EventoPresupuestoColDomain();
       ev.setPresupuestoColectivo(pres);
-      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findObjetoAseguradoByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
+      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findAllHistoricSecuredObject(pres.getDatoIdentificativo().getIdPresupuestoODL());
       ev.setObjetosAsegurados(objs);
-      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findDeclarationByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
+      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findHistoricDeclarationByIdres(pres.getDatoIdentificativo().getIdPresupuestoODL());
       ev.setDeclaracion(declaracionDomains);
       result.add(ev);
     }
     return result.iterator();
   }
-
 }

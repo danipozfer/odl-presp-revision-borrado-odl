@@ -12,4 +12,6 @@ public interface PresupuestoIndividiualClientService {
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   List<PresupuestoIndividualDomain> findIndividualBudgets(Instant fechaAnonimizacion, String indFormalizado);
+
+    List<PresupuestoIndividualDomain> findAllHistoricIndividualBudget(Instant fechaAnonimizacion, String indFormalizado);
 }

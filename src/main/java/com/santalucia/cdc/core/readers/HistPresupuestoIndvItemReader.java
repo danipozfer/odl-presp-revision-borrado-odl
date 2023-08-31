@@ -3,28 +3,25 @@ package com.santalucia.cdc.core.readers;
 import com.santalucia.arq.ams.batch.core.readers.PaginatedDataItemReader;
 import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.mappers.budget.EventoPresupuestoColMapper;
-import com.santalucia.cdc.core.mappers.budget.EventoPresupuestoIndvMapper;
 import com.santalucia.cdc.core.service.DeclaracionClientService;
 import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
 import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-public class PresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPresupuestoIndvDomain> {
+
+public class HistPresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPresupuestoIndvDomain> {
   private final PresupuestosUtilsService utils;
   private final PresupuestoIndividiualClientService presupuestoApiClient;
   private final DeclaracionClientService declaracionApiClient;
   private final ObjetoAseguradoClientService objetoAseguradoApiClient;
 
-  public PresupuestoIndvItemReader(PresupuestosUtilsService utils,
+  public HistPresupuestoIndvItemReader(PresupuestosUtilsService utils,
                                    PresupuestoIndividiualClientService presupuestoApiClient,
                                    DeclaracionClientService declaracionApiClient,
                                    ObjetoAseguradoClientService objetoAseguradoApiClient1) {
@@ -34,21 +31,22 @@ public class PresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPre
     this.objetoAseguradoApiClient = objetoAseguradoApiClient1;
   }
 
+
   /**
    * simplifica la lectura de los datos paginados de la fuente
    * @return
    */
   @Override
   protected Iterator<EventoPresupuestoIndvDomain> doPageRead() {
-    List<PresupuestoIndividualDomain> list2 = presupuestoApiClient.findIndividualBudgets(null, "N");
+    List<PresupuestoIndividualDomain> list2 = presupuestoApiClient.findAllHistoricIndividualBudget(null, "N");
     List<EventoPresupuestoIndvDomain> result = new ArrayList<>();
 
     for (PresupuestoIndividualDomain pres : list2){
       EventoPresupuestoIndvDomain ev = new EventoPresupuestoIndvDomain();
       ev.setPresupuestoIndividual(pres);
-      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findObjetoAseguradoByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
+      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findAllHistoricSecuredObject(pres.getDatoIdentificativo().getIdPresupuestoODL());
       ev.setObjetosAsegurados(objs);
-      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findDeclarationByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
+      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findHistoricDeclarationByIdres(pres.getDatoIdentificativo().getIdPresupuestoODL());
       ev.setDeclaracion(declaracionDomains);
       result.add(ev);
     }

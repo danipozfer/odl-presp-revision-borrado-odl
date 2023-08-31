@@ -61,7 +61,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
     List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
     com.santalucia.arq.ams.odl.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoColectivoResource result = presupuestosIndividualApiClient
       .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery("", "", "", fechaAnonimizacion, indFormalizado),
+        getMapParamQuery(fechaAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
     boolean end = false;
@@ -71,7 +71,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
       while (pageNum < maxPages && !end) {
         result = presupuestosIndividualApiClient
           .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery("", "", "", fechaAnonimizacion, indFormalizado),
+            getMapParamQuery(fechaAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
         if (result == null) {
@@ -87,28 +87,59 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
   }
 
   /**
+   * Metodo para buscar un presupuesto individual en la coleccion de historico
+   * no anonimizados
+   *
+   * @param fechaAnonimizacion
+   * @param indFormalizado
+   */
+  @Override
+  public List<PresupuestoIndividualDomain> findAllHistoricIndividualBudget(Instant fechaAnonimizacion, String indFormalizado) {
+    log.info("Buscando presupuestos individuales historicos no anonimizados");
+
+    int pageNum = 1;
+    List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
+    com.santalucia.arq.ams.odl.historico.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoIndividualResource result = histPresupuestoIndividualApiClient
+      .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(fechaAnonimizacion, indFormalizado),
+        PageRequest.of(0, this.properties.getFindallPageSize()))
+      .getBody();
+
+    boolean end = false;
+    if(result != null) {
+      Long maxPages = result.getPage().getTotalPages();
+      presupuestosIndividuales.addAll(histPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
+      while (pageNum < maxPages && !end) {
+        result = histPresupuestoIndividualApiClient
+          .findAllPresupuestosIndividualesUsingGET(presupuestosUtils.getOrSetUUID(null),
+            getMapParamQuery(fechaAnonimizacion, indFormalizado),
+            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
+          .getBody();
+        if (result == null) {
+          end = true;
+        }else {
+          pageNum++;
+          presupuestosIndividuales.addAll(histPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
+        }
+      }
+    }
+
+    return presupuestosIndividuales;
+  }
+
+  /**
    * Metodo para obtener parametros para la consulta
    *
-   * @param idPresupuestoODL
-   * @param versPresupuesto
-   * @param versPresupuestoODL
+   * @param fechaAnonimizacion
+   * @param indFormalizado
    *
    * @return
    */
-  private Map<String, List<String>> getMapParamQuery(String idPresupuestoODL, String versPresupuesto,
-                                                     String versPresupuestoODL, Instant fechaAnonimizacion,
+  private Map<String, List<String>> getMapParamQuery(Instant fechaAnonimizacion,
                                                      String indFormalizado) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
     Map<String, List<Instant>> mapDates = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
-    if (StringUtils.isNotBlank(idPresupuestoODL)) {
-      mapParams.put("datosIdentificativos.idPresupuestoODL", List.of(idPresupuestoODL));
-    }
-    if (StringUtils.isNotBlank(versPresupuesto)) {
-      mapParams.put("datosIdentificativos.versPresupuesto", List.of(versPresupuesto));
-    }
-    if (StringUtils.isNotBlank(versPresupuestoODL)) {
-      mapParams.put("datosIdentificativos.versPresupuestoODL", List.of(versPresupuestoODL));
-    }
+
     if (fechaAnonimizacion == null){
       mapDates.put("fechaYEstado.fecha.fechaAnonimizacion", null);
     }
