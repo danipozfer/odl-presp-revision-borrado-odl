@@ -1,5 +1,6 @@
 package com.santalucia.cdc.config;
 
+import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
 import com.santalucia.cdc.core.processors.PrespColProcessor;
 import com.santalucia.cdc.core.processors.PrespIndvProcessor;
 import com.santalucia.cdc.core.readers.PresupuestoColItemReader;
@@ -32,7 +33,7 @@ public class StepPresIndv {
   @Bean(STEP_NAME)
   public Step presupuestoStep() {
     return stepBuilderFactory.get("presupuestoStep")
-      .<Presupuestos, Presupuestos>chunk(10)
+      .<EventoPresupuestoIndvDomain, EventoPresupuestoIndvDomain>chunk(10)
       .reader(presupuestoIndvItemReader)
       .processor(prespIndvProcessor)
       .writer(presupuestoIndItemWriter)

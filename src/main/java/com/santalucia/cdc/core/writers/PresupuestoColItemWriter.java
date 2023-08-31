@@ -15,10 +15,15 @@ public class PresupuestoColItemWriter implements ItemWriter<EventoPresupuestoCol
   @Override
   public void write(List<? extends EventoPresupuestoColDomain> items) throws Exception {
 
-    for (EventoPresupuestoColDomain presupuesto : items) {//debe actualizar el objeto entero?
+    for (EventoPresupuestoColDomain presupuesto : items) {
       presupuestoColApiClient.actualizarPresupuesto(presupuesto.getIdMongo(), presupuesto);
 
-      //se recorre el presupuesto y se va actualizando por partes, declaracion, objetos asegurados
+      presupuestoColApiClient.actualizarListaDeclaracion(presupuesto.getIdMongo(), presupuesto.getListaDeclaracion());
+
+      presupuestoColApiClient.actualizarListaObjetosAsegurados(presupuesto.getIdMongo(), presupuesto.getListaObjetosAsegurados());
+    }
+
+      //se recorre el presupuesto y se va actualizando por partes, lista declaracion, lista objetos asegurados
     }
   }
 }
