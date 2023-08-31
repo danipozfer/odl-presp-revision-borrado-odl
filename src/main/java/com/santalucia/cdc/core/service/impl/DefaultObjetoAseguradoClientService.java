@@ -2,6 +2,8 @@ package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
+import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.mappers.budget.HistObjetoAseguradoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.ObjetoAseguradoDomainMapper;
 import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
@@ -22,18 +24,61 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   // AutoWired
 
   private final ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper;
+  private final HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper;
   private final ObjetoAseguradoApiClient objetoAseguradoApiClient;//objeto que contiene la peticion get a la api
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
 
-  public DefaultObjetoAseguradoClientService(ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper, ObetoAseguradoApiClient obetoAseguradoApiClient,
-                                         PresupuestosUtilsService pUtils, AppCustomFeaturesProperties prop) {
+  public DefaultObjetoAseguradoClientService(ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper,
+                                             HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper,
+                                             ObjetoAseguradoApiClient objetoAseguradoApiClient,
+                                             PresupuestosUtilsService presupuestosUtils,
+                                             AppCustomFeaturesProperties properties) {
     this.objetoAseguradoDomainMapper = objetoAseguradoDomainMapper;
-    this.objetoAseguradoApiClient = dClient;
-    this.properties = prop;
-    this.presupuestosUtils = pUtils;
+    this.histObjetoAseguradoDomainMapper = histObjetoAseguradoDomainMapper;
+    this.objetoAseguradoApiClient = objetoAseguradoApiClient;
+    this.presupuestosUtils = presupuestosUtils;
+    this.properties = properties;
+  }
 
+  /**
+   * Metodo para buscar un objeto asegurado en la coleccion de historico
+   *
+   * @param idPresupuestoODL
+   */
+  @Override
+  public List<ObjetosAseguradosDomain> findAllHistoricSecuredObject(String idPresupuestoODL) {
+    log.info("Buscando objetos asegurados historicos con idPresupuestoODL {} ", idPresupuestoODL);
+
+    int pageNum = 1;
+    List<ObjetosAseguradosDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
+    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelObjetoAseguradoResource result = histObjetoAseguradoApiClient
+      .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(idPresupuestoODL),
+        PageRequest.of(0, this.properties.getFindallPageSize()))
+      .getBody();
+
+    boolean end = false;
+    if(result != null) {
+      Long maxPages = result.getPage().getTotalPages();
+      objetosAsegurados.addAll(histObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
+      while (pageNum < maxPages && !end) {
+        result = histObjetoAseguradoApiClient
+          .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
+            getMapParamQuery(idPresupuestoODL),
+            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
+          .getBody();
+        if (result == null) {
+          end = true;
+        }else {
+          pageNum++;
+          objetosAsegurados.addAll(histObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
+        }
+      }
+    }
+
+    return objetosAsegurados;
   }
 
   @Override

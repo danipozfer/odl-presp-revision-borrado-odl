@@ -36,6 +36,43 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
 
   }
 
+  /**
+   * Metodo para buscar declaraciones en el historico con idPresupuestoODL
+   * @param idPresupuestoODL
+   * @return
+   */
+  @Override
+  public List<DeclaracionDomain> findHistoricDeclarationByIdres(String idPresupuestoODL){
+    log.info("Buscando declaraciones historicas con idPresupuestoODL {}", idPresupuestoODL);
+
+    int pageNum = 1;
+    List<DeclaracionDomain> declarations = new ArrayList<>(DEFAULT_CAPACITY);
+    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = histDeclaracionApiClient
+      .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(idPresupuestoODL),
+        PageRequest.of(0, this.properties.getFindallPageSize()))
+      .getBody();
+    boolean end = false;
+    if(result != null) {
+      Long maxPages = result.getPage().getTotalPages();
+      declarations.addAll(histDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+      while (pageNum < maxPages && !end) {
+        result = histDeclaracionApiClient
+          .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
+            getMapParamQuery(idPresupuestoODL),
+            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
+          .getBody();
+        if (result == null) {
+          end = true;
+        }else {
+          pageNum++;
+          declarations.addAll(histDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+        }
+      }
+    }
+    return declarations;
+  }
+
   @Override
   public List<DeclaracionDomain> findDeclarationByIdPres(String idPresupuestoODL) {
     log.info("Buscando declaraciones con idPresupuestoODL {}", idPresupuestoODL);

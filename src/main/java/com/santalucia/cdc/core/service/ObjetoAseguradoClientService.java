@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface ObjetoAseguradoClientService {
 
+  List<ObjetosAseguradosDomain> findAllHistoricSecuredObject(String idPresupuestoODL);
+
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   List findObjetoAseguradoByIdPres(String idPresupuestoODL);
 }

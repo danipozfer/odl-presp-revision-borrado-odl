@@ -3,8 +3,6 @@ package com.santalucia.cdc.core.service.impl;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import com.santalucia.cdc.core.mappers.insurance.HistPolizaColectivaDomainMapper;
 import com.santalucia.cdc.core.mappers.insurance.PolizaColectivaDomainMapper;
-import com.santalucia.cdc.core.mappers.insurance.PolizaIndividualDomainMapper;
-import com.santalucia.cdc.core.mappers.insurance.HistPolizaIndividualDomainMapper;
 import com.santalucia.cdc.core.service.PolizaColectivaClientService;
 import com.santalucia.cdc.core.service.PolizaUtilsService;
 import lombok.extern.slf4j.Slf4j;
