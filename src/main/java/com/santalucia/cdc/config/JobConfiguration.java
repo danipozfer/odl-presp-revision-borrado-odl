@@ -215,12 +215,17 @@ public class JobConfiguration {
   public Job job(JobBuilderFactory jobBuilderFactory,
                  @Qualifier(StepPresCol.STEP_NAME) Step step1,
                  @Qualifier(StepPresIndv.STEP_NAME) Step step2,
+                 @Qualifier(StepHistoricPresCol.STEP_NAME) Step step3,
+                 @Qualifier(StepHistoricPresIndv.STEP_NAME) Step step4,
+
                  @Value("${spring.application.name}") String jobName) {
     return jobBuilderFactory
       .get(jobName)
       .incrementer(new RunIdIncrementer())
       .start(step1)
       .next(step2)
+      .next(step3)
+      .next(step4)
       .build();
   }
 

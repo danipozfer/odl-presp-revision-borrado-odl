@@ -1,23 +1,32 @@
 package com.santalucia.cdc.core.processors;
 
+import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
 import com.santalucia.cdc.core.domain.TipoMDLDomain;
+import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.DomicilioPersDomain;
 import com.santalucia.cdc.core.domain.budgets.common.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.CoordenadaDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.DomicilioPresupuestoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
+import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.declaration.RespuestaDomain;
+import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.AnimalDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.DomicilioDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.FiguraDomain;
+import com.santalucia.cdc.core.service.PolizaIndividualClientService;
 import com.santalucia.cdc.infrastructure.entity.Presupuestos;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,16 +34,46 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
 
   public static final String ANONIMO = "**********";
 
-
+  @Autowired
+  private PolizaIndividualClientService polizaService;
 
   @Override
   public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) throws Exception {
+    EventoPresupuestoIndvDomain updatedEvent = new EventoPresupuestoIndvDomain();
+    PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
+    List<ObjetosAseguradosDomain> securedObjects = eventoPresupuestoIndvDomain.getObjetosAsegurados();
+    List<DeclaracionDomain> declarations = eventoPresupuestoIndvDomain.getDeclaracion();
+
+    String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
+    //Buscar en polizas
+    PolizaDomain insurance = polizaService.getPolizaIndividual(numIdpresupuesto, null);
+    List<PolizaDomain> hInsurances = polizaService.findAllHistoricoIndividual(numIdpresupuesto, null);
+
+    //Si hay resultado poner el ind a S
+    if (insurance != null || !hInsurances.isEmpty()) {
+      budget.getDatoIdentificativo().setIndFormalizado("S");
+
+      updatedEvent.setIndTipoEvento(eventoPresupuestoIndvDomain.getIndTipoEvento());
+      updatedEvent.setPresupuestoIndividual(budget);
+      updatedEvent.setObjetosAsegurados(securedObjects);
+      updatedEvent.setDeclaracion(declarations);
+
+    } else {//Si no hay resultado comprobar fecha
+      Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
+      if (budget.getFechaYEstado().getFecha().getFecAlta().isBefore(thirtyDaysAfter)) {   //Fecha anterior (anonimizamos y ponemos fecAnonimiizacion al día actual)
+        updatedEvent = eventoPresupuestoIndvDomain;
+      }
+      else {
+        updatedEvent = anonimizate(eventoPresupuestoIndvDomain);
+      }
+    }
     return eventoPresupuestoIndvDomain;
   }
 
   private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain){
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();
+    Instant anonDate = Instant.ofEpochSecond(0);
     tipoMDLDomainAnonimizado.setCodMDL(ANONIMO);
     tipoMDLDomainAnonimizado.setCodOrigen(ANONIMO);
     tipoMDLDomainAnonimizado.setDescOrigen(ANONIMO);
@@ -96,7 +135,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
       datoPersonalDomain.setTxtPrimerApellido(ANONIMO);
       datoPersonalDomain.setTxtSegundoApellido(ANONIMO);
       datoPersonalDomain.setTxtRazonSocial(ANONIMO);
-      datoPersonalDomain.setFecNacimiento();
+      datoPersonalDomain.setFecNacimiento(anonDate);
       datoPersonalDomain.setProfesion(tipoMDLDomainAnonimizado);
       datoPersonalDomain.setAgrupProfesion(tipoMDLDomainAnonimizado);
       datoPersonalDomain.setNacionalidad(tipoMDLDomainAnonimizado);
@@ -215,7 +254,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
         figura.setTxtRazonSocial(ANONIMO);
         figura.setTipoDocumento(tipoMDLDomainAnonimizado);
         figura.setNumDocumento(ANONIMO);
-        figura.setFecNacimiento();
+        figura.setFecNacimiento(anonDate);
         figura.setSexo(tipoMDLDomainAnonimizado);
         figura.setNacionalidad(tipoMDLDomainAnonimizado);
         figura.setProfesion(tipoMDLDomainAnonimizado);
@@ -237,7 +276,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
         animal.setNumIdentAnimalComp(ANONIMO);
         animal.setNomMascota(ANONIMO);
         animal.setNumChip(ANONIMO);
-        animal.setFecNacimiento();
+        animal.setFecNacimiento(anonDate);
         animal.setImpValorMascota(0.0);
         animal.setIndPerroMestizo(ANONIMO);
         animal.setIndPerfEstadoSalud(ANONIMO);

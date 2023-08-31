@@ -17,11 +17,7 @@ import com.santalucia.cdc.core.domain.securedObject.characteristics.AnimalDomain
 import com.santalucia.cdc.core.domain.securedObject.characteristics.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.DomicilioDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.FiguraDomain;
-import com.santalucia.cdc.core.domain.securedObject.identif.DatoIdentificativoDomain;
-import com.santalucia.cdc.core.service.DeclaracionClientService;
 import com.santalucia.cdc.core.service.PolizaColectivaClientService;
-import com.santalucia.cdc.core.service.PresupuestoColectivoClientService;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,8 +27,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDomain, EventoPresupuestoColDomain> {
-
+public class HistPrespColProcessor  implements ItemProcessor<EventoPresupuestoColDomain, EventoPresupuestoColDomain> {
   public static final String ANONIMO = "**********";
   @Autowired
   private PolizaColectivaClientService polizaService;
@@ -206,7 +201,7 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
     coordenadaDomainAnonimizada.setNumCoordX(0.0);
     coordenadaDomainAnonimizada.setNumCoordY(0.0);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
-      //Para fechas 0001-01-01 y para double 0.0 y para integer 0
+    //Para fechas 0001-01-01 y para double 0.0 y para integer 0
 
 
     // OBJETO ASEGURADO
@@ -323,4 +318,5 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
 
     return eventoPresupuestoColDomain;
   }
+
 }

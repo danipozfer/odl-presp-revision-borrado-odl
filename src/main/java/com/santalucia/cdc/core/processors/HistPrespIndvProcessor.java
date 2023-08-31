@@ -1,14 +1,15 @@
 package com.santalucia.cdc.core.processors;
 
-import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
+
+import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
 import com.santalucia.cdc.core.domain.TipoMDLDomain;
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.DomicilioPersDomain;
 import com.santalucia.cdc.core.domain.budgets.common.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.CoordenadaDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.DomicilioPresupuestoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
+import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.declaration.RespuestaDomain;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
@@ -17,11 +18,7 @@ import com.santalucia.cdc.core.domain.securedObject.characteristics.AnimalDomain
 import com.santalucia.cdc.core.domain.securedObject.characteristics.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.DomicilioDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.FiguraDomain;
-import com.santalucia.cdc.core.domain.securedObject.identif.DatoIdentificativoDomain;
-import com.santalucia.cdc.core.service.DeclaracionClientService;
-import com.santalucia.cdc.core.service.PolizaColectivaClientService;
-import com.santalucia.cdc.core.service.PresupuestoColectivoClientService;
-import org.checkerframework.checker.units.qual.A;
+import com.santalucia.cdc.core.service.PolizaIndividualClientService;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,47 +28,47 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDomain, EventoPresupuestoColDomain> {
+public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDomain,EventoPresupuestoIndvDomain> {
 
   public static final String ANONIMO = "**********";
+
   @Autowired
-  private PolizaColectivaClientService polizaService;
+  private PolizaIndividualClientService polizaService;
 
   @Override
-  public EventoPresupuestoColDomain process(EventoPresupuestoColDomain eventoPresupuestoColDomain) throws Exception {
-    EventoPresupuestoColDomain updatedEvent = new EventoPresupuestoColDomain();
-    PresupuestoColectivoDomain budget = eventoPresupuestoColDomain.getPresupuestoColectivo();
-    List<ObjetosAseguradosDomain> securedObjects = eventoPresupuestoColDomain.getObjetosAsegurados();
-    List<DeclaracionDomain> declarations = eventoPresupuestoColDomain.getDeclaracion();
+  public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) throws Exception {
+    EventoPresupuestoIndvDomain updatedEvent = new EventoPresupuestoIndvDomain();
+    PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
+    List<ObjetosAseguradosDomain> securedObjects = eventoPresupuestoIndvDomain.getObjetosAsegurados();
+    List<DeclaracionDomain> declarations = eventoPresupuestoIndvDomain.getDeclaracion();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
     //Buscar en polizas
-    PolizaDomain insurance = polizaService.getPolizaColectiva(numIdpresupuesto, null);
-    List<PolizaDomain> hInsurances = polizaService.findAllHistoricoColectiva(numIdpresupuesto, null);
+    PolizaDomain insurance = polizaService.getPolizaIndividual(numIdpresupuesto, null);
+    List<PolizaDomain> hInsurances = polizaService.findAllHistoricoIndividual(numIdpresupuesto, null);
 
     //Si hay resultado poner el ind a S
     if (insurance != null || !hInsurances.isEmpty()) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-      updatedEvent.setIndTipoEvento(eventoPresupuestoColDomain.getIndTipoEvento());
-      updatedEvent.setPresupuestoColectivo(budget);
+      updatedEvent.setIndTipoEvento(eventoPresupuestoIndvDomain.getIndTipoEvento());
+      updatedEvent.setPresupuestoIndividual(budget);
       updatedEvent.setObjetosAsegurados(securedObjects);
       updatedEvent.setDeclaracion(declarations);
 
     } else {//Si no hay resultado comprobar fecha
       Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
       if (budget.getFechaYEstado().getFecha().getFecAlta().isBefore(thirtyDaysAfter)) {   //Fecha anterior (anonimizamos y ponemos fecAnonimiizacion al día actual)
-        updatedEvent = eventoPresupuestoColDomain;
+        updatedEvent = eventoPresupuestoIndvDomain;
       }
       else {
-        updatedEvent = anonimizate(eventoPresupuestoColDomain);
+        updatedEvent = anonimizate(eventoPresupuestoIndvDomain);
       }
     }
-    return updatedEvent;
+    return eventoPresupuestoIndvDomain;
   }
 
-
-  private EventoPresupuestoColDomain anonimizate(EventoPresupuestoColDomain eventoPresupuestoColDomain) {
+  private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain){
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();
     Instant anonDate = Instant.ofEpochSecond(0);
@@ -80,39 +77,39 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
     tipoMDLDomainAnonimizado.setDescOrigen(ANONIMO);
 
 
-    // PRESUPUESTO COLECTIVO
+    //PRESUPUESTO INDIVIDUAL
 
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setTipoDomBancario(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setEntidadBancaria(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrNumCuent(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrEntidOfic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumCuentBanc(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setTitulCuentBanc(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodIban(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodBic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setTipoDomBancario(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setEntidadBancaria(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrNumCuent(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrEntidOfic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumCuentBanc(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setTitulCuentBanc(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodIban(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodBic(ANONIMO);
 
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setTipoDomCobro(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setPais(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setProvincia(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setLocalidad(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodMunicipio(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodPostal(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodEntColectiva(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodEntSingular(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodNucPobla(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setDenomPoblaPers(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setTipoVia(tipoMDLDomainAnonimizado);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setDescDomicilio(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumDomicilio(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumBloqueDomic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCompNumDomic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumPortalDomic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumEscalDomic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumPisoDomic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumPuertaDomic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setOtrosDatosDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setTipoDomCobro(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setPais(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setProvincia(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setLocalidad(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodMunicipio(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodPostal(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodEntColectiva(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodEntSingular(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCodNucPobla(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setDenomPoblaPers(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setTipoVia(tipoMDLDomainAnonimizado);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setDescDomicilio(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumDomicilio(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumBloqueDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setCompNumDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumPortalDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumEscalDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumPisoDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setNumPuertaDomic(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroFisico().setOtrosDatosDomic(ANONIMO);
 
-    for (DatoOtrosCobPagBancDomain datos : eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatosOtrosCobPagBanc()) {
+    for (DatoOtrosCobPagBancDomain datos : eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatosOtrosCobPagBanc()) {
       datos.setCodBic(ANONIMO);
       datos.setCodIban(ANONIMO);
       datos.setNumDigContrNumCuent(ANONIMO);
@@ -123,7 +120,7 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       datos.setTipoDomBancOtroCob(tipoMDLDomainAnonimizado);
     }
 
-    for (DatoPersonalDomain datoPersonalDomain : eventoPresupuestoColDomain.getPresupuestoColectivo().getFigura().getDatosPersonales()) {
+    for (DatoPersonalDomain datoPersonalDomain : eventoPresupuestoIndvDomain.getPresupuestoIndividual().getFigura().getDatosPersonales()) {
       datoPersonalDomain.setTipoRol(tipoMDLDomainAnonimizado);
       datoPersonalDomain.setNumOrdenRol(ANONIMO);
       datoPersonalDomain.setNumIdPersona(ANONIMO);
@@ -198,23 +195,22 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
     domicilioPresupuestoDomain.setBlNormalizado(ANONIMO);
     domicilioPresupuestoDomain.setDesOtrosDatos(ANONIMO);
 
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setDomicilioPresupuesto(domicilioPresupuestoDomain);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getEstructuraGeografica().setDomicilioPresupuesto(domicilioPresupuestoDomain);
 
     CoordenadaDomain coordenadaDomainAnonimizada = new CoordenadaDomain();
     coordenadaDomainAnonimizada.setTipoCoordenada(tipoMDLDomainAnonimizado);
     coordenadaDomainAnonimizada.setIndSistema(ANONIMO);
     coordenadaDomainAnonimizada.setNumCoordX(0.0);
     coordenadaDomainAnonimizada.setNumCoordY(0.0);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
-      //Para fechas 0001-01-01 y para double 0.0 y para integer 0
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
+    //Para fechas 0001-01-01 y para double 0.0 y para integer 0
 
-
-    // OBJETO ASEGURADO
+    //OBJETOS ASEGURADOS
 
     List<ObjetosAseguradosDomain> objetosAseguradosDomainList = new ArrayList<>();
 
 
-    for (ObjetosAseguradosDomain obj : eventoPresupuestoColDomain.getObjetosAsegurados()){
+    for (ObjetosAseguradosDomain obj : eventoPresupuestoIndvDomain.getObjetosAsegurados()){
 
       CaracteristicaDomain caracteristicaDomainAnonima = new CaracteristicaDomain();
       List<DomicilioDomain> domicilioDomains = new ArrayList<>();
@@ -291,13 +287,14 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       objetosAseguradosDomainList.add(obj);
     }
 
-    eventoPresupuestoColDomain.setObjetosAsegurados(objetosAseguradosDomainList);
+    eventoPresupuestoIndvDomain.setObjetosAsegurados(objetosAseguradosDomainList);
 
-    //DECLARACION
+
+    //DECLARACIONES
 
     List<DeclaracionDomain> declaracionDomainList = new ArrayList<>();
 
-    for(DeclaracionDomain dec : eventoPresupuestoColDomain.getDeclaracion()){
+    for(DeclaracionDomain dec : eventoPresupuestoIndvDomain.getDeclaracion()){
 
       List<com.santalucia.cdc.core.domain.declaration.CaracteristicaDomain> caracList = new ArrayList<>();
 
@@ -319,8 +316,8 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       declaracionDomainList.add(dec);
     }
 
-    eventoPresupuestoColDomain.setDeclaracion(declaracionDomainList);
+    eventoPresupuestoIndvDomain.setDeclaracion(declaracionDomainList);
 
-    return eventoPresupuestoColDomain;
+    return eventoPresupuestoIndvDomain;
   }
 }
