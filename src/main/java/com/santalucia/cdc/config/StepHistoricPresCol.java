@@ -5,6 +5,7 @@ import com.santalucia.cdc.core.processors.HistPrespColProcessor;
 import com.santalucia.cdc.core.processors.PrespColProcessor;
 import com.santalucia.cdc.core.readers.HistPresupuestoColItemReader;
 import com.santalucia.cdc.core.readers.PresupuestoColItemReader;
+import com.santalucia.cdc.core.writers.HistPresupuestoColItemWriter;
 import com.santalucia.cdc.core.writers.PresupuestoColItemWriter;
 import com.santalucia.cdc.infrastructure.entity.Presupuestos;
 import org.springframework.batch.core.Step;
@@ -27,7 +28,7 @@ public class StepHistoricPresCol {
   private HistPrespColProcessor prespColProcessor;
 
   @Autowired
-  private PresupuestoColItemWriter presupuestoColItemWriter;
+  private HistPresupuestoColItemWriter presupuestoColItemWriter;
 
   @Bean(STEP_NAME)
   public Step presupuestoStep() {

@@ -4,23 +4,26 @@ import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
 import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.service.*;
+import com.santalucia.cdc.core.service.DeclaracionClientService;
+import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
+import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
+import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import org.springframework.batch.item.ItemWriter;
 
 import java.util.List;
 import java.util.UUID;
 
-public class PresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoIndvDomain> {
+public class HistPresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoIndvDomain> {
 
   private final PresupuestosUtilsService utils;
   private final PresupuestoIndividiualClientService presupuestoIndividualService;
   private final DeclaracionClientService declaracionService;
   private final ObjetoAseguradoClientService objetoAseguradoService;
 
-  public PresupuestoIndItemWriter(PresupuestosUtilsService utils,
-                                  PresupuestoIndividiualClientService presupuestoIndividualService,
-                                  DeclaracionClientService declaracionService,
-                                  ObjetoAseguradoClientService objetoAseguradoService) {
+  public HistPresupuestoIndItemWriter(PresupuestosUtilsService utils,
+                                      PresupuestoIndividiualClientService presupuestoIndividualService,
+                                      DeclaracionClientService declaracionService,
+                                      ObjetoAseguradoClientService objetoAseguradoService) {
     this.utils = utils;
     this.presupuestoIndividualService = presupuestoIndividualService;
     this.declaracionService = declaracionService;
@@ -33,10 +36,10 @@ public class PresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoInd
     for (EventoPresupuestoIndvDomain budgets : items) {
       UUID uuid = utils.getOrSetUUID(null);
 
-      PresupuestoIndividualDomain budget = budgets.getPresupuestoIndividual();
+      PresupuestoIndividualDomain historicBudget = budgets.getPresupuestoIndividual();
       List<ObjetosAseguradosDomain> securedObjects = budgets.getObjetosAsegurados();
       List<DeclaracionDomain> declarations = budgets.getDeclaracion();
-      presupuestoIndividualService.updateIndividualBudget(budget, budget.getId(), uuid);
+      presupuestoIndividualService.updateHistIndividualBudget(historicBudget, historicBudget.getId(), uuid);
 
       for (ObjetosAseguradosDomain securedObject: securedObjects) {
         objetoAseguradoService.updateSecuredObject(securedObject, securedObject.getId(), uuid);
@@ -47,5 +50,4 @@ public class PresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoInd
 
     }
   }
-
 }

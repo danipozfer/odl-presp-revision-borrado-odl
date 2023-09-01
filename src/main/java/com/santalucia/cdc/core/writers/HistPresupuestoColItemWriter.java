@@ -13,14 +13,14 @@ import org.springframework.batch.item.ItemWriter;
 import java.util.List;
 import java.util.UUID;
 
-public class PresupuestoColItemWriter implements ItemWriter<EventoPresupuestoColDomain> {
+public class HistPresupuestoColItemWriter implements ItemWriter<EventoPresupuestoColDomain> {
 
   private final PresupuestosUtilsService utils;
   private final PresupuestoColectivoClientService presupuestoColectivoService;
   private final DeclaracionClientService declaracionService;
   private final ObjetoAseguradoClientService objetoAseguradoService;
 
-  public PresupuestoColItemWriter(PresupuestosUtilsService utils,
+  public HistPresupuestoColItemWriter(PresupuestosUtilsService utils,
                                   PresupuestoColectivoClientService presupuestoColectivoService,
                                   DeclaracionClientService declaracionService,
                                   ObjetoAseguradoClientService objetoAseguradoService) {
@@ -33,19 +33,19 @@ public class PresupuestoColItemWriter implements ItemWriter<EventoPresupuestoCol
   @Override
   public void write(List<? extends EventoPresupuestoColDomain> items) throws Exception {
 
-    for (EventoPresupuestoColDomain budgets : items) {
+    for (EventoPresupuestoColDomain historicBudgets : items) {
       UUID uuid = utils.getOrSetUUID(null);
 
-      PresupuestoColectivoDomain budget = budgets.getPresupuestoColectivo();
-      List<ObjetosAseguradosDomain> securedObjects = budgets.getObjetosAsegurados();
-      List<DeclaracionDomain> declarations = budgets.getDeclaracion();
-      presupuestoColectivoService.updateCollectiveBudget(budget, budget.getId(), uuid);
+      PresupuestoColectivoDomain historicBudget = historicBudgets.getPresupuestoColectivo();
+      List<ObjetosAseguradosDomain> historicSecuredObjects = historicBudgets.getObjetosAsegurados();
+      List<DeclaracionDomain> historicDeclarations = historicBudgets.getDeclaracion();
+      presupuestoColectivoService.updateHistCollectiveBudget(historicBudget, historicBudget.getId(), uuid);
 
-      for (ObjetosAseguradosDomain securedObject: securedObjects) {
-        objetoAseguradoService.updateSecuredObject(securedObject, securedObject.getId(), uuid);
+      for (ObjetosAseguradosDomain historicSecuredObject: historicSecuredObjects) {
+        objetoAseguradoService.updateSecuredObject(historicSecuredObject, historicSecuredObject.getId(), uuid);
       }
-      for (DeclaracionDomain declaration: declarations) {
-        declaracionService.updateDeclaration(declaration, declaration.getId(), uuid);
+      for (DeclaracionDomain historicDeclaration: historicDeclarations) {
+        declaracionService.updateDeclaration(historicDeclaration, historicDeclaration.getId(), uuid);
       }
 
     }

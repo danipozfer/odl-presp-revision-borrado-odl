@@ -127,11 +127,48 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
   }
 
   /**
+   * Metodo para actualizar un presupuesto colectivo
+   *
+   * @param collectiveBudget
+   * @param collectiveBudgetId
+   * @param uuid
+   */
+  @Override
+  public PresupuestoColectivoDomain updateCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
+    PresupuestoColectivoDomain result = null;
+    if (collectiveBudgetId != null) {
+      PresupuestosColectivosRequestBodyResource input = presupuestoColectivoDomainMapper.toResource(collectiveBudget);
+      result = presupuestoColectivoDomainMapper
+        .toDomain(presupuestosColectivoApiClient.savePresupuestosColectivosUsingPUT(collectiveBudgetId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
+  }
+
+  /**
+   * Metodo para actualizar un presupuesto colectivo historico
+   *
+   * @param collectiveBudget
+   * @param collectiveBudgetId
+   * @param uuid
+   */
+  @Override
+  public PresupuestoColectivoDomain updateHistCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
+    PresupuestoColectivoDomain result = null;
+    if (collectiveBudgetId != null) {
+      PresupuestosColectivosRequestBodyResource input = histPresupuestoColectivoDomainMapper.toResource(collectiveBudget);
+      result = histPresupuestoColectivoDomainMapper
+        .toDomain(histPresupuestoColectivoApiClient.savePresupuestosColectivosUsingPUT(collectiveBudgetId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
+  }
+
+  /**
    * Metodo para obtener parametros para la consulta
    *
-   * @param idPresupuestoODL
-   * @param versPresupuesto
-   * @param versPresupuestoODL
+   * @param fechaAnonimizacion
+   * @param indFormalizado
    *
    * @return
    */

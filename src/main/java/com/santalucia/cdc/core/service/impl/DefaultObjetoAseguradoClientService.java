@@ -25,7 +25,8 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
 
   private final ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper;
   private final HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper;
-  private final ObjetoAseguradoApiClient objetoAseguradoApiClient;//objeto que contiene la peticion get a la api
+  private final ObjetoAseguradoApiClient objetoAseguradoApiClient;
+  private final HistObjetoAseguradoApiClient histObjetoAseguradoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
@@ -33,11 +34,13 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   public DefaultObjetoAseguradoClientService(ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper,
                                              HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper,
                                              ObjetoAseguradoApiClient objetoAseguradoApiClient,
+                                             HistObjetoAseguradoApiClient histObjetoAseguradoApiClient,
                                              PresupuestosUtilsService presupuestosUtils,
                                              AppCustomFeaturesProperties properties) {
     this.objetoAseguradoDomainMapper = objetoAseguradoDomainMapper;
     this.histObjetoAseguradoDomainMapper = histObjetoAseguradoDomainMapper;
     this.objetoAseguradoApiClient = objetoAseguradoApiClient;
+    this.histObjetoAseguradoApiClient = histObjetoAseguradoApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
@@ -113,6 +116,44 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
     }
 
     return objetosAsegurados;
+  }
+
+  /**
+   * Metodo para actualizar un objeto asegurado
+   *
+   * @param securedObject
+   * @param securedObjectId
+   * @param uuid
+   */
+  @Override
+  public ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
+    ObjetosAseguradosDomain result = null;
+    if (securedObjectId != null) {
+      PresupuestosObjetoAseguradoRequestBodyResource input = objetoAseguradoDomainMapper.toResource(securedObject);
+      result = objetoAseguradoDomainMapper
+        .toDomain(objetoAseguradoApiClient.savePresupuestosObjetoAseguradoUsingPUT(securedObjectId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
+  }
+
+  /**
+   * Metodo para actualizar un objeto asegurado en histórico
+   *
+   * @param securedObject
+   * @param securedObjectId
+   * @param uuid
+   */
+  @Override
+  public ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
+    ObjetosAseguradosDomain result = null;
+    if (securedObjectId != null) {
+      PresupuestosObjetoAseguradoRequestBodyResource input = histObjetoAseguradoDomainMapper.toResource(securedObject);
+      result = histObjetoAseguradoDomainMapper
+        .toDomain(histObjetoAseguradoApiClient.savePresupuestosObjetoAseguradoUsingPUT(securedObjectId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
   }
 
   /**

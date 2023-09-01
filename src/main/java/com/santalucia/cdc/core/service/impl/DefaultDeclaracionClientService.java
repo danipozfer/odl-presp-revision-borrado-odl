@@ -3,6 +3,7 @@ package com.santalucia.cdc.core.service.impl;
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.mappers.budget.DeclaracionDomainMapper;
+import com.santalucia.cdc.core.mappers.budget.HistDeclaracionDomainMapper;
 import com.santalucia.cdc.core.service.DeclaracionClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import com.santalucia.cdc.reload.AppCustomFeaturesProperties;
@@ -22,18 +23,25 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
   // AutoWired
 
   private final DeclaracionDomainMapper declaracionDomainMapper;
+  private final HistDeclaracionDomainMapper histDeclaracionDomainMapper;
   private final PresupuestosDeclaracionesApiClient declaracionApiClient;//objeto que contiene la peticion get a la api
+  private final HistPresupuestosDeclaracionesApiClient histDeclaracionApiClient;//objeto que contiene la peticion get a la api
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
 
-  public DefaultDeclaracionClientService(DeclaracionDomainMapper declaracionDomainMapper, PresupuestosDeclaracionesApiClient dClient,
-                                         PresupuestosUtilsService pUtils, AppCustomFeaturesProperties prop) {
+  public DefaultDeclaracionClientService(DeclaracionDomainMapper declaracionDomainMapper,
+                                         HistDeclaracionDomainMapper histDeclaracionDomainMapper,
+                                         PresupuestosDeclaracionesApiClient declaracionApiClient,
+                                         HistPresupuestosDeclaracionesApiClient histDeclaracionApiClient,
+                                         PresupuestosUtilsService presupuestosUtils,
+                                         AppCustomFeaturesProperties properties) {
     this.declaracionDomainMapper = declaracionDomainMapper;
-    this.declaracionApiClient = dClient;
-    this.properties = prop;
-    this.presupuestosUtils = pUtils;
-
+    this.histDeclaracionDomainMapper = histDeclaracionDomainMapper;
+    this.declaracionApiClient = declaracionApiClient;
+    this.histDeclaracionApiClient = histDeclaracionApiClient;
+    this.presupuestosUtils = presupuestosUtils;
+    this.properties = properties;
   }
 
   /**
@@ -105,6 +113,44 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
     }
 
     return declaraciones;
+  }
+
+  /**
+   * Metodo para actualizar una declaracion
+   *
+   * @param declaracion
+   * @param declaracionId
+   * @param uuid
+   */
+  @Override
+  public DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
+    DeclaracionDomain result = null;
+    if (declaracionId != null) {
+      PresupuestosDeclaracionesRequestBodyResource input = declaracionDomainMapper.toResource(declaracion);
+      result = declaracionDomainMapper
+        .toDomain(declaracionApiClient.savePresupuestosDeclaracionUsingPUT(declaracionId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
+  }
+
+  /**
+   * Metodo para actualizar una declaracion
+   *
+   * @param declaracion
+   * @param declaracionId
+   * @param uuid
+   */
+  @Override
+  public DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
+    DeclaracionDomain result = null;
+    if (declaracionId != null) {
+      PresupuestosDeclaracionesRequestBodyResource input = histDeclaracionDomainMapper.toResource(declaracion);
+      result = histDeclaracionDomainMapper
+        .toDomain(histDeclaracionApiClient.savePresupuestosDeclaracionUsingPUT(declaracionId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
   }
 
   /**

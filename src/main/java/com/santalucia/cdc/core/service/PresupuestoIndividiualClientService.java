@@ -14,4 +14,8 @@ public interface PresupuestoIndividiualClientService {
   List<PresupuestoIndividualDomain> findIndividualBudgets(Instant fechaAnonimizacion, String indFormalizado);
 
     List<PresupuestoIndividualDomain> findAllHistoricIndividualBudget(Instant fechaAnonimizacion, String indFormalizado);
+
+  PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid);
+
+  PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid);
 }

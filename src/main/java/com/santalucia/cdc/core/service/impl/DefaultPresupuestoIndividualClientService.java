@@ -128,6 +128,44 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
   }
 
   /**
+   * Metodo para actualizar un presupuesto individual
+   *
+   * @param individualBudget
+   * @param individualBudgetId
+   * @param uuid
+   */
+  @Override
+  public PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid) {
+    PresupuestoIndividualDomain result = null;
+    if (individualBudgetId != null) {
+      PresupuestoIndividualRequestBodyResource input = presupuestoIndividualDomainMapper.toResource(individualBudget);
+      result = presupuestoIndividualDomainMapper
+        .toDomain(presupuestosIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
+  }
+
+  /**
+   * Metodo para actualizar un presupuesto individual en histórico
+   *
+   * @param individualBudget
+   * @param individualBudgetId
+   * @param uuid
+   */
+  @Override
+  public PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid) {
+    PresupuestoIndividualDomain result = null;
+    if (individualBudgetId != null) {
+      PresupuestoIndividualRequestBodyResource input = histPresupuestoIndividualDomainMapper.toResource(individualBudget);
+      result = histPresupuestoIndividualDomainMapper
+        .toDomain(histPresupuestoIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
+          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+    }
+    return result;
+  }
+
+  /**
    * Metodo para obtener parametros para la consulta
    *
    * @param fechaAnonimizacion
