@@ -10,13 +10,16 @@ import com.santalucia.cdc.core.domain.budgets.common.identif.DatoIdentificativoD
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoCobroDomain;
 import com.santalucia.cdc.core.domain.budgets.common.product.ProductoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.securedObject.ObjetoAseguradoDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 
 public class PresupuestoColectivoDomain {
     private String id;

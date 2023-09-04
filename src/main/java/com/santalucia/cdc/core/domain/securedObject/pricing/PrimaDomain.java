@@ -1,9 +1,12 @@
 package com.santalucia.cdc.core.domain.securedObject.pricing;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class PrimaDomain {
     private double impPrimaTarifa;
     private double impPrimaBruta;

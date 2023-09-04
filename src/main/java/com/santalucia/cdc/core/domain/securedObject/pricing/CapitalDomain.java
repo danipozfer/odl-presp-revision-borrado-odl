@@ -1,13 +1,16 @@
 package com.santalucia.cdc.core.domain.securedObject.pricing;
 
-import com.santalucia.cdc.core.domain.securedObject.PrevisionDomain;
+import com.santalucia.cdc.core.domain.securedObject.pricing.com.PrevisionDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class CapitalDomain {
     private double impCapital;
     private double impCapitalReducido;

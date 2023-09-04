@@ -1,12 +1,15 @@
 package com.santalucia.cdc.core.domain.securedObject.characteristics;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class CaracteristicaDomain {
     private List<DomicilioDomain> domicilios;
     private List<FiguraDomain> figuras;
