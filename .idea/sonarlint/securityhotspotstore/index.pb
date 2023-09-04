@@ -5,8 +5,6 @@ i
 9src/main/java/com/santalucia/cdc/config/package-info.java,8\f\8f65349ce56069e58cdbdc45c8dae255eace32da
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-o
-?src/main/java/com/santalucia/cdc/core/mappers/package-info.java,e\1\e17792ec5f7442302306eda6d1553bb58d989a1d
 É
 Ssrc/main/java/com/santalucia/cdc/infrastructure/mybatis/primary/PersonasMapper.java,7\a\7a58faedecc3169083fc37d9804683343c234f7d
 é
@@ -45,8 +43,6 @@ Tsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/DomicilioPersDomain
 asrc/main/java/com/santalucia/cdc/core/domain/budgets/common/identif/DatoIdentificativoDomain.java,9\1\9148b8e4aad74b04b90eda966689864aa8a615a2
 Ñ
 Tsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/figure/FiguraDomain.java,1\e\1e3b51b033f8e962e8df13300fd2b3f956fd15c4
-Ü
-Vsrc/main/java/com/santalucia/cdc/core/service/PresupuestoIndividiualClientService.java,9\4\94d13caa31d534481bc3d58fcfcfba4895074826
 î
 dsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/geograph/DomicilioPresupuestoDomain.java,3\5\355b345948a7fa1f9a4790d10774c66d844f5ca7
 è
@@ -59,10 +55,6 @@ Zsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/geograph/Coordenada
 Wsrc/main/java/com/santalucia/cdc/core/domain/securedObject/ObjetosAseguradosDomain.java,9\a\9a329d80a84174e3b27476013f4d2e8ba75744f4
 ê
 `src/main/java/com/santalucia/cdc/core/domain/securedObject/identif/DatoIdentificativoDomain.java,8\7\876546efe90d0bb41d59676b668681c3ec6a851b
-Ñ
-Tsrc/main/java/com/santalucia/cdc/core/service/PresupuestoColectivoClientService.java,f\9\f9d04b03a6fab7b9f441364b32902ac737a85909
-ï
-esrc/main/java/com/santalucia/cdc/core/domain/budgets/collectiveBudget/PresupuestoColectivoDomain.java,7\9\79310dda27b588324983dee07e923d0f2bd4335f
 o
 ?src/main/java/com/santalucia/cdc/core/domain/TipoMDLDomain.java,d\3\d3434c2ec450f7a52eb9cac1a0b8090384887f66
 î
@@ -73,8 +65,6 @@ Osrc/main/java/com/santalucia/cdc/core/domain/declaration/DeclaracionDomain.java
 Rsrc/main/java/com/santalucia/cdc/core/domain/declaration/CaracteristicaDomain.java,a\3\a303a77f1241e1a8fc5f3eeb96d10feeb4c67d61
 }
 Msrc/main/java/com/santalucia/cdc/core/domain/EventoPresupuestoIndvDomain.java,7\5\751b8149d092060471ad6b65f3e15eb6b23a6713
-r
-Bsrc/main/java/com/santalucia/cdc/core/processors/package-info.java,8\e\8e20aefb852c7d720ad19942ac97c5a658339929
 é
 ^src/main/java/com/santalucia/cdc/core/mappers/budget/HistPresupuestoColectivoDomainMapper.java,5\b\5b30b4fcd87600c4c85bae9691d35772f8dd9ec4
 Å
@@ -91,8 +81,6 @@ x
 Hsrc/main/java/com/santalucia/cdc/core/processors/PrespIndvProcessor.java,e\4\e46096fb21d4a0baa750c90a5f6ab24596fbaa95
 |
 Lsrc/main/java/com/santalucia/cdc/core/domain/EventoPresupuestoColDomain.java,2\1\21adb35699f1330e4e907850044818431c1f6f43
-m
-=src/main/java/com/santalucia/cdc/config/JobConfiguration.java,a\0\a0c8851af2e9d75caaded21fd0e50249cd14c0cd
 w
 Gsrc/main/java/com/santalucia/cdc/core/processors/PrespColProcessor.java,2\f\2f95d0714f2c0ebaca83150a0b4c5a7384f96801
 {
