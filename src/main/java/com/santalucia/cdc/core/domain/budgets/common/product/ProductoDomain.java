@@ -1,12 +1,15 @@
 package com.santalucia.cdc.core.domain.budgets.common.product;
 
-import com.santalucia.cdc.core.domain.TipoMDLDomain;
+import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class ProductoDomain {
     private TipoMDLDomain ramoComercial;
     private TipoMDLDomain modalidadComercial;

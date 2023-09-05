@@ -1,11 +1,14 @@
 package com.santalucia.cdc.core.domain.budgets.common.commercial;
 
-import com.santalucia.cdc.core.domain.TipoMDLDomain;
+import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class EstructuraComercialDomain {
     private TipoMDLDomain canalMediacion;
     private TipoMDLDomain medioDistribucion;

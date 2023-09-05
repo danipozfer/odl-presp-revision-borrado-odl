@@ -1,15 +1,18 @@
 package com.santalucia.cdc.core.domain.securedObject.pricing;
 
-import com.santalucia.cdc.core.domain.TipoMDLDomain;
-import com.santalucia.cdc.core.domain.securedObject.ComposicionCaractDomain;
-import com.santalucia.cdc.core.domain.securedObject.ComposicionServicioDomain;
+import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
+import com.santalucia.cdc.core.domain.securedObject.pricing.com.ComposicionCaractDomain;
+import com.santalucia.cdc.core.domain.securedObject.pricing.com.ComposicionServicioDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class ComposicionGarantiaDomain {
     private TipoMDLDomain garantia;
     private String indOrigenRecomendador;
