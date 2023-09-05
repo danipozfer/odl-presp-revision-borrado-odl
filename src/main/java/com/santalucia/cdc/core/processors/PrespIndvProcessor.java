@@ -70,7 +70,8 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
   private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain){
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();
-    Instant anonDate = Instant.ofEpochSecond(0);
+    LocalDate localDate = LocalDate.of(1, 1, 1);
+    Instant anonDate = localDate.atStartOfDay(ZoneOffset.UTC).toInstant();
     tipoMDLDomainAnonimizado.setCodMDL(ANONIMO);
     tipoMDLDomainAnonimizado.setCodOrigen(ANONIMO);
     tipoMDLDomainAnonimizado.setDescOrigen(ANONIMO);
