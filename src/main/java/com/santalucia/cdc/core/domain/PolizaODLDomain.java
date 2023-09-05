@@ -3,6 +3,8 @@ package com.santalucia.cdc.core.domain;
 import com.santalucia.cdc.core.domain.insurance.movimientos.ColMovimientoDomain;
 import com.santalucia.cdc.core.domain.insurance.objeto.asegurado.ColObjetoAseguradoDomain;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +19,8 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PolizaODLDomain {
 	/**
      * Capacidad inicial por defecto

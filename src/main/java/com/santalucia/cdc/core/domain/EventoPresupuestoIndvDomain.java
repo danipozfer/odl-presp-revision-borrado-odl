@@ -3,6 +3,8 @@ package com.santalucia.cdc.core.domain;
 import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +18,8 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-@SuppressWarnings("NullAway.Init")
+@AllArgsConstructor
+@Builder
 public class EventoPresupuestoIndvDomain {
 
   private String indTipoEvento;
