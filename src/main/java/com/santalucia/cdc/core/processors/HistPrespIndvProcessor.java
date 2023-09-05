@@ -2,16 +2,16 @@ package com.santalucia.cdc.core.processors;
 
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
-import com.santalucia.cdc.core.domain.TipoMDLDomain;
-import com.santalucia.cdc.core.domain.budgets.common.DomicilioPersDomain;
-import com.santalucia.cdc.core.domain.budgets.common.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.contactData.DomicilioPersDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.contactData.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.CoordenadaDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.DomicilioPresupuestoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
 import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.domain.declaration.RespuestaDomain;
+import com.santalucia.cdc.core.domain.declaration.com.resp.RespuestaDomain;
+import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.domain.securedObject.characteristics.AnimalDomain;
@@ -296,9 +296,9 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
 
     for(DeclaracionDomain dec : eventoPresupuestoIndvDomain.getDeclaracion()){
 
-      List<com.santalucia.cdc.core.domain.declaration.CaracteristicaDomain> caracList = new ArrayList<>();
+      List<com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain> caracList = new ArrayList<>();
 
-      for (com.santalucia.cdc.core.domain.declaration.CaracteristicaDomain caracteristicaDomain: dec.getCaracteristicas()){
+      for (com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain caracteristicaDomain: dec.getCaracteristicas()){
 
         caracteristicaDomain.setPregunta(tipoMDLDomainAnonimizado);
         caracteristicaDomain.setIndAplicPregunta(ANONIMO);

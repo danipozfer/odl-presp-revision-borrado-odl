@@ -37,15 +37,9 @@ y
 Isrc/main/java/com/santalucia/cdc/core/exceptions/errors/DecoderError.java,7\1\71e054d9cf46af15ff5c96857759a52f041ca4fb
 }
 Msrc/main/java/com/santalucia/cdc/core/exceptions/HashGenerationException.java,2\d\2d72b03054b6d20286651799fd9805506d56cecf
-é
-^src/main/java/com/santalucia/cdc/core/mappers/budget/HistPresupuestoColectivoDomainMapper.java,5\b\5b30b4fcd87600c4c85bae9691d35772f8dd9ec4
 z
 Jsrc/main/java/com/santalucia/cdc/core/exceptions/errors/AppErrorCodes.java,6\0\603de19f8634eabe784c0add560eb51942131b11
 Ç
 Rsrc/main/java/com/santalucia/cdc/core/exceptions/PolicyHistoricStateException.java,8\e\8eb5abe1c2a71bdf66f84c8a4099d59b3bfaf0c4
-è
-_src/main/java/com/santalucia/cdc/core/mappers/budget/HistPresupuestoIndividualDomainMapper.java,6\c\6c62f06fc0b9c7c23fc13c73ca712b42d5511d64
-Ö
-Usrc/main/java/com/santalucia/cdc/core/mappers/budget/ObjetoAseguradoDomainMapper.java,1\2\124cfb19b4d78e7e703c9fd1f186155ce40b6357
 }
 Msrc/main/java/com/santalucia/cdc/core/exceptions/PolicyNotFoundException.java,2\7\27d194d85c2d45c9b2c36252796d3a130a09c473
