@@ -138,6 +138,23 @@
       <version>${recibos.odl.api.client.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.presupuestos.declaraciones</groupId>
+      <artifactId>declaraciones-odl-java-17-feign-api-client</artifactId>
+      <version>1.0.0-20230804.084111-1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.presupuestos.colectivo</groupId>
+      <artifactId>presupuesto-colectivo-odl-java-17-feign-api-client</artifactId>
+      <version>1.0.0-20230811.083431-1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.presupuestos.historico.colectivo</groupId>
+      <artifactId>historico-presupuesto-colectivo-odl-java-17-feign-api-client</artifactId>
+      <version>1.0.0-20230811.083432-1</version>
+    </dependency>
+
   </dependencies>
 
   <build>

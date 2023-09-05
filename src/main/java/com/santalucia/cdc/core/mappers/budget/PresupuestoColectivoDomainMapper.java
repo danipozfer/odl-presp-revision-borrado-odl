@@ -1,6 +1,9 @@
 package com.santalucia.cdc.core.mappers.budget;
 
 //import com.santalucia.cdc.core.domain.presupuestoColectivo.PresupuestoColectivoResource;
+import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.EntityModelPresupuestoColectivoResource;
+import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PresupuestoColectivoRequestBodyResource;
+import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
@@ -12,13 +15,13 @@ public interface PresupuestoColectivoDomainMapper {
    * @param presupuestoColectivoResource
    * @return
    */
-  /*PresupuestoColectivoDomain toDomain (PresupuestoColectivoResource presupuestoColectivoResource);*/
+  PresupuestoColectivoDomain toDomain (EntityModelPresupuestoColectivoResource presupuestoColectivoResource);
 
   /**
    *
    * @param presupuestoColectivoDomain
    * @return
    */
-  /*PresupuestoColectivoResource toResource (PresupuestoColectivoDomain presupuestoColectivoDomain);*/
+  PresupuestoColectivoRequestBodyResource toResource (PresupuestoColectivoDomain presupuestoColectivoDomain);
 
 }
