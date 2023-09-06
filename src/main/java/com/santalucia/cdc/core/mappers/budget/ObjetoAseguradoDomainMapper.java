@@ -1,12 +1,11 @@
 package com.santalucia.cdc.core.mappers.budget;
 
 import com.santalucia.arq.ams.odl.recibos.api.model.ObjetoAseguradoResource;
-import com.santalucia.cdc.core.domain.budgets.common.securedObject.ObjetoAseguradoDomain;
-import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
+import com.santalucia.cdc.core.domain.budgets.common.securedobject.ObjetosAseguradosDomain;
 
 public interface ObjetoAseguradoDomainMapper {
 
-  ObjetoAseguradoDomain toDomain (ObjetoAseguradoResource objetoAseguradoResource);
+  ObjetosAseguradosDomain toDomain (ObjetoAseguradoResource objetoAseguradoResource);
 
   /**
    *

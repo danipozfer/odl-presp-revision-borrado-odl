@@ -15,5 +15,5 @@ public class ProductoDomain {
     private TipoMDLDomain modalidadComercial;
     private TipoMDLDomain productoTecnico;
     private TipoMDLDomain productoComercial;
-    private String desModalidadInterna;
+    private String descModalidadInterna;
 }

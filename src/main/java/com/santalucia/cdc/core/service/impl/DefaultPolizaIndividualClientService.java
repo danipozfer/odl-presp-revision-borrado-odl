@@ -1,5 +1,9 @@
 package com.santalucia.cdc.core.service.impl;
 
+import com.santalucia.arq.ams.odl.historico.polizas.individuales.api.client.HistoricoPolizasIndividualesApiClient;
+import com.santalucia.arq.ams.odl.historico.polizas.individuales.api.model.CollectionModelHistoricoPolizaIndividualCertificadoResource;
+import com.santalucia.arq.ams.odl.polizas.individuales.api.client.PolizasIndividualesApiClient;
+import com.santalucia.arq.ams.odl.polizas.individuales.api.model.CollectionModelPolizaIndividualCertificadoResource;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import com.santalucia.cdc.core.mappers.insurance.HistPolizaIndividualDomainMapper;
 import com.santalucia.cdc.core.mappers.insurance.PolizaIndividualDomainMapper;

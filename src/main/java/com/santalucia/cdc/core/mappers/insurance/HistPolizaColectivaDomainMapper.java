@@ -1,5 +1,8 @@
 package com.santalucia.cdc.core.mappers.insurance;
 
+import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.DatosPersonalesResource;
+import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.HistoricoPolizaColectivaDetailResource;
+import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.HistoricoPolizaColectivaResource;
 import com.santalucia.cdc.core.domain.insurance.figuras.DatoPersonalDomain;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import org.mapstruct.InjectionStrategy;

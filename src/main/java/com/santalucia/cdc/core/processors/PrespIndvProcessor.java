@@ -2,21 +2,21 @@ package com.santalucia.cdc.core.processors;
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
 import com.santalucia.cdc.core.domain.budgets.common.figure.DatoPersonalDomain;
-import com.santalucia.cdc.core.domain.budgets.common.figure.contactData.DomicilioPersDomain;
-import com.santalucia.cdc.core.domain.budgets.common.figure.contactData.MedioDeContactoDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.contactdata.DomicilioPersDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.contactdata.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.CoordenadaDomain;
 import com.santalucia.cdc.core.domain.budgets.common.geograph.DomicilioPresupuestoDomain;
 import com.santalucia.cdc.core.domain.budgets.common.payment.DatoOtrosCobPagBancDomain;
-import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
+import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.RespuestaDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.domain.securedObject.characteristics.AnimalDomain;
-import com.santalucia.cdc.core.domain.securedObject.characteristics.CaracteristicaDomain;
-import com.santalucia.cdc.core.domain.securedObject.characteristics.DomicilioDomain;
-import com.santalucia.cdc.core.domain.securedObject.characteristics.FiguraDomain;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.characteristics.AnimalDomain;
+import com.santalucia.cdc.core.domain.securedobjects.characteristics.CaracteristicaDomain;
+import com.santalucia.cdc.core.domain.securedobjects.characteristics.DomicilioDomain;
+import com.santalucia.cdc.core.domain.securedobjects.characteristics.FiguraDomain;
 import com.santalucia.cdc.core.service.PolizaIndividualClientService;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +116,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
       datos.setNumDigContrEntidOfic(ANONIMO);
       datos.setTitulCuentBanc(ANONIMO);
       datos.setNumCuentaBanc(ANONIMO);
-      datos.setEntidadBancOtroCob(tipoMDLDomainAnonimizado);
+      datos.setEntidadBancOtroCobro(tipoMDLDomainAnonimizado);
       datos.setTipoDomBancOtroCob(tipoMDLDomainAnonimizado);
     }
 
@@ -159,7 +159,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
       domicilioPersDomainAnonimizado.setNumEscalera(ANONIMO);
       domicilioPersDomainAnonimizado.setNumPuerta(ANONIMO);
       domicilioPersDomainAnonimizado.setNumPiso(ANONIMO);
-      domicilioPersDomainAnonimizado.setBlNormalizado(ANONIMO);
+      domicilioPersDomainAnonimizado.setIndNormalizado(ANONIMO);
       domicilioPersDomainAnonimizado.setDesOtrosDatos(ANONIMO);
 
       datoPersonalDomain.setDomicilioPers(domicilioPersDomainAnonimizado);
@@ -174,16 +174,16 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
 
     DomicilioPresupuestoDomain domicilioPresupuestoDomain = new DomicilioPresupuestoDomain();
     domicilioPresupuestoDomain.setIdDomicilio(ANONIMO);
-    domicilioPresupuestoDomain.setPais(tipoMDLDomainAnonimizado);
-    domicilioPresupuestoDomain.setLocalidad(tipoMDLDomainAnonimizado);
-    domicilioPresupuestoDomain.setProvincia(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setPaisPresup(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setLocalidadPresup(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setProvinciaPresup(tipoMDLDomainAnonimizado);
     domicilioPresupuestoDomain.setCodMunicipio(ANONIMO);
     domicilioPresupuestoDomain.setCodEntColectiva(ANONIMO);
     domicilioPresupuestoDomain.setCodEntSingular(ANONIMO);
     domicilioPresupuestoDomain.setCodNucPobla(ANONIMO);
-    domicilioPresupuestoDomain.setDenomPobla(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setDenomPoblaPresup(tipoMDLDomainAnonimizado);
     domicilioPresupuestoDomain.setCodPostal(ANONIMO);
-    domicilioPresupuestoDomain.setTipoVia(tipoMDLDomainAnonimizado);
+    domicilioPresupuestoDomain.setTipoViaPresup(tipoMDLDomainAnonimizado);
     domicilioPresupuestoDomain.setDesDomicilio(ANONIMO);
     domicilioPresupuestoDomain.setNumNumero(ANONIMO);
     domicilioPresupuestoDomain.setNumComplemento(ANONIMO);
@@ -192,7 +192,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
     domicilioPresupuestoDomain.setNumEscalera(ANONIMO);
     domicilioPresupuestoDomain.setNumPuerta(ANONIMO);
     domicilioPresupuestoDomain.setNumPiso(ANONIMO);
-    domicilioPresupuestoDomain.setBlNormalizado(ANONIMO);
+    domicilioPresupuestoDomain.setIndNormalizado(ANONIMO);
     domicilioPresupuestoDomain.setDesOtrosDatos(ANONIMO);
 
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getEstructuraGeografica().setDomicilioPresupuesto(domicilioPresupuestoDomain);
@@ -233,7 +233,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
         domicilios.setNumEscalera(ANONIMO);
         domicilios.setNumPiso(ANONIMO);
         domicilios.setNumPuerta(ANONIMO);
-        domicilios.setBlNormalizado(ANONIMO);
+        domicilios.setIndNormalizado(ANONIMO);
         domicilios.setDesOtrosDatos(ANONIMO);
 
         domicilioDomains.add(domicilios);

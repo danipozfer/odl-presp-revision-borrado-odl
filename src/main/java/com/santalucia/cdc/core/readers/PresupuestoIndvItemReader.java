@@ -1,19 +1,14 @@
 package com.santalucia.cdc.core.readers;
 
 import com.santalucia.arq.ams.batch.core.readers.PaginatedDataItemReader;
-import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
-import com.santalucia.cdc.core.domain.budgets.individualBudget.PresupuestoIndividualDomain;
+import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.mappers.budget.EventoPresupuestoColMapper;
-import com.santalucia.cdc.core.mappers.budget.EventoPresupuestoIndvMapper;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.service.DeclaracionClientService;
 import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
 import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Iterator;

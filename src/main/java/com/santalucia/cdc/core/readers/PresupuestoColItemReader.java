@@ -2,9 +2,9 @@ package com.santalucia.cdc.core.readers;
 
 import com.santalucia.arq.ams.batch.core.readers.PaginatedDataItemReader;
 import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
+import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.service.*;
 
 import java.util.ArrayList;

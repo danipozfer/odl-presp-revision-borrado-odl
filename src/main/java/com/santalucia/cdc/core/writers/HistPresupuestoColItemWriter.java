@@ -1,9 +1,9 @@
 package com.santalucia.cdc.core.writers;
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
+import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.service.DeclaracionClientService;
 import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
 import com.santalucia.cdc.core.service.PresupuestoColectivoClientService;

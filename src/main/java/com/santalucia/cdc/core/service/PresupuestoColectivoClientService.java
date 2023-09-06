@@ -1,6 +1,6 @@
 package com.santalucia.cdc.core.service;
 
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
+import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 

@@ -1,7 +1,7 @@
 package com.santalucia.cdc.core.domain.budgets.common.figure;
 
-import com.santalucia.cdc.core.domain.budgets.common.figure.contactData.DomicilioPersDomain;
-import com.santalucia.cdc.core.domain.budgets.common.figure.contactData.MedioDeContactoDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.contactdata.DomicilioPersDomain;
+import com.santalucia.cdc.core.domain.budgets.common.figure.contactdata.MedioDeContactoDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

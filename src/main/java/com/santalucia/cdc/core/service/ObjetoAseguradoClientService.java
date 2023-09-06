@@ -1,6 +1,6 @@
 package com.santalucia.cdc.core.service;
 
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 

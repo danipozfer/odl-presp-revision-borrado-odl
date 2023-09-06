@@ -6,7 +6,7 @@ import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PresupuestoCo
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoApiControllerApiClient;
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoEntityControllerApiClient;
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource;
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
+import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.PresupuestoColectivoDomainMapper;
 import com.santalucia.cdc.core.service.PresupuestoColectivoClientService;

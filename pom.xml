@@ -52,6 +52,11 @@
   <properties>
     <git.hooks.skip>false</git.hooks.skip>
     <recibos.odl.api.client.version>2.2.1-RELEASE</recibos.odl.api.client.version>
+    <!-- Clientes APIs CRUD -->
+    <polizas-individuales-odl-api-client.version>2.3.0-RELEASE</polizas-individuales-odl-api-client.version>
+    <historico-polizas-individuales-odl-api-client.version>2.3.0-RELEASE</historico-polizas-individuales-odl-api-client.version>
+    <polizas-colectivas-odl-api-client.version>1.2.0-SNAPSHOT</polizas-colectivas-odl-api-client.version>
+    <historico-polizas-colectivas-odl-api-client.version>1.2.0-SNAPSHOT</historico-polizas-colectivas-odl-api-client.version>
   </properties>
 
   <dependencies>
@@ -136,6 +141,30 @@
       <groupId>com.santalucia.arq.ams.odl.recibos</groupId>
       <artifactId>recibos-odl-api-client</artifactId>
       <version>${recibos.odl.api.client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.polizas.individuales</groupId>
+      <artifactId>polizas-individuales-odl-api-client</artifactId>
+      <version>${polizas-individuales-odl-api-client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.historico.polizas.individuales</groupId>
+      <artifactId>historico-polizas-individuales-odl-api-client</artifactId>
+      <version>${historico-polizas-individuales-odl-api-client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.polizas.colectivas</groupId>
+      <artifactId>polizas-colectivas-odl-api-client</artifactId>
+      <version>${polizas-colectivas-odl-api-client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.historico.polizas.colectivas</groupId>
+      <artifactId>historico-polizas-colectivas-odl-api-client</artifactId>
+      <version>${historico-polizas-colectivas-odl-api-client.version}</version>
     </dependency>
 
     <dependency>

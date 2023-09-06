@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DatoOtrosCobPagBancDomain {
     private TipoMDLDomain tipoDomBancOtroCob;
-    private TipoMDLDomain entidadBancOtroCob;
+    private TipoMDLDomain entidadBancOtroCobro;
     private String numDigContrNumCuent;
     private String numDigContrEntidOfic;
     private String numCuentaBanc;

@@ -1,12 +1,10 @@
 package com.santalucia.cdc.core.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.mappers.budget.HistObjetoAseguradoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.ObjetoAseguradoDomainMapper;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;

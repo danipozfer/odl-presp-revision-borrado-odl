@@ -1,10 +1,10 @@
 package com.santalucia.cdc.core.domain;
 
 
-import com.santalucia.cdc.core.domain.budgets.collectiveBudget.PresupuestoColectivoDomain;
+import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
-import com.santalucia.cdc.core.domain.securedObject.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
