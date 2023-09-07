@@ -10,30 +10,222 @@ spring:
   main:
     allow-bean-definition-overriding: true
     lazy-initialization: false
+  mvc:
+    log-request-details: true # Whether logging of (potentially sensitive) request details at DEBUG and TRACE level is allowed.
+  output:
+    ansi:
+      enabled: detect
+  jmx:
+    enabled: true
+    unique-names: true
+  devtools:
+    livereload:
+      #OJO: debe estar habilitado para desarrollo local, pero no para openshift
+      enabled: false
+  kafka:
+    bootstrap-servers:
+      - kafka-back-dev-kafka-bootstrap-kafka-back-dev.kafka-dev.santalucia.net:443
+    properties:
+      security.protocol: SSL
+      ssl.keystore.location: /mnt/secrets/keystore/kafka.client.keystore.jks
+      ssl.keystore.password: ${KEYSTORE_PASS}
+      ssl.truststore.location: /mnt/secrets/truststore/kafka.client.truststore.jks
+      ssl.truststore.password: ${TRUSTSTORE_PASS}
+    consumer:
+      client-id: consumerClientId-${spring.application.name}
+      max-poll-records: 1
+      properties:
+        group.instance.id: ${HOSTNAME:${random.uuid}}
+        max.poll.interval.ms: 1800000
+        session.timeout.ms: 1800000
   application:
     name: odl-presp-revision-borrado-odl
   banner:
     location: classpath:santalucia-banner.txt
   mandatory-file-encoding: UTF-8
   cloud:
+  function:
+      definition: process
+    stream:
+      bindings:
+        process-in-0:
+          consumer:
+            concurrency: 2
+          group: group.neg.sl.${0}.prestaciones.odl-presp-carga-presupuestos-odl
+          destination: neg.sl.${santalucia.entorno}.contrataciones.presupuestos-odl.kafka.mdl-carga
+      kafka:
+        bindings:
+          process-in-0:
+            consumer:
+              dlqPartitions: 1
     task:
       initialize-enabled: false
       batch:
         fail-on-job-failure: true
       name: ${spring.application.name}
+  jackson:
+    time-zone: ${santalucia.default-zone-id}
   security:
     oauth2:
       client:
+        provider:
+          historicopresupuestoindividualodlcrud:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          presupuestocolectivoodlcrud:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          historicopresupuestocolectivoodlcrud:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          declaracionesenlaodl:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          historicodedeclaracionesenlaodlcrud:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+                    polizasindividualescertificadosodl:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          historicopolizasindividualescertificadosodl:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          polizascolectivasodl:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+          historicopolizascolectivasodl:
+            issuer-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
+            jwk-set-uri:
+              https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
         registration:
-          recibosodl:
+          presupuestoindividualodlcrud:
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_SECRET}
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_ID}
             client-authentication-method: post
             authorization-grant-type: client_credentials
-            scope:
-              - read-dynamic:recibos-odl
-        provider:
-          recibosodl:
-            issuer-uri: https://sso-sldev.santalucia.es/auth/realms/stl-int-odl
-            jwk-set-uri: https://sso-sldev.santalucia.es/auth/realms/stl-int-odl/protocol/openid-connect/certs
+            scope: #scopes para la autorización
+              - read:presupuesto-individual-odl
+              - write:presupuesto-individual-odl
+              - read-dynamic:presupuesto-individual-odl
+          historicopresupuestoindividualodlcrud:
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_SECRET}
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_ID}
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorización
+              - read:historico-presupuesto-individual-odl
+              - write:historico-presupuesto-individual-odl
+              - read-dynamic:historico-presupuesto-individual-odl
+          presupuestocolectivoodlcrud:
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_SECRET}
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_ID}
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorización
+              - read:presupuesto-colectivo-odl
+              - write:presupuesto-colectivo-odl
+              - read-dynamic:presupuesto-colectivo-odl
+          historicopresupuestocolectivoodlcrud:
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_SECRET}
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_ID}
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorización
+              - read:historico-presupuesto-colectivo-odl
+              - write:historico-presupuesto-colectivo-odl
+              - read-dynamic:historico-presupuesto-colectivo-odl
+          declaracionesenlaodl:
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_SECRET}
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_ID}
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorización
+              - read:declaraciones-odl
+              - write:declaraciones-odl
+              - read-dynamic:declaraciones-odl
+          historicodedeclaracionesenlaodlcrud:
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_SECRET}
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_CLIENT_ID}
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorización
+              - read:historico-siniestros-odl
+              - write:historico-siniestros-odl
+              - read-dynamic:historico-siniestros-odl
+          polizasindividualescertificadosodl:
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorizacion
+              - read:polizas-individuales-odl
+              - write:polizas-individuales-odl
+          historicopolizasindividualescertificadosodl:
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorizacion
+              - read:historico-polizas-individuales-odl
+              - write:historico-polizas-individuales-odl
+          polizascolectivasodl:
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorizacion
+              - read:polizas-colectivas-odl
+              - write:polizas-colectivas-odl
+          historicopolizascolectivasodl:
+            client-authentication-method: post
+            authorization-grant-type: client_credentials
+            scope: #scopes para la autorizacion
+              - read:historico-polizas-colectivas-odl
+              - write:historico-polizas-colectivas-odl
+
+###########################
+#                         #
+# i18n properties         #
+#                         #
+###########################
+  messages:
+    basename: classpath:i18n/messages
+    #cache-duration: 1s si no se especifica
+    #se cachean para siempre. Al estar en el jar no es correcto
+    encoding: UTF-8
+    fallback-to-system-locale: false
+    
+###########################
+#                         #
+# feign client properties #
+#                         #
+###########################
+
+polizasIndividuales:
+  url: https://apicast-3scale-dev.app-dev.santalucia.net/odl/v2
+historicoPolizasIndividuales:
+  url: https://apicast-3scale-dev.app-dev.santalucia.net/odl/v2
+polizasColectivas:
+  url: https://apicast-3scale-dev.app-dev.santalucia.net/odl/v2
+historicoPolizasColectivas:
+  url: https://apicast-3scale-dev.app-dev.santalucia.net/odl/v2
+feign:
+  client:
+    config:
+      default:
+        error-decoder: com.santalucia.cdc.core.errors.DecoderError
+
   batch:
     jdbc:
       initialize-schema: never
@@ -85,12 +277,19 @@ santalucia:
       feign:
         base-packages: com.santalucia
 
-# Configurar caracteristicas propias de la aplicacion
+###########################
+#                         #
+# general parameters      #
+#                         #
+###########################
 app:
   custom:
     features:
-      chunk-size: 1000
-      cvs-path: ../../test/resources/data/csv/dummyFile.csv
+      retryMaxAttempt: 3
+      retryInterval: 3000
+      attempt: 1
+      findallPageSize: 500
+      firstVersion: 1
 
 ###########################
 #                         #
