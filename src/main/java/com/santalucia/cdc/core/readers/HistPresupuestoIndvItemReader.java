@@ -37,17 +37,17 @@ public class HistPresupuestoIndvItemReader extends PaginatedDataItemReader<Event
    */
   @Override
   protected Iterator<EventoPresupuestoIndvDomain> doPageRead() {
-    List<PresupuestoIndividualDomain> list2 = presupuestoApiClient.findAllHistoricIndividualBudget(null, "N");
+    List<PresupuestoIndividualDomain> listHistIndvBudget = presupuestoApiClient.findAllHistoricIndividualBudget(null, "N");
     List<EventoPresupuestoIndvDomain> result = new ArrayList<>();
 
-    for (PresupuestoIndividualDomain pres : list2){
-      EventoPresupuestoIndvDomain ev = new EventoPresupuestoIndvDomain();
-      ev.setPresupuestoIndividual(pres);
-      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findAllHistoricSecuredObject(pres.getDatoIdentificativo().getIdPresupuestoODL());
-      ev.setObjetosAsegurados(objs);
-      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findHistoricDeclarationByIdres(pres.getDatoIdentificativo().getIdPresupuestoODL());
-      ev.setDeclaracion(declaracionDomains);
-      result.add(ev);
+    for (PresupuestoIndividualDomain budget : listHistIndvBudget){
+      EventoPresupuestoIndvDomain event = new EventoPresupuestoIndvDomain();
+      event.setPresupuestoIndividual(budget);
+      List<ObjetosAseguradosDomain> objects = objetoAseguradoApiClient.findAllHistoricSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      event.setObjetosAsegurados(objects);
+      List<DeclaracionDomain> declarations = declaracionApiClient.findHistoricDeclarationByIdres(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      event.setDeclaracion(declarations);
+      result.add(event);
     }
     return result.iterator();
   }

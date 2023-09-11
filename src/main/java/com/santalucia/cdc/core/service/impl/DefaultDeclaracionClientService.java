@@ -107,7 +107,7 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
           end = true;
         } else {
           pageNum++;//añade las declaraciones encontradas
-          declaraciones.addAll(declaracionDomainMapper.toDomain(result.getEmbedded().getDatosEconomicos()));
+          declaraciones.addAll(declaracionDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
         }
       }
     }

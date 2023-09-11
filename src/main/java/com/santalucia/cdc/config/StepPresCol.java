@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class StepPresCol {
 
-  public static final String STEP_NAME = "bbdd-to-file-step";
+  public static final String STEP_NAME = "step-col";
   @Autowired
   private StepBuilderFactory stepBuilderFactory;
 

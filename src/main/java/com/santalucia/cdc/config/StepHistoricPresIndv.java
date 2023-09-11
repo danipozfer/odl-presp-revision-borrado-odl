@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class StepHistoricPresIndv {
 
-  public static final String STEP_NAME = "sftp-subir-fichero-step";
+  public static final String STEP_NAME = "step-hist-col";
   @Autowired
   private StepBuilderFactory stepBuilderFactory;
 

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class StepHistoricPresCol {
 
-  public static final String STEP_NAME = "bbdd-to-file-step";
+  public static final String STEP_NAME = "step-hist-ind";
   @Autowired
   private StepBuilderFactory stepBuilderFactory;
 

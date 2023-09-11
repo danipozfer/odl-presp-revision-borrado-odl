@@ -14,7 +14,7 @@ public interface PresupuestoColectivoClientService {
   List<PresupuestoColectivoDomain> findCollectiveBudgets(Instant fechaAnonimizacion, String indFormalizado);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  List<PresupuestoColectivoDomain> findAllHistoricCollectiveBudget(Instant fechaAnonimizacion, String indFormalizado);
+  List<PresupuestoColectivoDomain> findAllHistoricCollectiveBudget(String fechaAnonimizacion, String indFormalizado);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   PresupuestoColectivoDomain updateCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid);

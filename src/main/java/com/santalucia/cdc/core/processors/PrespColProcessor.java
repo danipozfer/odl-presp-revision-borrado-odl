@@ -17,7 +17,7 @@ import com.santalucia.cdc.core.domain.securedobjects.characteristics.AnimalDomai
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.DomicilioDomain;
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.FiguraDomain;
-import com.santalucia.cdc.core.service.PolizaColectivaClientService;
+import com.santalucia.cdc.core.service.policies.PolizaColectivaClientService;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 

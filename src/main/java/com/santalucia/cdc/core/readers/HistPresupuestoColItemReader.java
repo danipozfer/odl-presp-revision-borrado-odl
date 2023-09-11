@@ -37,10 +37,10 @@ public class HistPresupuestoColItemReader extends PaginatedDataItemReader<Evento
   @Override
   protected Iterator<EventoPresupuestoColDomain> doPageRead() {
 
-    List<PresupuestoColectivoDomain> list2 = presupuestoApiClient.findAllHistoricCollectiveBudget(null, "N");
+    List<PresupuestoColectivoDomain> listHistColBudget = presupuestoApiClient.findAllHistoricCollectiveBudget("0001-01-01", "N");
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
-    for (PresupuestoColectivoDomain pres : list2){
+    for (PresupuestoColectivoDomain pres : listHistColBudget){
       EventoPresupuestoColDomain ev = new EventoPresupuestoColDomain();
       ev.setPresupuestoColectivo(pres);
       List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findAllHistoricSecuredObject(pres.getDatoIdentificativo().getIdPresupuestoODL());

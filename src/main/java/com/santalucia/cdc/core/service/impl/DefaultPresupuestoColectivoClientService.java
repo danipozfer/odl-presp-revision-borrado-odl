@@ -47,13 +47,13 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
 
   /**
    * Metodo para la busqueda de presupuestos colectivos no anonimizados
-   * @param fechaAnonimizacion
+   * @param indAnonimizado
    * @param indFormalizado
    * @return
    */
 
   @Override
-  public List<PresupuestoColectivoDomain> findCollectiveBudgets(Instant fechaAnonimizacion, String indFormalizado){
+  public List<PresupuestoColectivoDomain> findCollectiveBudgets(String indAnonimizado, String indFormalizado){
 
     log.info("Buscando presupuestos colectivos no anonimizados");
 
@@ -61,7 +61,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
     List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
     com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource result = presupuestosColectivoApiClient
       .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(fechaAnonimizacion, indFormalizado),
+        getMapParamQuery(indAnonimizado, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
     boolean end = false;
@@ -71,7 +71,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
       while (pageNum < maxPages && !end) {
         result = presupuestosColectivoApiClient
           .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(fechaAnonimizacion, indFormalizado),
+            getMapParamQuery(indAnonimizado, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
         if (result == null) {
@@ -79,47 +79,6 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
         }else {
           pageNum++;
           presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) presupuestoColectivoDomainMapper.toDomain((EntityModelPresupuestoColectivoResource) result.getEmbedded().getPresupuestos()));
-        }
-      }
-    }
-
-    return presupuestosColectivos;
-  }
-
-  /**
-   * Metodo para buscar presupuestos colectivos en la coleccion de historico
-   * no anonimizados
-   *
-   * @param fechaAnonimizacion
-   * @param indFormalizado
-   */
-  @Override
-  public List<PresupuestoColectivoDomain> findAllHistoricCollectiveBudget(Instant fechaAnonimizacion, String indFormalizado) {
-    log.info("Buscando presupuestos colectivos historicos no anonimizados");
-
-    int pageNum = 1;
-    List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
-    PagedModelEntityModelPresupuestoColectivoResource result = histPresupuestoColectivoApiClient
-      .findAllAdvancedHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(fechaAnonimizacion, indFormalizado),
-        PageRequest.of(0, this.properties.getFindallPageSize()))
-      .getBody();
-
-    boolean end = false;
-    if(result != null) {
-      Long maxPages = result.getPage().getTotalPages();
-      presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) histPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
-      while (pageNum < maxPages && !end) {
-        result = histPresupuestoColectivoApiClient
-          .findAllAdvancedHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(fechaAnonimizacion, indFormalizado),
-            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
-          .getBody();
-        if (result == null) {
-          end = true;
-        }else {
-          pageNum++;
-          presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) histPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
         }
       }
     }
@@ -147,38 +106,19 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
   }
 
   /**
-   * Metodo para actualizar un presupuesto colectivo historico
-   *
-   * @param collectiveBudget
-   * @param collectiveBudgetId
-   * @param uuid
-   */
-  @Override
-  public PresupuestoColectivoDomain updateHistCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
-    PresupuestoColectivoDomain result = null;
-    if (collectiveBudgetId != null) {
-      PresupuestosColectivosRequestBodyResource input = histPresupuestoColectivoDomainMapper.toResource(collectiveBudget);
-      result = histPresupuestoColectivoDomainMapper
-        .toDomain(histPresupuestoColectivoApiClient.savePresupuestosColectivosUsingPUT(collectiveBudgetId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
-    }
-    return result;
-  }
-
-  /**
    * Metodo para obtener parametros para la consulta
    *
-   * @param fechaAnonimizacion
+   * @param indAnonimizacion
    * @param indFormalizado
    *
    * @return
    */
-  private Map<String, List<String>> getMapParamQuery(Instant fechaAnonimizacion,
+  private Map<String, List<String>> getMapParamQuery(String indAnonimizacion,
                                                      String indFormalizado) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
-    Map<String, List<Instant>> mapDates = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
-    if (fechaAnonimizacion == null){
-      mapDates.put("fechaYEstado.fecha.fechaAnonimizacion", null);
+
+    if (StringUtils.isNotBlank(indAnonimizacion)){
+      mapParams.put("datosIdentificativos.indAnonimizacion", List.of(indAnonimizacion));
     }
     if (StringUtils.isNotBlank(indFormalizado)){
       mapParams.put("datosIdentificativos.indFormalizado", List.of(indFormalizado));

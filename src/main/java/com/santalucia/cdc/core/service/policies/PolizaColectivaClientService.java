@@ -1,4 +1,4 @@
-package com.santalucia.cdc.core.service;
+package com.santalucia.cdc.core.service.policies;
 
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import org.springframework.retry.annotation.Backoff;
@@ -7,13 +7,13 @@ import org.springframework.retry.annotation.Retryable;
 import java.util.List;
 import java.util.UUID;
 
-public interface PolizaIndividualClientService {
+public interface PolizaColectivaClientService {
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  PolizaDomain getPolizaIndividual(String numIdPresupuesto, UUID uuid);
+  PolizaDomain getPolizaColectiva(String numIdPresupuesto, UUID uuid);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  String findApiIdUltimaFotoIndividual(String numIdPresupuesto);
+  String findApiIdUltimaFotoColectiva(String numIdPresupuesto);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  List<PolizaDomain> findAllHistoricoIndividual(String numIdPresupuesto, UUID uuid);
+  List<PolizaDomain> findAllHistoricoColectiva(String numIdPresupuesto, UUID uuid);
 }

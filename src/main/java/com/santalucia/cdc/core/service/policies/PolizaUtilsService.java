@@ -1,4 +1,4 @@
-package com.santalucia.cdc.core.service;
+package com.santalucia.cdc.core.service.policies;
 
 import com.santalucia.cdc.core.domain.insurance.hash.HashDomain;
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;

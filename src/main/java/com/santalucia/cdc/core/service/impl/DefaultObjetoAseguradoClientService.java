@@ -85,11 +85,11 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   }
 
   @Override
-  public List<DeclaracionDomain> findObjetoAseguradoByIdPres(String idPresupuestoODL) {
+  public List<ObjetosAseguradosDomain> findObjetoAseguradoByIdPres(String idPresupuestoODL) {
     log.info("Buscando objetoAsegurado con idPresupuestoODL {}", idPresupuestoODL);
 
     int pageNum = 1;
-    List<DeclaracionDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
+    List<ObjetosAseguradosDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
     com.santalucia.arq.ams.odl.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = objetoAseguradoApiClient
       .findAllPresupuestosObjetoAseguradoGET(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idPresupuestoODL),
@@ -98,8 +98,8 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
 
     boolean end = false;
     if (result != null) {
-      Long maxPages = result.getPage().getTotalPages();//busca las declaraciones por id
-      objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
+      Long maxPages = result.getPage().getTotalPages();
+      objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getObjetoAsegurado()));
       while (pageNum < maxPages && !end) {
         result = objetoAseguradoApiClient
           .findAllPresupuestosObjetoAseguradoGET(presupuestosUtils.getOrSetUUID(null),
@@ -110,7 +110,7 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
           end = true;
         } else {
           pageNum++;//añade las declaraciones encontradas
-          objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getDatosEconomicos()));
+          objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getObjetoAsegurado()));
         }
       }
     }

@@ -17,7 +17,7 @@ import com.santalucia.cdc.core.domain.securedobjects.characteristics.AnimalDomai
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.DomicilioDomain;
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.FiguraDomain;
-import com.santalucia.cdc.core.service.PolizaIndividualClientService;
+import com.santalucia.cdc.core.service.policies.PolizaIndividualClientService;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,32 +36,23 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
 
   @Override
   public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) throws Exception {
-    EventoPresupuestoIndvDomain updatedEvent = new EventoPresupuestoIndvDomain();
     PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
-    List<ObjetosAseguradosDomain> securedObjects = eventoPresupuestoIndvDomain.getObjetosAsegurados();
-    List<DeclaracionDomain> declarations = eventoPresupuestoIndvDomain.getDeclaracion();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
     //Buscar en polizas
-    PolizaDomain insurance = polizaService.getPolizaIndividual(numIdpresupuesto, null);
-    List<PolizaDomain> hInsurances = polizaService.findAllHistoricoIndividual(numIdpresupuesto, null);
+    PolizaDomain policy = polizaService.getPolizaIndividual(numIdpresupuesto, null);
+    List<PolizaDomain> hPolicies = polizaService.findAllHistoricoIndividual(numIdpresupuesto, null);
 
     //Si hay resultado poner el ind a S
-    if (insurance != null || !hInsurances.isEmpty()) {
+    if (policy != null || !hPolicies.isEmpty()) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-      updatedEvent.setIndTipoEvento(eventoPresupuestoIndvDomain.getIndTipoEvento());
-      updatedEvent.setPresupuestoIndividual(budget);
-      updatedEvent.setObjetosAsegurados(securedObjects);
-      updatedEvent.setDeclaracion(declarations);
+
 
     } else {//Si no hay resultado comprobar fecha
       Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
       if (budget.getFechaYEstado().getFecha().getFecAlta().isBefore(thirtyDaysAfter)) {   //Fecha anterior (anonimizamos y ponemos fecAnonimiizacion al día actual)
-        updatedEvent = eventoPresupuestoIndvDomain;
-      }
-      else {
-        updatedEvent = anonimizate(eventoPresupuestoIndvDomain);
+        eventoPresupuestoIndvDomain = anonimizate(eventoPresupuestoIndvDomain);
       }
     }
     return eventoPresupuestoIndvDomain;

@@ -28,7 +28,7 @@ public class PresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoInd
   }
 
   @Override
-  public void write(List<? extends EventoPresupuestoIndvDomain> items) throws Exception {
+  public void write(List<? extends EventoPresupuestoIndvDomain> items) {
 
     for (EventoPresupuestoIndvDomain budgets : items) {
       UUID uuid = utils.getOrSetUUID(null);

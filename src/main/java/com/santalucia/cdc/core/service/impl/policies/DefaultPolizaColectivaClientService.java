@@ -1,4 +1,4 @@
-package com.santalucia.cdc.core.service.impl;
+package com.santalucia.cdc.core.service.impl.policies;
 
 import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.client.HistoricoPolizasColectivasApiClient;
 import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.CollectionModelHistoricoPolizaColectivaResource;
@@ -7,8 +7,8 @@ import com.santalucia.arq.ams.odl.polizas.colectivas.api.model.CollectionModelPo
 import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import com.santalucia.cdc.core.mappers.insurance.HistPolizaColectivaDomainMapper;
 import com.santalucia.cdc.core.mappers.insurance.PolizaColectivaDomainMapper;
-import com.santalucia.cdc.core.service.PolizaColectivaClientService;
-import com.santalucia.cdc.core.service.PolizaUtilsService;
+import com.santalucia.cdc.core.service.policies.PolizaColectivaClientService;
+import com.santalucia.cdc.core.service.policies.PolizaUtilsService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;

@@ -32,29 +32,29 @@ public class JobConfiguration {
   /**
    *
    * @param jobBuilderFactory
-   * @param step1
-   * @param step2
-   * @param step3
-   * @param step4
+   * @param stepPresCol
+   * @param stepPresIndv
+   * @param stepHistoricPresCol
+   * @param stepHistoricPresIndv
    * @param jobName
    * @return
    */
 
   @Bean
   public Job job(JobBuilderFactory jobBuilderFactory,
-                 @Qualifier(StepPresCol.STEP_NAME) Step step1,
-                 @Qualifier(StepPresIndv.STEP_NAME) Step step2,
-                 @Qualifier(StepHistoricPresCol.STEP_NAME) Step step3,
-                 @Qualifier(StepHistoricPresIndv.STEP_NAME) Step step4,
+                 @Qualifier(StepPresCol.STEP_NAME) Step stepPresCol,
+                 @Qualifier(StepPresIndv.STEP_NAME) Step stepPresIndv,
+                 @Qualifier(StepHistoricPresCol.STEP_NAME) Step stepHistoricPresCol,
+                 @Qualifier(StepHistoricPresIndv.STEP_NAME) Step stepHistoricPresIndv,
 
                  @Value("${spring.application.name}") String jobName) {
     return jobBuilderFactory
       .get(jobName)
       .incrementer(new RunIdIncrementer())
-      .start(step1)
-      .next(step2)
-      .next(step3)
-      .next(step4)
+      .start(stepPresCol)
+      .next(stepPresIndv)
+      .next(stepHistoricPresCol)
+      .next(stepHistoricPresIndv)
       .build();
   }
 
