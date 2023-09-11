@@ -35,35 +35,31 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
 
   @Override
   public EventoPresupuestoColDomain process(EventoPresupuestoColDomain eventoPresupuestoColDomain) throws Exception {
-    EventoPresupuestoColDomain updatedEvent = new EventoPresupuestoColDomain();
+
     PresupuestoColectivoDomain budget = eventoPresupuestoColDomain.getPresupuestoColectivo();
-    List<ObjetosAseguradosDomain> securedObjects = eventoPresupuestoColDomain.getObjetosAsegurados();
-    List<DeclaracionDomain> declarations = eventoPresupuestoColDomain.getDeclaracion();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
     //Buscar en polizas
-    PolizaDomain insurance = polizaService.getPolizaColectiva(numIdpresupuesto, null);
-    List<PolizaDomain> hInsurances = polizaService.findAllHistoricoColectiva(numIdpresupuesto, null);
 
     //Si hay resultado poner el ind a S
-    if (insurance != null || !hInsurances.isEmpty()) {
+    if (polizaService.getPolizaColectiva(numIdpresupuesto, null) != null ) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-      updatedEvent.setIndTipoEvento(eventoPresupuestoColDomain.getIndTipoEvento());
-      updatedEvent.setPresupuestoColectivo(budget);
-      updatedEvent.setObjetosAsegurados(securedObjects);
-      updatedEvent.setDeclaracion(declarations);
 
-    } else {//Si no hay resultado comprobar fecha
-      Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
+
+    } else if (!polizaService.findAllHistoricoColectiva(numIdpresupuesto, null).isEmpty()) {//Si no hay resultado comprobar fecha
+      budget.getDatoIdentificativo().setIndFormalizado("S");
+
+
+    }
+
+     else{ Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
       if (budget.getFechaYEstado().getFecha().getFecAlta().isBefore(thirtyDaysAfter)) {   //Fecha anterior (anonimizamos y ponemos fecAnonimiizacion al día actual)
-        updatedEvent = eventoPresupuestoColDomain;
-      }
-      else {
-        updatedEvent = anonimizate(eventoPresupuestoColDomain);
+        eventoPresupuestoColDomain = anonimizate(eventoPresupuestoColDomain);
+        eventoPresupuestoColDomain.getPresupuestoColectivo().getFechaYEstado().getFecha().setFecAnonimizacion(Instant.now());
       }
     }
-    return updatedEvent;
+    return eventoPresupuestoColDomain;
   }
 
 

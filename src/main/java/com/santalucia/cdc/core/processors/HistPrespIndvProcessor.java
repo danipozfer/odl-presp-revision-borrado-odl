@@ -28,7 +28,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDomain,EventoPresupuestoIndvDomain> {
+public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDomain, EventoPresupuestoIndvDomain> {
 
   public static final String ANONIMO = "**********";
 
@@ -37,38 +37,30 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
 
   @Override
   public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) throws Exception {
-    EventoPresupuestoIndvDomain updatedEvent = new EventoPresupuestoIndvDomain();
+
     PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
-    List<ObjetosAseguradosDomain> securedObjects = eventoPresupuestoIndvDomain.getObjetosAsegurados();
-    List<DeclaracionDomain> declarations = eventoPresupuestoIndvDomain.getDeclaracion();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
     //Buscar en polizas
-    PolizaDomain insurance = polizaService.getPolizaIndividual(numIdpresupuesto, null);
-    List<PolizaDomain> hInsurances = polizaService.findAllHistoricoIndividual(numIdpresupuesto, null);
 
     //Si hay resultado poner el ind a S
-    if (insurance != null || !hInsurances.isEmpty()) {
+    if (polizaService.getPolizaIndividual(numIdpresupuesto, null) != null ) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-      updatedEvent.setIndTipoEvento(eventoPresupuestoIndvDomain.getIndTipoEvento());
-      updatedEvent.setPresupuestoIndividual(budget);
-      updatedEvent.setObjetosAsegurados(securedObjects);
-      updatedEvent.setDeclaracion(declarations);
+    } else if (!polizaService.findAllHistoricoIndividual(numIdpresupuesto, null).isEmpty()) {//Si no hay resultado comprobar fecha
+      budget.getDatoIdentificativo().setIndFormalizado("S");
 
-    } else {//Si no hay resultado comprobar fecha
+    } else {
       Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
       if (budget.getFechaYEstado().getFecha().getFecAlta().isBefore(thirtyDaysAfter)) {   //Fecha anterior (anonimizamos y ponemos fecAnonimiizacion al día actual)
-        updatedEvent = eventoPresupuestoIndvDomain;
-      }
-      else {
-        updatedEvent = anonimizate(eventoPresupuestoIndvDomain);
+        anonimizate(eventoPresupuestoIndvDomain);
+        eventoPresupuestoIndvDomain.getPresupuestoIndividual().getFechaYEstado().getFecha().setFecAnonimizacion(Instant.now());
       }
     }
     return eventoPresupuestoIndvDomain;
   }
 
-  private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain){
+  private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) {
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();
     LocalDate localDate = LocalDate.of(1, 1, 1);
@@ -211,11 +203,11 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
     List<ObjetosAseguradosDomain> objetosAseguradosDomainList = new ArrayList<>();
 
 
-    for (ObjetosAseguradosDomain obj : eventoPresupuestoIndvDomain.getObjetosAsegurados()){
+    for (ObjetosAseguradosDomain obj : eventoPresupuestoIndvDomain.getObjetosAsegurados()) {
 
       CaracteristicaDomain caracteristicaDomainAnonima = new CaracteristicaDomain();
       List<DomicilioDomain> domicilioDomains = new ArrayList<>();
-      for(DomicilioDomain domicilios : caracteristicaDomainAnonima.getDomicilios()) {
+      for (DomicilioDomain domicilios : caracteristicaDomainAnonima.getDomicilios()) {
         domicilios.setPais(tipoMDLDomainAnonimizado);
         domicilios.setProvincia(tipoMDLDomainAnonimizado);
         domicilios.setLocalidad(tipoMDLDomainAnonimizado);
@@ -244,7 +236,7 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
 
       List<FiguraDomain> figuraDomainList = new ArrayList<>();
 
-      for (FiguraDomain figura : caracteristicaDomainAnonima.getFiguras()){
+      for (FiguraDomain figura : caracteristicaDomainAnonima.getFiguras()) {
         figura.setIdPersona(ANONIMO);
         figura.setTipoPersona(tipoMDLDomainAnonimizado);
         figura.setTxtNombre(ANONIMO);
@@ -268,7 +260,7 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
 
       List<AnimalDomain> animalDomainsList = new ArrayList<>();
 
-      for (AnimalDomain animal: caracteristicaDomainAnonima.getAnimales()){
+      for (AnimalDomain animal : caracteristicaDomainAnonima.getAnimales()) {
         animal.setIndTipoEspecie(ANONIMO);
         animal.setRaza(tipoMDLDomainAnonimizado);
         animal.setIndTipoAnimalComp(ANONIMO);
@@ -280,7 +272,6 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
         animal.setIndPerroMestizo(ANONIMO);
         animal.setIndPerfEstadoSalud(ANONIMO);
       }
-
 
 
       obj.getCaracteristica().setAnimales(animalDomainsList);
@@ -295,17 +286,17 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
 
     List<DeclaracionDomain> declaracionDomainList = new ArrayList<>();
 
-    for(DeclaracionDomain dec : eventoPresupuestoIndvDomain.getDeclaracion()){
+    for (DeclaracionDomain dec : eventoPresupuestoIndvDomain.getDeclaracion()) {
 
       List<com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain> caracList = new ArrayList<>();
 
-      for (com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain caracteristicaDomain: dec.getCaracteristicas()){
+      for (com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain caracteristicaDomain : dec.getCaracteristicas()) {
 
         caracteristicaDomain.setPregunta(tipoMDLDomainAnonimizado);
         caracteristicaDomain.setIndAplicPregunta(ANONIMO);
 
         List<RespuestaDomain> respuestaDomainList = new ArrayList<>();
-        for (RespuestaDomain res: caracteristicaDomain.getRespuestas()){
+        for (RespuestaDomain res : caracteristicaDomain.getRespuestas()) {
           res.setRespFacilitada(tipoMDLDomainAnonimizado);
           res.setIndTipoRespuesta(ANONIMO);
           respuestaDomainList.add(res);
