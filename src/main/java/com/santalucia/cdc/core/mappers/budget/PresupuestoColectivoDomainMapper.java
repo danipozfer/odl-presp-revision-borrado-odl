@@ -15,13 +15,13 @@ public interface PresupuestoColectivoDomainMapper {
    * @param presupuestoColectivoResource
    * @return
    */
-  PresupuestoColectivoDomain toDomain (EntityModelPresupuestoColectivoResource presupuestoColectivoResource);
+  //PresupuestoColectivoDomain toDomain (EntityModelPresupuestoColectivoResource presupuestoColectivoResource);
 
   /**
    *
    * @param presupuestoColectivoDomain
    * @return
    */
-  PresupuestoColectivoRequestBodyResource toResource (PresupuestoColectivoDomain presupuestoColectivoDomain);
+  //PresupuestoColectivoRequestBodyResource toResource (PresupuestoColectivoDomain presupuestoColectivoDomain);
 
 }

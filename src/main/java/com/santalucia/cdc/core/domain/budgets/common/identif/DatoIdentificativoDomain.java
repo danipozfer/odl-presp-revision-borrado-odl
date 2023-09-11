@@ -36,4 +36,5 @@ public class DatoIdentificativoDomain {
     private String indOrigRecomendador;
     private String codEvento;
     private String indFormalizado;
+    private String indAnonimizado;
 }

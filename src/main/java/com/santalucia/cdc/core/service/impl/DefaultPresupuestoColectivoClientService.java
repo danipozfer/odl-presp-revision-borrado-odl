@@ -29,18 +29,16 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
   // AutoWired
   private final PresupuestoColectivoDomainMapper presupuestoColectivoDomainMapper;
   private final HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper;
-  private final PresupuestoColectivoApiControllerApiClient presupuestosColectivoApiClient;
-  private final HistoricoPresupuestoColectivoApiControllerApiClient histPresupuestoColectivoApiClient;
-  private final HistoricoPresupuestoColectivoEntityControllerApiClient historicoPresupuestoColectivoEntityControllerApiClient;
+  private final PresupuestoColectivoApiClient presupuestosColectivoApiClient;
+  private final HistoricoPresupuestoColectivoApiApiClient histPresupuestoColectivoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
-  public DefaultPresupuestoColectivoClientService(PresupuestoColectivoDomainMapper presupuestoColectivoDomainMapper, HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper, PresupuestoColectivoApiControllerApiClient presupuestosColectivoApiClient, HistoricoPresupuestoColectivoApiControllerApiClient histPresupuestoColectivoApiClient, HistoricoPresupuestoColectivoEntityControllerApiClient historicoPresupuestoColectivoEntityControllerApiClient, PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
+  public DefaultPresupuestoColectivoClientService(PresupuestoColectivoDomainMapper presupuestoColectivoDomainMapper, HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper, PresupuestoColectivoApiClient presupuestosColectivoApiClient, HistoricoPresupuestoColectivoApiApiClient histPresupuestoColectivoApiClient, PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
     this.presupuestoColectivoDomainMapper = presupuestoColectivoDomainMapper;
     this.histPresupuestoColectivoDomainMapper = histPresupuestoColectivoDomainMapper;
     this.presupuestosColectivoApiClient = presupuestosColectivoApiClient;
     this.histPresupuestoColectivoApiClient = histPresupuestoColectivoApiClient;
-    this.historicoPresupuestoColectivoEntityControllerApiClient = historicoPresupuestoColectivoEntityControllerApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
@@ -67,7 +65,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) presupuestoColectivoDomainMapper.toDomain((EntityModelPresupuestoColectivoResource) result.getEmbedded().getPresupuestos()));
+      presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomain(result.getEmbedded().getPresupuestos()));
       while (pageNum < maxPages && !end) {
         result = presupuestosColectivoApiClient
           .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
@@ -78,7 +76,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
           end = true;
         }else {
           pageNum++;
-          presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) presupuestoColectivoDomainMapper.toDomain((EntityModelPresupuestoColectivoResource) result.getEmbedded().getPresupuestos()));
+          presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomain(result.getEmbedded().getPresupuestos()));
         }
       }
     }
