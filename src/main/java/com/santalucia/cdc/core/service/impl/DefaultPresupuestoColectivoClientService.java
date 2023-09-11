@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.*;
 
 @Slf4j
@@ -39,44 +38,39 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
   }
 
   /**
-   * Metodo para la busqueda de presupuestos colectivos no anonimizados
-   * @param indAnonimizado
+   * Metodo para obtener un presupuesto colectivo
+   *
+   * @param indAnonimizacion
    * @param indFormalizado
-   * @return
    */
-
   @Override
-  public List<PresupuestoColectivoDomain> findCollectiveBudgets(String indAnonimizado, String indFormalizado){
-
-    log.info("Buscando presupuestos colectivos no anonimizados");
-
-    int pageNum = 1;
-    List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource result = presupuestosColectivoApiClient
-      .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(indAnonimizado, indFormalizado),
-        PageRequest.of(0, this.properties.getFindallPageSize()))
-      .getBody();
-    boolean end = false;
-    if(result != null) {
-      Long maxPages = result.getPage().getTotalPages();
-      presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomain(result.getEmbedded().getPresupuestos()));
-      while (pageNum < maxPages && !end) {
-        result = presupuestosColectivoApiClient
-          .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(indAnonimizado, indFormalizado),
-            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
-          .getBody();
-        if (result == null) {
-          end = true;
-        }else {
-          pageNum++;
-          presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomain(result.getEmbedded().getPresupuestos()));
-        }
-      }
+  public PresupuestoColectivoDomain getCollectiveBudget(String indAnonimizacion, String indFormalizado) {
+    PresupuestoColectivoDomain result = null;
+    PresupuestoColectivoResource presupuestoColectivo = findApiSnapshotCollectiveBudget(indAnonimizacion, indFormalizado);
+    if (presupuestoColectivo != null) {
+      result = presupuestoColectivoDomainMapper.toDomain(presupuestoColectivo);
     }
+    return result;
+  }
 
-    return presupuestosColectivos;
+  /**
+   * Metodo para obtener la ultima foto de un presupuesto colectivo
+   *
+   * @param indAnonimizacion
+   * @param indFormalizado
+   */
+  @Override
+  public PresupuestoColectivoResource findApiSnapshotCollectiveBudget(String indAnonimizacion, String indFormalizado) {
+    log.info("Buscando presupuesto no anonimizado");
+    PresupuestoColectivoResource result = null;
+    PagedModelEntityModelPresupuestoColectivoResource odlResult = presupuestosColectivoApiClient
+      .findAllPresupuestosPresupuestoColectivoUsingGET(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(indAnonimizacion, indFormalizado), PageRequest.of(0, 1))
+      .getBody();
+    if (odlResult != null && !odlResult.getEmbedded().getDeclaracion().isEmpty()) {
+      result = odlResult.getEmbedded().getDeclaracion().get(0);
+    }
+    return result;
   }
 
   /**

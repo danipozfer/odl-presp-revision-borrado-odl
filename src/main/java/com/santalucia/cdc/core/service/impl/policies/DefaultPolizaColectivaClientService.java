@@ -4,9 +4,9 @@ import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.client.Histor
 import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.CollectionModelHistoricoPolizaColectivaResource;
 import com.santalucia.arq.ams.odl.polizas.colectivas.api.client.PolizasColectivasApiClient;
 import com.santalucia.arq.ams.odl.polizas.colectivas.api.model.CollectionModelPolizaColectivaResource;
-import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
-import com.santalucia.cdc.core.mappers.insurance.HistPolizaColectivaDomainMapper;
-import com.santalucia.cdc.core.mappers.insurance.PolizaColectivaDomainMapper;
+import com.santalucia.cdc.core.domain.policy.polizas.PolizaDomain;
+import com.santalucia.cdc.core.mappers.policy.HistPolizaColectivaDomainMapper;
+import com.santalucia.cdc.core.mappers.policy.PolizaColectivaDomainMapper;
 import com.santalucia.cdc.core.service.policies.PolizaColectivaClientService;
 import com.santalucia.cdc.core.service.policies.PolizaUtilsService;
 import lombok.extern.slf4j.Slf4j;
@@ -82,8 +82,7 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
     log.debug("La poliza es colectiva, se busca con numIdPresupuesto {} ",
       numIdPresupuesto);
     UUID uuid = polizaUtils.getOrSetUUID(null);
-    Map<String, List<String>> paramQuery = getMapParamQuery("", "", "",
-      numIdPresupuesto);
+    Map<String, List<String>> paramQuery = getMapParamQuery(numIdPresupuesto);
 
     CollectionModelPolizaColectivaResource result = colectivasApiClient
       .findAllPolizaColectivaUsingGET(uuid, paramQuery, PageRequest.of(0, 1)).getBody();
@@ -101,7 +100,7 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
    * Obtiene todas las polizas del historico en base a numero de poliza y
    * certificado si es necesario
    *
-   * @param poliza poliza individual/colectiva/certificado
+   * @param numIdPresupuesto equivalente a idPresupuestoOrigen
    * @param uuid   UUID a utilizar o null para generar uno nuevo
    * @return listado de fotos del historico o null si no existe la poliza
    */
@@ -111,8 +110,7 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
     int maxPages = -1;
 
     List<PolizaDomain> polizas = new ArrayList<>(DEFAULT_CAPACITY);
-    Map<String, List<String>> paramQuery = getMapParamQuery("", "",
-      "", numIdPresupuesto);
+    Map<String, List<String>> paramQuery = getMapParamQuery(numIdPresupuesto);
     boolean end = false;
     while (pageNum > maxPages && maxPages != 0 && !end) {
       log.debug("Extrayendo pagina {} historico para polizas", pageNum + 1);
@@ -142,19 +140,8 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
   }
 
 
-  private Map<String, List<String>> getMapParamQuery(String idPolizaODL, String versPoliza,
-                                                     String numCertificado, String numIdPresupuesto) {
+  private Map<String, List<String>> getMapParamQuery(String numIdPresupuesto) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
-
-    if (StringUtils.isNotBlank(idPolizaODL)) {
-      mapParams.put("datosIdentificativos.idPolizaODL", List.of(idPolizaODL));
-    }
-    if (StringUtils.isNotBlank(versPoliza)) {
-      mapParams.put("movimientos.versPolizaODL", List.of(versPoliza));
-    }
-    if (StringUtils.isNotBlank(numCertificado)) {
-      mapParams.put("datosIdentificativos.numCertificado", List.of(numCertificado));
-    }
     if (StringUtils.isNotBlank(numIdPresupuesto)) {
       mapParams.put("datosIdentificativos.numIdPresupuesto", List.of(numIdPresupuesto));
     }

@@ -1,7 +1,6 @@
 package com.santalucia.cdc.core.service.impl;
 
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
-import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.PresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
@@ -12,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.*;
 
 @Slf4j
@@ -37,45 +35,39 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
   }
 
   /**
-   * Metodo para la busqueda de presupuestos individuales no anonimizados
+   * Metodo para obtener un presupuesto individual
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   * @return
    */
-
   @Override
-  public List<PresupuestoIndividualDomain> findIndividualBudgets(String indAnonimizacion, String indFormalizado) {
-
-    log.info("Buscando presupuestos individuales no anonimizados");
-
-    int pageNum = 1;
-    List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoColectivoResource result = presupuestosIndividualApiClient
-      .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(indAnonimizacion, indFormalizado),
-        PageRequest.of(0, this.properties.getFindallPageSize()))
-      .getBody();
-    boolean end = false;
-    if (result != null) {
-      Long maxPages = result.getPage().getTotalPages();
-      presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoColectivo()));
-      while (pageNum < maxPages && !end) {
-        result = presupuestosIndividualApiClient
-          .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(indAnonimizacion, indFormalizado),
-            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
-          .getBody();
-        if (result == null) {
-          end = true;
-        } else {
-          pageNum++;
-          presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoColectivo()));
-        }
-      }
+  public PresupuestoIndividualDomain getIndividualBudget(String indAnonimizacion, String indFormalizado) {
+    PresupuestoIndividualDomain result = null;
+    EntityModelPresupuestoIndividualResource presupuestoIndividual = findApiSnapshotIndividualBudget(idPresupuestoODL);
+    if (presupuestoIndividual != null) {
+      result = presupuestoIndividualDomainMapper.toDomain(presupuestoIndividual);
     }
+    return result;
+  }
 
-    return presupuestosIndividuales;
+  /**
+   * Metodo para obtener la ultima foto de un presupuesto individual
+   *
+   * @param indAnonimizacion
+   * @param indFormalizado
+   */
+  @Override
+  public EntityModelPresupuestoIndividualResource findApiSnapshotIndividualBudget(String indAnonimizacion, String indFormalizado){
+    log.info("Buscando presupuesto no anonimizado");
+    EntityModelPresupuestoIndividualResource result = null;
+    PagedModelEntityModelPresupuestoIndividualResource odlResult = presupuestosIndividualApiClient
+      .findAllPresupuestoIndividual(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(indAnonimizacion, indFormalizado), PageRequest.of(0, 1))
+      .getBody();
+    if (odlResult != null && !odlResult.getEmbedded().getPresupuestos().isEmpty()) {
+      result = odlResult.getEmbedded().getPresupuestos().get(0);
+    }
+    return result;
   }
 
   /**

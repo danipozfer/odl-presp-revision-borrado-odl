@@ -11,7 +11,6 @@ import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndivi
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.RespuestaDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
-import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.AnimalDomain;
 import com.santalucia.cdc.core.domain.securedobjects.characteristics.CaracteristicaDomain;

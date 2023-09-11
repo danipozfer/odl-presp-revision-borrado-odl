@@ -10,8 +10,13 @@ import java.util.UUID;
 
 public interface PresupuestoIndividiualClientService {
 
+
+
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  List<PresupuestoIndividualDomain> findIndividualBudgets(String fechaAnonimizacion, String indFormalizado);
+  PresupuestoIndividualDomain getIndividualBudget(String indAnonimizacion, String indFormalizado);
+
+  @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
+  EntityModelPresupuestoIndividualResource findApiSnapshotIndividualBudget(String indAnonimizacion, String indFormalizado);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid);

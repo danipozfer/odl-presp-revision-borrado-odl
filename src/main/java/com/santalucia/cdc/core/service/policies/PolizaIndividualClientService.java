@@ -1,6 +1,6 @@
 package com.santalucia.cdc.core.service.policies;
 
-import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
+import com.santalucia.cdc.core.domain.policy.polizas.PolizaDomain;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 

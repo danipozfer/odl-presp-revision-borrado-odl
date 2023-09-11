@@ -38,14 +38,15 @@ public class PresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPre
     List<PresupuestoIndividualDomain> listIndvBudget = presupuestoApiClient.findIndividualBudgets(null, "N");
     List<EventoPresupuestoIndvDomain> result = new ArrayList<>();
 
-    for (PresupuestoIndividualDomain pres : listIndvBudget){
-      EventoPresupuestoIndvDomain ev = new EventoPresupuestoIndvDomain();
-      ev.setPresupuestoIndividual(pres);
-      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findObjetoAseguradoByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
-      ev.setObjetosAsegurados(objs);
-      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findDeclarationByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
-      ev.setDeclaracion(declaracionDomains);
-      result.add(ev);
+    for (PresupuestoIndividualDomain budget : listIndvBudget){
+      EventoPresupuestoIndvDomain event = new EventoPresupuestoIndvDomain();
+      event.setPresupuestoIndividual(budget);
+      List<ObjetosAseguradosDomain> objects = new ArrayList<>();
+      objects.add(objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL()));
+      event.setObjetosAsegurados(objects);
+      List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      event.setDeclaracion(declarations);
+      result.add(event);
     }
     return result.iterator();
   }

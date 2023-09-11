@@ -1,7 +1,6 @@
 package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
-import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.mappers.budget.HistObjetoAseguradoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.ObjetoAseguradoDomainMapper;
@@ -24,9 +23,7 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   // AutoWired
 
   private final ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper;
-  private final HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper;
   private final ObjetoAseguradoApiClient objetoAseguradoApiClient;
-  private final HistObjetoAseguradoApiClient histObjetoAseguradoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
@@ -45,77 +42,40 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
     this.properties = properties;
   }
 
+
+
   /**
-   * Metodo para buscar un objeto asegurado en la coleccion de historico
+   * Metodo para obtener un objeto asegurado
    *
-   * @param idPresupuestoODL
+   * @param idObjetoAseguradoODL
    */
   @Override
-  public List<ObjetosAseguradosDomain> findAllHistoricSecuredObject(String idPresupuestoODL) {
-    log.info("Buscando objetos asegurados historicos con idPresupuestoODL {} ", idPresupuestoODL);
-
-    int pageNum = 1;
-    List<ObjetosAseguradosDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelObjetoAseguradoResource result = histObjetoAseguradoApiClient
-      .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(idPresupuestoODL),
-        PageRequest.of(0, this.properties.getFindallPageSize()))
-      .getBody();
-
-    boolean end = false;
-    if(result != null) {
-      Long maxPages = result.getPage().getTotalPages();
-      objetosAsegurados.addAll(histObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
-      while (pageNum < maxPages && !end) {
-        result = histObjetoAseguradoApiClient
-          .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(idPresupuestoODL),
-            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
-          .getBody();
-        if (result == null) {
-          end = true;
-        }else {
-          pageNum++;
-          objetosAsegurados.addAll(histObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
-        }
-      }
+  public ObjetosAseguradosDomain getSecuredObject(String idObjetoAseguradoODL) {
+    ObjetosAseguradosDomain result = null;
+    EntityModelObjetoAseguradoResource objetoAsegurado = findApiSnapshotSecuredObject(idObjetoAseguradoODL);
+    if (objetoAsegurado != null) {
+      result = objetoAseguradoDomainMapper.toDomain(objetoAsegurado);
     }
-
-    return objetosAsegurados;
+    return result;
   }
 
+  /**
+   * Metodo para obtener la ultima foto de un objeto asegurado
+   *
+   * @param idObjetoAseguradoODL
+   */
   @Override
-  public List<ObjetosAseguradosDomain> findObjetoAseguradoByIdPres(String idPresupuestoODL) {
-    log.info("Buscando objetoAsegurado con idPresupuestoODL {}", idPresupuestoODL);
-
-    int pageNum = 1;
-    List<ObjetosAseguradosDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = objetoAseguradoApiClient
-      .findAllPresupuestosObjetoAseguradoGET(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(idPresupuestoODL),
-        PageRequest.of(0, this.properties.getFindallPageSize()))
+  public EntityModelObjetoAseguradoResource findApiSnapshotSecuredObject(String idObjetoAseguradoODL) {
+    log.info("Buscando objeto asegurado con idObjetoAseguradoODL {}", idObjetoAseguradoODL);
+    EntityModelObjetoAseguradoResource result = null;
+    PagedModelEntityModelObjetoAseguradoResource odlResult = objetoAseguradoApiClient
+      .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(idObjetoAseguradoODL), PageRequest.of(0, 1))
       .getBody();
-
-    boolean end = false;
-    if (result != null) {
-      Long maxPages = result.getPage().getTotalPages();
-      objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getObjetoAsegurado()));
-      while (pageNum < maxPages && !end) {
-        result = objetoAseguradoApiClient
-          .findAllPresupuestosObjetoAseguradoGET(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(idPresupuestoODL),
-            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
-          .getBody();
-        if (result == null) {
-          end = true;
-        } else {
-          pageNum++;//añade las declaraciones encontradas
-          objetosAsegurados.addAll(objetoAseguradoDomainMapper.toDomain(result.getEmbedded().getObjetoAsegurado()));
-        }
-      }
+    if (odlResult != null && !odlResult.getEmbedded().getDeclaracion().isEmpty()) {
+      result = odlResult.getEmbedded().getDeclaracion().get(0);
     }
-
-    return objetosAsegurados;
+    return result;
   }
 
   /**
@@ -137,24 +97,6 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
     return result;
   }
 
-  /**
-   * Metodo para actualizar un objeto asegurado en histórico
-   *
-   * @param securedObject
-   * @param securedObjectId
-   * @param uuid
-   */
-  @Override
-  public ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
-    ObjetosAseguradosDomain result = null;
-    if (securedObjectId != null) {
-      PresupuestosObjetoAseguradoRequestBodyResource input = histObjetoAseguradoDomainMapper.toResource(securedObject);
-      result = histObjetoAseguradoDomainMapper
-        .toDomain(histObjetoAseguradoApiClient.savePresupuestosObjetoAseguradoUsingPUT(securedObjectId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
-    }
-    return result;
-  }
 
   /**
    * Metodo para obtener parametros para la consulta

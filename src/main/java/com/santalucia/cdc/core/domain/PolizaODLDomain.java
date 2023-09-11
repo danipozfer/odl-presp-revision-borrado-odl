@@ -1,8 +1,8 @@
 package com.santalucia.cdc.core.domain;
 
-import com.santalucia.cdc.core.domain.insurance.movimientos.ColMovimientoDomain;
-import com.santalucia.cdc.core.domain.insurance.objeto.asegurado.ColObjetoAseguradoDomain;
-import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
+import com.santalucia.cdc.core.domain.policy.movimientos.ColMovimientoDomain;
+import com.santalucia.cdc.core.domain.policy.objeto.asegurado.ColObjetoAseguradoDomain;
+import com.santalucia.cdc.core.domain.policy.polizas.PolizaDomain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

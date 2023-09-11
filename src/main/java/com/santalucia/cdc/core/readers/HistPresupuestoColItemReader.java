@@ -14,8 +14,8 @@ import java.util.List;
 public class HistPresupuestoColItemReader extends PaginatedDataItemReader<EventoPresupuestoColDomain> {
   private final PresupuestosUtilsService utils;
   private final HistPresupuestoColectivoClientService presupuestoApiClient;
-  private final DeclaracionClientService declaracionApiClient;
-  private final ObjetoAseguradoClientService objetoAseguradoApiClient;
+  private final HistDeclaracionClientService declaracionApiClient;
+  private final HistObjetosAseguradosClientService objetoAseguradoApiClient;
 
   public HistPresupuestoColItemReader(PresupuestosUtilsService utils,
                                       HistPresupuestoColectivoClientService presupuestoApiClient,
@@ -37,14 +37,14 @@ public class HistPresupuestoColItemReader extends PaginatedDataItemReader<Evento
     List<PresupuestoColectivoDomain> listHistColBudget = presupuestoApiClient.findAllHistoricCollectiveBudget("0001-01-01", "N");
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
-    for (PresupuestoColectivoDomain pres : listHistColBudget){
-      EventoPresupuestoColDomain ev = new EventoPresupuestoColDomain();
-      ev.setPresupuestoColectivo(pres);
-      List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findAllHistoricSecuredObject(pres.getDatoIdentificativo().getIdPresupuestoODL());
-      ev.setObjetosAsegurados(objs);
-      List<DeclaracionDomain> declaracionDomains = declaracionApiClient.findHistoricDeclarationByIdres(pres.getDatoIdentificativo().getIdPresupuestoODL());
-      ev.setDeclaracion(declaracionDomains);
-      result.add(ev);
+    for (PresupuestoColectivoDomain budget : listHistColBudget){
+      EventoPresupuestoColDomain event = new EventoPresupuestoColDomain();
+      event.setPresupuestoColectivo(budget);
+      List<ObjetosAseguradosDomain> objects = objetoAseguradoApiClient.findAllHistoricSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      event.setObjetosAsegurados(objects);
+      List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      event.setDeclaracion(declarations);
+      result.add(event);
     }
     return result.iterator();
   }

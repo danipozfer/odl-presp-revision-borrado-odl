@@ -1,7 +1,7 @@
 package com.santalucia.cdc.core.service.policies;
 
-import com.santalucia.cdc.core.domain.insurance.hash.HashDomain;
-import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
+import com.santalucia.cdc.core.domain.policy.hash.HashDomain;
+import com.santalucia.cdc.core.domain.policy.polizas.PolizaDomain;
 
 import java.util.UUID;
 

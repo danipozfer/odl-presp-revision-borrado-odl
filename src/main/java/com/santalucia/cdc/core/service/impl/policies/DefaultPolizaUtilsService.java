@@ -2,8 +2,8 @@ package com.santalucia.cdc.core.service.impl.policies;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.santalucia.cdc.core.domain.insurance.hash.HashDomain;
-import com.santalucia.cdc.core.domain.insurance.polizas.PolizaDomain;
+import com.santalucia.cdc.core.domain.policy.hash.HashDomain;
+import com.santalucia.cdc.core.domain.policy.polizas.PolizaDomain;
 import com.santalucia.cdc.core.exceptions.HashGenerationException;
 import com.santalucia.cdc.core.service.policies.PolizaUtilsService;
 import org.springframework.stereotype.Service;
