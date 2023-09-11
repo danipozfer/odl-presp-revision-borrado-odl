@@ -1,11 +1,6 @@
 package com.santalucia.cdc.core.service.impl;
 
-import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.client.PresupuestoColectivoApiControllerApiClient;
-import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.EntityModelPresupuestoColectivoResource;
 import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PresupuestoColectivoRequestBodyResource;
-import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoApiControllerApiClient;
-import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoEntityControllerApiClient;
-import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource;
 import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.PresupuestoColectivoDomainMapper;

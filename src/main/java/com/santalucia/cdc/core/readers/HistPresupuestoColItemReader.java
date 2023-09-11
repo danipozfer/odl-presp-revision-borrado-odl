@@ -5,10 +5,7 @@ import com.santalucia.cdc.core.domain.EventoPresupuestoColDomain;
 import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.service.DeclaracionClientService;
-import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
-import com.santalucia.cdc.core.service.PresupuestoColectivoClientService;
-import com.santalucia.cdc.core.service.PresupuestosUtilsService;
+import com.santalucia.cdc.core.service.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,12 +13,12 @@ import java.util.List;
 
 public class HistPresupuestoColItemReader extends PaginatedDataItemReader<EventoPresupuestoColDomain> {
   private final PresupuestosUtilsService utils;
-  private final PresupuestoColectivoClientService presupuestoApiClient;
+  private final HistPresupuestoColectivoClientService presupuestoApiClient;
   private final DeclaracionClientService declaracionApiClient;
   private final ObjetoAseguradoClientService objetoAseguradoApiClient;
 
   public HistPresupuestoColItemReader(PresupuestosUtilsService utils,
-                                  PresupuestoColectivoClientService presupuestoApiClient,
+                                      HistPresupuestoColectivoClientService presupuestoApiClient,
                                   DeclaracionClientService declaracionApiClient,
                                   ObjetoAseguradoClientService objetoAseguradoApiClient) {
     this.utils = utils;

@@ -4,10 +4,7 @@ import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
-import com.santalucia.cdc.core.service.DeclaracionClientService;
-import com.santalucia.cdc.core.service.ObjetoAseguradoClientService;
-import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
-import com.santalucia.cdc.core.service.PresupuestosUtilsService;
+import com.santalucia.cdc.core.service.*;
 import org.springframework.batch.item.ItemWriter;
 
 import java.util.List;
@@ -16,12 +13,12 @@ import java.util.UUID;
 public class HistPresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoIndvDomain> {
 
   private final PresupuestosUtilsService utils;
-  private final PresupuestoIndividiualClientService presupuestoIndividualService;
+  private final HistPresupuestoIndividualClientService presupuestoIndividualService;
   private final DeclaracionClientService declaracionService;
   private final ObjetoAseguradoClientService objetoAseguradoService;
 
   public HistPresupuestoIndItemWriter(PresupuestosUtilsService utils,
-                                      PresupuestoIndividiualClientService presupuestoIndividualService,
+                                      HistPresupuestoIndividualClientService presupuestoIndividualService,
                                       DeclaracionClientService declaracionService,
                                       ObjetoAseguradoClientService objetoAseguradoService) {
     this.utils = utils;

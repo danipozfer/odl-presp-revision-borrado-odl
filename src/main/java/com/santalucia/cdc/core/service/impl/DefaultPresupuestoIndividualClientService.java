@@ -23,36 +23,29 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
 
   // AutoWired
   private final PresupuestoIndividualDomainMapper presupuestoIndividualDomainMapper;
-  private final HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper;
   private final PresupuestosIndividualApiClient presupuestosIndividualApiClient;
-  private final HistoricoPresupuestosIndividualApiClient histPresupuestoIndividualApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
-  public DefaultPresupuestoIndividualClientService(PresupuestoIndividualDomainMapper piMapper,
-                                                  HistPresupuestoIndividualDomainMapper hMapper,
-                                                  PresupuestosIndividualApiClient piClient,
-                                                  HistoricoPresupuestosIndividualApiClient hClient,
-                                                  PresupuestosUtilsService pUtils,
-                                                  AppCustomFeaturesProperties prop) {
-    this.presupuestoIndividualDomainMapper = piMapper;
-    this.histPresupuestoIndividualDomainMapper = hMapper;
-    this.presupuestosIndividualApiClient = piClient;
-    this.histPresupuestoIndividualApiClient = hClient;
-    this.presupuestosUtils = pUtils;
-    this.properties = prop;
+  public DefaultPresupuestoIndividualClientService(PresupuestoIndividualDomainMapper presupuestoIndividualDomainMapper,
+                                                   PresupuestosIndividualApiClient presupuestosIndividualApiClient,
+                                                   PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
+    this.presupuestoIndividualDomainMapper = presupuestoIndividualDomainMapper;
+    this.presupuestosIndividualApiClient = presupuestosIndividualApiClient;
+    this.presupuestosUtils = presupuestosUtils;
+    this.properties = properties;
   }
-
 
   /**
    * Metodo para la busqueda de presupuestos individuales no anonimizados
+   *
    * @param indAnonimizacion
    * @param indFormalizado
    * @return
    */
 
   @Override
-  public List<PresupuestoIndividualDomain> findIndividualBudgets(String indAnonimizacion, String indFormalizado){
+  public List<PresupuestoIndividualDomain> findIndividualBudgets(String indAnonimizacion, String indFormalizado) {
 
     log.info("Buscando presupuestos individuales no anonimizados");
 
@@ -64,7 +57,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
     boolean end = false;
-    if(result != null) {
+    if (result != null) {
       Long maxPages = result.getPage().getTotalPages();
       presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoColectivo()));
       while (pageNum < maxPages && !end) {
@@ -75,7 +68,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
           .getBody();
         if (result == null) {
           end = true;
-        }else {
+        } else {
           pageNum++;
           presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoColectivo()));
         }
@@ -109,17 +102,16 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   *
    * @return
    */
   private Map<String, List<String>> getMapParamQuery(String indAnonimizacion,
                                                      String indFormalizado) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
 
-    if (indAnonimizacion == null){
+    if (indAnonimizacion == null) {
       mapParams.put("datosIdentificativos.indAnonimizacion", null);
     }
-    if (StringUtils.isNotBlank(indFormalizado)){
+    if (StringUtils.isNotBlank(indFormalizado)) {
       mapParams.put("datosIdentificativos.indFormalizado", List.of(indFormalizado));
     }
     return mapParams;

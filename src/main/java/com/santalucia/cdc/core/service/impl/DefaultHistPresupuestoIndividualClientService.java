@@ -1,37 +1,35 @@
 package com.santalucia.cdc.core.service.impl;
 
-import com.santalucia.arq.ams.odl.presupuestos.colectivo.api.client.PresupuestoColectivoApiControllerApiClient;
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoApiControllerApiClient;
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoEntityControllerApiClient;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
-import com.santalucia.cdc.core.mappers.budget.PresupuestoColectivoDomainMapper;
+import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.HistPresupuestoIndividualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import com.santalucia.cdc.reload.AppCustomFeaturesProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
-
+@Slf4j
+@Service
 public class DefaultHistPresupuestoIndividualClientService implements HistPresupuestoIndividualClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
-  private final HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper;
-  private final HistoricoPresupuestoColectivoApiControllerApiClient histPresupuestoColectivoApiClient;
-  private final HistoricoPresupuestoColectivoEntityControllerApiClient historicoPresupuestoColectivoEntityControllerApiClient;
+  private final HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper;
+  private final HistoricoPresupuestoIndividualApiClient historicoPresupuestoIndividualApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
-  public DefaultHistPresupuestoIndividualClientService(HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper,
-                                                       HistoricoPresupuestoColectivoApiControllerApiClient histPresupuestoColectivoApiClient,
-                                                       HistoricoPresupuestoColectivoEntityControllerApiClient historicoPresupuestoColectivoEntityControllerApiClient,
-                                                       PresupuestosUtilsService presupuestosUtils,
-                                                       AppCustomFeaturesProperties properties) {
-    this.histPresupuestoColectivoDomainMapper = histPresupuestoColectivoDomainMapper;
-    this.histPresupuestoColectivoApiClient = histPresupuestoColectivoApiClient;
-    this.historicoPresupuestoColectivoEntityControllerApiClient = historicoPresupuestoColectivoEntityControllerApiClient;
+  public DefaultHistPresupuestoIndividualClientService(HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper,
+                                                       HistoricoPresupuestoIndividualApiClient historicoPresupuestoIndividualApiClient,
+                                                       PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
+    this.histPresupuestoIndividualDomainMapper = histPresupuestoIndividualDomainMapper;
+    this.historicoPresupuestoIndividualApiClient = historicoPresupuestoIndividualApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
@@ -90,7 +88,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
     if (individualBudgetId != null) {
       PresupuestoIndividualRequestBodyResource input = histPresupuestoIndividualDomainMapper.toResource(individualBudget);
       result = histPresupuestoIndividualDomainMapper
-        .toDomain(histPresupuestoIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
+        .toDomain(historicoPresupuestoIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
           presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
     }
     return result;

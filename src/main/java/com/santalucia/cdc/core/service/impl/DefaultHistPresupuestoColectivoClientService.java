@@ -2,32 +2,34 @@ package com.santalucia.cdc.core.service.impl;
 
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource;
 import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
+import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
-import com.santalucia.cdc.core.mappers.budget.PresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.HistPresupuestoColectivoClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import com.santalucia.cdc.reload.AppCustomFeaturesProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
-
+@Slf4j
+@Service
 public class DefaultHistPresupuestoColectivoClientService implements HistPresupuestoColectivoClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
 
-  private final HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper;
-  private final HistoricoPresupuestosIndividualApiClient histPresupuestoIndividualApiClient;
+  private final HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper;
+  private final HistoricoPresupuestosColectivoApiClient historicoPresupuestosColectivoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
-  public DefaultHistPresupuestoColectivoClientService(HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper,
-                                                      HistoricoPresupuestosIndividualApiClient histPresupuestoIndividualApiClient,
-                                                      PresupuestosUtilsService presupuestosUtils,
-                                                      AppCustomFeaturesProperties properties) {
-    this.histPresupuestoIndividualDomainMapper = histPresupuestoIndividualDomainMapper;
-    this.histPresupuestoIndividualApiClient = histPresupuestoIndividualApiClient;
+  public DefaultHistPresupuestoColectivoClientService(HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper,
+                                                      HistoricoPresupuestosColectivoApiClient historicoPresupuestosColectivoApiClient,
+                                                      PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
+    this.histPresupuestoColectivoDomainMapper = histPresupuestoColectivoDomainMapper;
+    this.historicoPresupuestosColectivoApiClient = historicoPresupuestosColectivoApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }

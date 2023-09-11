@@ -35,10 +35,10 @@ public class PresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPre
    */
   @Override
   protected Iterator<EventoPresupuestoIndvDomain> doPageRead() {
-    List<PresupuestoIndividualDomain> list2 = presupuestoApiClient.findIndividualBudgets(null, "N");
+    List<PresupuestoIndividualDomain> listIndvBudget = presupuestoApiClient.findIndividualBudgets(null, "N");
     List<EventoPresupuestoIndvDomain> result = new ArrayList<>();
 
-    for (PresupuestoIndividualDomain pres : list2){
+    for (PresupuestoIndividualDomain pres : listIndvBudget){
       EventoPresupuestoIndvDomain ev = new EventoPresupuestoIndvDomain();
       ev.setPresupuestoIndividual(pres);
       List<ObjetosAseguradosDomain> objs = objetoAseguradoApiClient.findObjetoAseguradoByIdPres(pres.getDatoIdentificativo().getIdPresupuestoODL());
