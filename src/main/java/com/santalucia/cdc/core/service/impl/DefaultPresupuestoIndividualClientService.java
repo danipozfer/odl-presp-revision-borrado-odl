@@ -108,8 +108,8 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
                                                      String indFormalizado) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
 
-    if (indAnonimizacion == null) {
-      mapParams.put("datosIdentificativos.indAnonimizacion", null);
+    if (StringUtils.isNotBlank(indAnonimizacion)) {
+      mapParams.put("datosIdentificativos.indAnonimizacion", List.of(indAnonimizacion));
     }
     if (StringUtils.isNotBlank(indFormalizado)) {
       mapParams.put("datosIdentificativos.indFormalizado", List.of(indFormalizado));
