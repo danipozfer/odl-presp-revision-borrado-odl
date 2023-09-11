@@ -8,6 +8,8 @@ import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface PresupuestoColectivoDomainMapper {
   /**
@@ -23,5 +25,13 @@ public interface PresupuestoColectivoDomainMapper {
    * @return
    */
   //PresupuestoColectivoRequestBodyResource toResource (PresupuestoColectivoDomain presupuestoColectivoDomain);
+
+  /**
+   *
+   * @param lst
+   * @return
+   */
+
+    //List<PresupuestoColectivoDomain> toDomainsfromResources(List<PresupuestoColectivoResource> lst);
 
 }

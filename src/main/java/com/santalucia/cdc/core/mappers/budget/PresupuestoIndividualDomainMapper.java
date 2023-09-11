@@ -4,6 +4,8 @@ import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface PresupuestoIndividualDomainMapper {
 
@@ -20,4 +22,12 @@ public interface PresupuestoIndividualDomainMapper {
    * @return
    */
   /*PresupuestoIndividualResource toResource (PresupuestoIndividualDomain presupuestoIndividualDomain);*/
+
+  /**
+   *
+   * @param lst
+   * @return
+   */
+
+  List<PresupuestoIndividualDomainMapper> toDomainsfromResources(List<PresupuestoIndividualResource> lst);
 }

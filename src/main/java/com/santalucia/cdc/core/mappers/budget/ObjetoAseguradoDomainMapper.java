@@ -6,6 +6,8 @@ import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface ObjetoAseguradoDomainMapper {
 
@@ -17,4 +19,13 @@ public interface ObjetoAseguradoDomainMapper {
    * @return
    */
   //ObjetoAseguradoResource toResource (ObjetoAseguradoDomain objetoAseguradoDomain);
+
+  /**
+   *
+   * @param lst
+   * @return
+   */
+
+
+  //List<ObjetosAseguradosDomain> toDomainsfromResources(List<ObjetoAseguradoResource> lst);
 }
