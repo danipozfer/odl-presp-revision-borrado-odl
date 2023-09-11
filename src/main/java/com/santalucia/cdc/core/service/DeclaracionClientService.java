@@ -9,8 +9,7 @@ import java.util.UUID;
 
 public interface DeclaracionClientService {
 
-  @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  List<DeclaracionDomain> findHistoricDeclarationByIdres(String idPresupuestoODL);
+
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   List findDeclarationByIdPres(String idPresupuestoODL);
@@ -18,6 +17,4 @@ public interface DeclaracionClientService {
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid);
 
-  @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid);
 }

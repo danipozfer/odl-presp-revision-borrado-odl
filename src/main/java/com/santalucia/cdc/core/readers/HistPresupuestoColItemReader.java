@@ -17,10 +17,9 @@ public class HistPresupuestoColItemReader extends PaginatedDataItemReader<Evento
   private final HistDeclaracionClientService declaracionApiClient;
   private final HistObjetosAseguradosClientService objetoAseguradoApiClient;
 
-  public HistPresupuestoColItemReader(PresupuestosUtilsService utils,
-                                      HistPresupuestoColectivoClientService presupuestoApiClient,
-                                  DeclaracionClientService declaracionApiClient,
-                                  ObjetoAseguradoClientService objetoAseguradoApiClient) {
+  public HistPresupuestoColItemReader(PresupuestosUtilsService utils, HistPresupuestoColectivoClientService presupuestoApiClient,
+                                      HistDeclaracionClientService declaracionApiClient,
+                                      HistObjetosAseguradosClientService objetoAseguradoApiClient) {
     this.utils = utils;
     this.presupuestoApiClient = presupuestoApiClient;
     this.declaracionApiClient = declaracionApiClient;
@@ -42,7 +41,7 @@ public class HistPresupuestoColItemReader extends PaginatedDataItemReader<Evento
       event.setPresupuestoColectivo(budget);
       List<ObjetosAseguradosDomain> objects = objetoAseguradoApiClient.findAllHistoricSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL());
       event.setObjetosAsegurados(objects);
-      List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      List<DeclaracionDomain> declarations = declaracionApiClient.findHistoricDeclarationByIdres(budget.getDatoIdentificativo().getIdPresupuestoODL());
       event.setDeclaracion(declarations);
       result.add(event);
     }

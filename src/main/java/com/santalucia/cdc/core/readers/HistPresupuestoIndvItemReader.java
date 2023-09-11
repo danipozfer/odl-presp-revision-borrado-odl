@@ -14,19 +14,16 @@ import java.util.List;
 public class HistPresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPresupuestoIndvDomain> {
   private final PresupuestosUtilsService utils;
   private final HistPresupuestoIndividualClientService presupuestoApiClient;
-  private final DeclaracionClientService declaracionApiClient;
-  private final ObjetoAseguradoClientService objetoAseguradoApiClient;
+  private final HistDeclaracionClientService declaracionApiClient;
+  private final HistObjetosAseguradosClientService objetoAseguradoApiClient;
 
-  public HistPresupuestoIndvItemReader(PresupuestosUtilsService utils,
-                                       HistPresupuestoIndividualClientService presupuestoApiClient,
-                                       DeclaracionClientService declaracionApiClient,
-                                       ObjetoAseguradoClientService objetoAseguradoApiClient1) {
+  public HistPresupuestoIndvItemReader(PresupuestosUtilsService utils, HistPresupuestoIndividualClientService presupuestoApiClient, HistDeclaracionClientService declaracionApiClient,
+                                       HistObjetosAseguradosClientService objetoAseguradoApiClient) {
     this.utils = utils;
     this.presupuestoApiClient = presupuestoApiClient;
     this.declaracionApiClient = declaracionApiClient;
-    this.objetoAseguradoApiClient = objetoAseguradoApiClient1;
+    this.objetoAseguradoApiClient = objetoAseguradoApiClient;
   }
-
 
   /**
    * simplifica la lectura de los datos paginados de la fuente

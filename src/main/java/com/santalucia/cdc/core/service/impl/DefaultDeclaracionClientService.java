@@ -37,44 +37,39 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
-
-  /**
-   * Metodo para buscar declaraciones en el historico con idPresupuestoODL
-   * @param idPresupuestoODL
-   * @return
-   */
   @Override
-  public List<DeclaracionDomain> findHistoricDeclarationByIdres(String idPresupuestoODL){
-    log.info("Buscando declaraciones historicas con idPresupuestoODL {}", idPresupuestoODL);
+  public List<DeclaracionDomain> findDeclarationByIdPres(String idPresupuestoODL) {
+    log.info("Buscando declaraciones con idPresupuestoODL {}", idPresupuestoODL);
 
     int pageNum = 1;
-    List<DeclaracionDomain> declarations = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = histDeclaracionApiClient
+    List<DeclaracionDomain> declaraciones = new ArrayList<>(DEFAULT_CAPACITY);
+    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = declaracionApiClient
       .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idPresupuestoODL),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
+
     boolean end = false;
-    if(result != null) {
-      Long maxPages = result.getPage().getTotalPages();
-      declarations.addAll(histDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+    if (result != null) {
+      Long maxPages = result.getPage().getTotalPages();//busca las declaraciones por id
+      declaraciones.addAll(histDeclaracionDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
       while (pageNum < maxPages && !end) {
-        result = histDeclaracionApiClient
+        result = declaracionApiClient
           .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(idPresupuestoODL),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
         if (result == null) {
           end = true;
-        }else {
-          pageNum++;
-          declarations.addAll(histDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+        } else {
+          pageNum++;//añade las declaraciones encontradas
+          declaraciones.addAll(histDeclaracionDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
         }
       }
     }
-    return declarations;
-  }
 
+    return declaraciones;
+  }
 
 
   /**
