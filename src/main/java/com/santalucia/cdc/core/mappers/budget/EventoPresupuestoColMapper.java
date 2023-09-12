@@ -10,7 +10,7 @@ public interface EventoPresupuestoColMapper {
 
 
 
-    EventoPresupuestoColDomain toDomain (PresupuestoResource presupuestoResource);
+    //EventoPresupuestoColDomain toDomain (PresupuestoResource presupuestoResource);
 
     /**
      *

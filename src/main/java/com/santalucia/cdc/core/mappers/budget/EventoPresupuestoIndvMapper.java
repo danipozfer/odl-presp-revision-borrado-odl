@@ -9,5 +9,5 @@ import org.mapstruct.Mapper;
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface EventoPresupuestoIndvMapper {
 
-  EventoPresupuestoIndvDomain toDomain (PresupuestoResource presupuestoResource);
+  //EventoPresupuestoIndvDomain toDomain (PresupuestoResource presupuestoResource);
 }
