@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +49,8 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
     } else {
-      Instant thirtyDaysAfter = LocalDate.now().plusDays(30).atStartOfDay(ZoneOffset.UTC).toInstant();
-      if (budget.getFechaYEstado().getFecha().getFecAlta().isBefore(thirtyDaysAfter)) {   //Fecha anterior (anonimizamos y ponemos fecAnonimiizacion al día actual)
+      Instant thirtyDaysAfter = budget.getFechaYEstado().getFecha().getFecAlta().plus(30, ChronoUnit.DAYS);
+      if (Instant.now().isAfter(thirtyDaysAfter)) {
         eventoPresupuestoIndvDomain = anonimizate(eventoPresupuestoIndvDomain);
         eventoPresupuestoIndvDomain.getPresupuestoIndividual().getFechaYEstado().getFecha().setFecAnonimizacion(Instant.now());
       }

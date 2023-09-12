@@ -13,5 +13,5 @@ public interface HistPresupuestoIndividualClientService {
   PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  List<PresupuestoIndividualDomain> findAllHistoricIndividualBudget(String fechaAnonimizacion, String indFormalizado);
+  List<PresupuestoIndividualDomain> findAllHistoricIndividualBudget(String indAnonimizacion, String indFormalizado);
 }

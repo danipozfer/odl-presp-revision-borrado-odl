@@ -30,7 +30,7 @@ public class HistPresupuestoColItemWriter implements ItemWriter<EventoPresupuest
   }
 
   @Override
-  public void write(List<? extends EventoPresupuestoColDomain> items) throws Exception {
+  public void write(List<? extends EventoPresupuestoColDomain> items) {
 
     for (EventoPresupuestoColDomain historicBudgets : items) {
       UUID uuid = utils.getOrSetUUID(null);
