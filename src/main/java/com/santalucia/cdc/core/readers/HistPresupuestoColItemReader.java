@@ -27,13 +27,14 @@ public class HistPresupuestoColItemReader extends PaginatedDataItemReader<Evento
   }
 
   /**
-   * simplifica la lectura de los datos paginados de la fuente
+   * Simplifica la lectura de los datos paginados de la fuente
+   * Se encarga de obtener presupuestos colectivos en historico
+   * no anonimizados ni convertidos en polizas
    * @return
    */
   @Override
   protected Iterator<EventoPresupuestoColDomain> doPageRead() {
-
-    List<PresupuestoColectivoDomain> listHistColBudget = presupuestoApiClient.findAllHistoricCollectiveBudget("0001-01-01", "N");
+    List<PresupuestoColectivoDomain> listHistColBudget = presupuestoApiClient.findAllHistoricCollectiveBudget("N", "N");
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
     for (PresupuestoColectivoDomain budget : listHistColBudget){

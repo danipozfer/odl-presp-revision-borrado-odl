@@ -22,8 +22,8 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
   // AutoWired
 
 
-  private final HistDeclaracionDomainMapper histDeclaracionDomainMapper;
-  private final HistPresupuestosDeclaracionesApiClient histDeclaracionApiClient;//objeto que contiene la peticion get a la api
+  private final HistDeclaracionDomainMapper historicoDeclaracionDomainMapper;
+  private final HistPresupuestosDeclaracionesApiClient historicoDeclaracionApiClient;//objeto que contiene la peticion get a la api
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
@@ -31,8 +31,8 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
                                              HistPresupuestosDeclaracionesApiClient histDeclaracionApiClient,
                                              PresupuestosUtilsService presupuestosUtils,
                                              AppCustomFeaturesProperties properties) {
-    this.histDeclaracionDomainMapper = histDeclaracionDomainMapper;
-    this.histDeclaracionApiClient = histDeclaracionApiClient;
+    this.historicoDeclaracionDomainMapper = histDeclaracionDomainMapper;
+    this.historicoDeclaracionApiClient = histDeclaracionApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
@@ -49,7 +49,7 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
 
     int pageNum = 1;
     List<DeclaracionDomain> declarations = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = histDeclaracionApiClient
+    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = historicoDeclaracionApiClient
       .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idPresupuestoODL),
         PageRequest.of(0, this.properties.getFindallPageSize()))
@@ -57,9 +57,9 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      declarations.addAll(histDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+      declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
       while (pageNum < maxPages && !end) {
-        result = histDeclaracionApiClient
+        result = historicoDeclaracionApiClient
           .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(idPresupuestoODL),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
@@ -68,15 +68,12 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
           end = true;
         }else {
           pageNum++;
-          declarations.addAll(histDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+          declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
         }
       }
     }
     return declarations;
   }
-
-
-
 
   /**
    * Metodo para actualizar una declaracion
@@ -89,9 +86,9 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
   public DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
     DeclaracionDomain result = null;
     if (declaracionId != null) {
-      PresupuestosDeclaracionesRequestBodyResource input = histDeclaracionDomainMapper.toResource(declaracion);
-      result = histDeclaracionDomainMapper
-        .toDomain(histDeclaracionApiClient.savePresupuestosDeclaracionUsingPUT(declaracionId,
+      PresupuestosDeclaracionesRequestBodyResource input = historicoDeclaracionDomainMapper.toResource(declaracion);
+      result = historicoDeclaracionDomainMapper
+        .toDomain(historicoDeclaracionApiClient.savePresupuestosDeclaracionUsingPUT(declaracionId,
           presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
     }
     return result;

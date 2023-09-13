@@ -20,17 +20,17 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
 
   // AutoWired
-  private final HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper;
-  private final HistObjetoAseguradoApiClient histObjetoAseguradoApiClient;
+  private final HistObjetoAseguradoDomainMapper historicoObjetoAseguradoDomainMapper;
+  private final HistObjetoAseguradoApiClient historicoObjetoAseguradoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
   public DefaultHistObjetosAseguradosClientService(HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper,
-                                                   HistObjetoAseguradoApiClient histObjetoAseguradoApiClient,
+                                                   HistObjetoAseguradoApiClient historicoObjetoAseguradoApiClient,
                                                    PresupuestosUtilsService presupuestosUtils,
                                                    AppCustomFeaturesProperties properties) {
-    this.histObjetoAseguradoDomainMapper = histObjetoAseguradoDomainMapper;
-    this.histObjetoAseguradoApiClient = histObjetoAseguradoApiClient;
+    this.historicoObjetoAseguradoDomainMapper = histObjetoAseguradoDomainMapper;
+    this.historicoObjetoAseguradoApiClient = historicoObjetoAseguradoApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
@@ -46,7 +46,7 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
 
     int pageNum = 1;
     List<ObjetosAseguradosDomain> objetosAsegurados = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelObjetoAseguradoResource result = histObjetoAseguradoApiClient
+    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelObjetoAseguradoResource result = historicoObjetoAseguradoApiClient
       .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idPresupuestoODL),
         PageRequest.of(0, this.properties.getFindallPageSize()))
@@ -55,9 +55,9 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      objetosAsegurados.addAll(histObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
+      objetosAsegurados.addAll(historicoObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
       while (pageNum < maxPages && !end) {
-        result = histObjetoAseguradoApiClient
+        result = historicoObjetoAseguradoApiClient
           .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(idPresupuestoODL),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
@@ -66,15 +66,13 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
           end = true;
         }else {
           pageNum++;
-          objetosAsegurados.addAll(histObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
+          objetosAsegurados.addAll(historicoObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
         }
       }
     }
 
     return objetosAsegurados;
   }
-
-
 
   /**
    * Metodo para actualizar un objeto asegurado en histórico
@@ -87,9 +85,9 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
   public ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
     ObjetosAseguradosDomain result = null;
     if (securedObjectId != null) {
-      PresupuestosObjetoAseguradoRequestBodyResource input = histObjetoAseguradoDomainMapper.toResource(securedObject);
-      result = histObjetoAseguradoDomainMapper
-        .toDomain(histObjetoAseguradoApiClient.savePresupuestosObjetoAseguradoUsingPUT(securedObjectId,
+      PresupuestosObjetoAseguradoRequestBodyResource input = historicoObjetoAseguradoDomainMapper.toResource(securedObject);
+      result = historicoObjetoAseguradoDomainMapper
+        .toDomain(historicoObjetoAseguradoApiClient.savePresupuestosObjetoAseguradoUsingPUT(securedObjectId,
           presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
     }
     return result;

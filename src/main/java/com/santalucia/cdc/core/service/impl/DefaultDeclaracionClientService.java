@@ -37,6 +37,12 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
+
+  /**
+   * Metodo para buscar declaraciones en ultima foto con idPresupuestoOdl
+   * @param idPresupuestoODL
+   * @return
+   */
   @Override
   public List<DeclaracionDomain> findDeclarationByIdPres(String idPresupuestoODL) {
     log.info("Buscando declaraciones con idPresupuestoODL {}", idPresupuestoODL);

@@ -3,7 +3,6 @@ package com.santalucia.cdc.core.service.impl;
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource;
 import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
-import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.HistPresupuestoColectivoClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import com.santalucia.cdc.reload.AppCustomFeaturesProperties;
@@ -20,7 +19,7 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
 
-  private final HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper;
+  private final HistPresupuestoColectivoDomainMapper historicoPresupuestoColectivoDomainMapper;
   private final HistoricoPresupuestosColectivoApiClient historicoPresupuestosColectivoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
@@ -28,7 +27,7 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
   public DefaultHistPresupuestoColectivoClientService(HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper,
                                                       HistoricoPresupuestosColectivoApiClient historicoPresupuestosColectivoApiClient,
                                                       PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
-    this.histPresupuestoColectivoDomainMapper = histPresupuestoColectivoDomainMapper;
+    this.historicoPresupuestoColectivoDomainMapper = histPresupuestoColectivoDomainMapper;
     this.historicoPresupuestosColectivoApiClient = historicoPresupuestosColectivoApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
@@ -47,7 +46,7 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
 
     int pageNum = 1;
     List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
-    PagedModelEntityModelPresupuestoColectivoResource result = histPresupuestoColectivoApiClient
+    PagedModelEntityModelPresupuestoColectivoResource result = historicoPresupuestosColectivoApiClient
       .findAllAdvancedHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(indAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
@@ -56,9 +55,9 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) histPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
+      presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) historicoPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
       while (pageNum < maxPages && !end) {
-        result = histPresupuestoColectivoApiClient
+        result = historicoPresupuestosColectivoApiClient
           .findAllAdvancedHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(indAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
@@ -67,7 +66,7 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
           end = true;
         }else {
           pageNum++;
-          presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) histPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
+          presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) historicoPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
         }
       }
     }
@@ -86,9 +85,9 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
   public PresupuestoColectivoDomain updateHistCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
     PresupuestoColectivoDomain result = null;
     if (collectiveBudgetId != null) {
-      PresupuestosColectivosRequestBodyResource input = histPresupuestoColectivoDomainMapper.toResource(collectiveBudget);
-      result = histPresupuestoColectivoDomainMapper
-        .toDomain(histPresupuestoColectivoApiClient.savePresupuestosColectivosUsingPUT(collectiveBudgetId,
+      PresupuestosColectivosRequestBodyResource input = historicoPresupuestoColectivoDomainMapper.toResource(collectiveBudget);
+      result = historicoPresupuestoColectivoDomainMapper
+        .toDomain(historicoPresupuestosColectivoApiClient.savePresupuestosColectivosUsingPUT(collectiveBudgetId,
           presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
     }
     return result;

@@ -4,10 +4,17 @@ import com.santalucia.arq.ams.componentes.exceptions.core.SantaluciaCoreBusiness
 
 import com.santalucia.cdc.core.exceptions.errors.AppErrorCodes;
 public class RetryParamsValidationException extends SantaluciaCoreBusinessException {
+  /**
+   *
+   * @param cause
+   */
   public RetryParamsValidationException(Throwable cause) {
     super(AppErrorCodes.ERROR_ITEMREADER_RETRY_PARAMS, cause);
   }
 
+  /**
+   *
+   */
   public RetryParamsValidationException() {
     super(AppErrorCodes.ERROR_ITEMREADER_RETRY_PARAMS);
   }

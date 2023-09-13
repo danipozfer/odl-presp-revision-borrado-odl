@@ -32,11 +32,17 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
 
   public static final String ANONIMO = "**********";
 
+  /**
+   * Metodo para procesar los presupuestos
+   *
+   * @param eventoPresupuestoIndvDomain
+   * @return
+   */
   @Autowired
   private PolizaIndividualClientService polizaService;
 
   @Override
-  public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) throws Exception {
+  public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) {
 
     PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
 
@@ -60,6 +66,12 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
     return eventoPresupuestoIndvDomain;
   }
 
+  /**
+   * Metodo para anonimizar los campos correspondientes de los presupuestos
+   *
+   * @param eventoPresupuestoIndvDomain
+   * @return
+   */
   private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) {
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();

@@ -1,9 +1,6 @@
 package com.santalucia.cdc.core.service.impl;
 
-import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoApiControllerApiClient;
-import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoEntityControllerApiClient;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
-import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.HistPresupuestoIndividualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
@@ -20,7 +17,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
 
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
-  private final HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper;
+  private final HistPresupuestoIndividualDomainMapper historicoPresupuestoIndividualDomainMapper;
   private final HistoricoPresupuestoIndividualApiClient historicoPresupuestoIndividualApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
@@ -28,7 +25,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
   public DefaultHistPresupuestoIndividualClientService(HistPresupuestoIndividualDomainMapper histPresupuestoIndividualDomainMapper,
                                                        HistoricoPresupuestoIndividualApiClient historicoPresupuestoIndividualApiClient,
                                                        PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
-    this.histPresupuestoIndividualDomainMapper = histPresupuestoIndividualDomainMapper;
+    this.historicoPresupuestoIndividualDomainMapper = histPresupuestoIndividualDomainMapper;
     this.historicoPresupuestoIndividualApiClient = historicoPresupuestoIndividualApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
@@ -47,7 +44,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
 
     int pageNum = 1;
     List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoIndividualResource result = histPresupuestoIndividualApiClient
+    com.santalucia.arq.ams.odl.historico.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoIndividualResource result = historicoPresupuestoIndividualApiClient
       .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(indAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
@@ -56,9 +53,9 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosIndividuales.addAll(histPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
+      presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
       while (pageNum < maxPages && !end) {
-        result = histPresupuestoIndividualApiClient
+        result = historicoPresupuestoIndividualApiClient
           .findAllPresupuestosIndividualesUsingGET(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(indAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
@@ -67,7 +64,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
           end = true;
         }else {
           pageNum++;
-          presupuestosIndividuales.addAll(histPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
+          presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
         }
       }
     }
@@ -86,8 +83,8 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
   public PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid) {
     PresupuestoIndividualDomain result = null;
     if (individualBudgetId != null) {
-      PresupuestoIndividualRequestBodyResource input = histPresupuestoIndividualDomainMapper.toResource(individualBudget);
-      result = histPresupuestoIndividualDomainMapper
+      PresupuestoIndividualRequestBodyResource input = historicoPresupuestoIndividualDomainMapper.toResource(individualBudget);
+      result = historicoPresupuestoIndividualDomainMapper
         .toDomain(historicoPresupuestoIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
           presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
     }

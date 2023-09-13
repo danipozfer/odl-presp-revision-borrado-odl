@@ -26,13 +26,15 @@ public class HistPresupuestoIndvItemReader extends PaginatedDataItemReader<Event
   }
 
   /**
-   * simplifica la lectura de los datos paginados de la fuente
+   * Simplifica la lectura de los datos paginados de la fuente
+   * Se encarga de obtener presupuestos individuales en historico
+   * no anonimizados ni convertidos en polizas
    *
    * @return
    */
   @Override
   protected Iterator<EventoPresupuestoIndvDomain> doPageRead() {
-    List<PresupuestoIndividualDomain> listHistIndvBudget = presupuestoApiClient.findAllHistoricIndividualBudget(null, "N");
+    List<PresupuestoIndividualDomain> listHistIndvBudget = presupuestoApiClient.findAllHistoricIndividualBudget("N", "N");
     List<EventoPresupuestoIndvDomain> result = new ArrayList<>();
 
     for (PresupuestoIndividualDomain budget : listHistIndvBudget) {

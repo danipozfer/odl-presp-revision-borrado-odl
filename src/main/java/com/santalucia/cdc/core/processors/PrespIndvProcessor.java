@@ -34,8 +34,14 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
   @Autowired
   private PolizaIndividualClientService polizaService;
 
+  /**
+   * Metodo para procesar los presupuestos
+   *
+   * @param eventoPresupuestoIndvDomain
+   * @return
+   */
   @Override
-  public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) throws Exception {
+  public EventoPresupuestoIndvDomain process(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain){
     PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
@@ -57,7 +63,12 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
     }
     return eventoPresupuestoIndvDomain;
   }
-
+  /**
+   * Metodo para anonimizar los campos correspondientes de los presupuestos
+   *
+   * @param eventoPresupuestoIndvDomain
+   * @return
+   */
   private EventoPresupuestoIndvDomain anonimizate(EventoPresupuestoIndvDomain eventoPresupuestoIndvDomain) {
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();

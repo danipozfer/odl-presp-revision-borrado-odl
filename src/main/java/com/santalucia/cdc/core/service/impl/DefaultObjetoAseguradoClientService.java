@@ -29,15 +29,11 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
 
 
   public DefaultObjetoAseguradoClientService(ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper,
-                                             HistObjetoAseguradoDomainMapper histObjetoAseguradoDomainMapper,
                                              ObjetoAseguradoApiClient objetoAseguradoApiClient,
-                                             HistObjetoAseguradoApiClient histObjetoAseguradoApiClient,
                                              PresupuestosUtilsService presupuestosUtils,
                                              AppCustomFeaturesProperties properties) {
     this.objetoAseguradoDomainMapper = objetoAseguradoDomainMapper;
-    this.histObjetoAseguradoDomainMapper = histObjetoAseguradoDomainMapper;
     this.objetoAseguradoApiClient = objetoAseguradoApiClient;
-    this.histObjetoAseguradoApiClient = histObjetoAseguradoApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }

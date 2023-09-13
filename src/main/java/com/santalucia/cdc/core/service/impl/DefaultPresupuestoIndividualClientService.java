@@ -35,11 +35,50 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
   }
 
   /**
+   * Metodo para buscar presupuestos individuales no anonimizados ni formalizados
+   *
+   * @param indAnonimizacion indica si un presupuesto ha sido anonimizado
+   * @param indFormalizado indica si un presupuesto ha pasado a poliza
+   * @return
+   */
+  @Override
+  public List<PresupuestoIndividualDomain> findIndividualBudgets(String indAnonimizacion, String indFormalizado){
+
+    log.info("Buscando presupuestos individuales no anonimizados ni convertidos en polizas");
+
+    int pageNum = 1;
+    List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
+    PagedModelEntityModelPresupuestoIndividualResource result = presupuestosIndividualApiClient
+      .findAllPresupuestoIndividual(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(indAnonimizacion, indFormalizado),
+        PageRequest.of(0, this.properties.getFindallPageSize()))
+      .getBody();
+    boolean end = false;
+    if(result != null) {
+      Long maxPages = result.getPage().getTotalPages();
+      presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestos()));
+      while (pageNum < maxPages && !end) {
+        result = presupuestosIndividualApiClient
+          .findAllPresupuestoIndividual(presupuestosUtils.getOrSetUUID(null),
+            getMapParamQuery(indAnonimizacion, indFormalizado),
+            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
+          .getBody();
+        if (result == null) {
+          end = true;
+        }else {
+          pageNum++;
+          presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestos()));
+        }
+      }
+    }
+
+    return presupuestosIndividuales;
+  }
+  /**
    * Metodo para obtener un presupuesto individual
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   */
   @Override
   public PresupuestoIndividualDomain getIndividualBudget(String indAnonimizacion, String indFormalizado) {
     PresupuestoIndividualDomain result = null;
@@ -50,12 +89,12 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
     return result;
   }
 
-  /**
+  *//**
    * Metodo para obtener la ultima foto de un presupuesto individual
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   */
+   *//*
   @Override
   public EntityModelPresupuestoIndividualResource findApiSnapshotIndividualBudget(String indAnonimizacion, String indFormalizado){
     log.info("Buscando presupuesto no anonimizado");
@@ -68,7 +107,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
       result = odlResult.getEmbedded().getPresupuestos().get(0);
     }
     return result;
-  }
+  }*/
 
   /**
    * Metodo para actualizar un presupuesto individual

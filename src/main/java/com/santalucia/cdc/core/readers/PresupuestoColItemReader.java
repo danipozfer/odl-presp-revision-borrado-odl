@@ -30,25 +30,27 @@ public class PresupuestoColItemReader extends PaginatedDataItemReader<EventoPres
   }
 
   /**
-   * simplifica la lectura de los datos paginados de la fuente
+   * Simplifica la lectura de los datos paginados de la fuente
+   * Se encarga de obtener presupuestos colectivos en ultima foto
+   * no anonimizados ni convertidos en polizas
    *
    * @return
    */
   @Override
   protected Iterator<EventoPresupuestoColDomain> doPageRead() {
-    PresupuestoColectivoDomain budget = presupuestoApiClient.getCollectiveBudget(null, "N");
+    List<PresupuestoColectivoDomain> budgets = presupuestoApiClient.findCollectiveBudgets("N", "N");
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
-
-    EventoPresupuestoColDomain event = new EventoPresupuestoColDomain();
-    event.setPresupuestoColectivo(budget);
-    List<ObjetosAseguradosDomain> objects = new ArrayList<>();
-    objects.add(objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL()));
-    event.setObjetosAsegurados(objects);
-    List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
-    event.setDeclaracion(declarations);
-    result.add(event);
-
+    for (PresupuestoColectivoDomain budget: budgets) {
+      EventoPresupuestoColDomain event = new EventoPresupuestoColDomain();
+      event.setPresupuestoColectivo(budget);
+      List<ObjetosAseguradosDomain> objects = new ArrayList<>();
+      objects.add(objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL()));
+      event.setObjetosAsegurados(objects);
+      List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      event.setDeclaracion(declarations);
+      result.add(event);
+    }
     return result.iterator();
   }
 

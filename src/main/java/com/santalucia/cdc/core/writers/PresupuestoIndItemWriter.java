@@ -27,6 +27,10 @@ public class PresupuestoIndItemWriter implements ItemWriter<EventoPresupuestoInd
     this.objetoAseguradoService = objetoAseguradoService;
   }
 
+  /**
+   * Metodo para actualizar los presupuestos colectivos en ultima foto
+   * @param items
+   */
   @Override
   public void write(List<? extends EventoPresupuestoIndvDomain> items) {
 

@@ -32,8 +32,14 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
   @Autowired
   private PolizaColectivaClientService polizaService;
 
+  /**
+   * Metodo para procesar los presupuestos
+   *
+   * @param eventoPresupuestoColDomain
+   * @return
+   */
   @Override
-  public EventoPresupuestoColDomain process(EventoPresupuestoColDomain eventoPresupuestoColDomain) throws Exception {
+  public EventoPresupuestoColDomain process(EventoPresupuestoColDomain eventoPresupuestoColDomain){
 
     PresupuestoColectivoDomain budget = eventoPresupuestoColDomain.getPresupuestoColectivo();
 
@@ -57,7 +63,12 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
     return eventoPresupuestoColDomain;
   }
 
-
+  /**
+   * Metodo para anonimizar los campos correspondientes de los presupuestos
+   *
+   * @param eventoPresupuestoColDomain
+   * @return
+   */
   private EventoPresupuestoColDomain anonimizate(EventoPresupuestoColDomain eventoPresupuestoColDomain) {
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();

@@ -38,11 +38,50 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
   }
 
   /**
+   * Metodo para buscar presupuestos colectivos no anonimizados ni formalizados
+   *
+   * @param indAnonimizacion indica si un presupuesto ha sido anonimizado
+   * @param indFormalizado indica si un presupuesto ha pasado a poliza
+   * @return
+   */
+  @Override
+  public List<PresupuestoColectivoDomain> findCollectiveBudgets(String indAnonimizacion, String indFormalizado){
+
+    log.info("Buscando presupuestos historicos no anonimizados ni convertidos en polizas");
+
+    int pageNum = 1;
+    List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
+    com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource result = presupuestosColectivoApiClient
+      .findAllPresupuestosColectivoUsingGET(presupuestosUtils.getOrSetUUID(null),
+        getMapParamQuery(indAnonimizacion, indFormalizado),
+        PageRequest.of(0, this.properties.getFindallPageSize()))
+      .getBody();
+    boolean end = false;
+    if(result != null) {
+      Long maxPages = result.getPage().getTotalPages();
+      presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoColectivo()));
+      while (pageNum < maxPages && !end) {
+        result = presupuestosColectivoApiClient
+          .findAllPresupuestosColectivoUsingGET(presupuestosUtils.getOrSetUUID(null),
+            getMapParamQuery(numIdAgrupacion),
+            PageRequest.of(pageNum, this.properties.getFindallPageSize()))
+          .getBody();
+        if (result == null) {
+          end = true;
+        }else {
+          pageNum++;
+          presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoColectivo()));
+        }
+      }
+    }
+
+    return presupuestosColectivos;
+  }
+  /**
    * Metodo para obtener un presupuesto colectivo
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   */
   @Override
   public PresupuestoColectivoDomain getCollectiveBudget(String indAnonimizacion, String indFormalizado) {
     PresupuestoColectivoDomain result = null;
@@ -53,12 +92,12 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
     return result;
   }
 
-  /**
+  *//**
    * Metodo para obtener la ultima foto de un presupuesto colectivo
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   */
+   *//*
   @Override
   public PresupuestoColectivoResource findApiSnapshotCollectiveBudget(String indAnonimizacion, String indFormalizado) {
     log.info("Buscando presupuesto no anonimizado");
@@ -71,7 +110,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
       result = odlResult.getEmbedded().getDeclaracion().get(0);
     }
     return result;
-  }
+  }*/
 
   /**
    * Metodo para actualizar un presupuesto colectivo

@@ -29,6 +29,10 @@ public class HistPresupuestoColItemWriter implements ItemWriter<EventoPresupuest
     this.objetoAseguradoService = objetoAseguradoService;
   }
 
+  /**
+   * Metodo para actualizar los presupuestos colectivos en historico
+   * @param items
+   */
   @Override
   public void write(List<? extends EventoPresupuestoColDomain> items) {
 
