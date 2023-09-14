@@ -50,10 +50,10 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
     //Buscar en polizas
 
     //Si hay resultado poner el ind a S
-    if (polizaService.getPolizaIndividual(numIdpresupuesto, null) != null ) {
+    if (polizaService.getPolizaIndividual(numIdpresupuesto)) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-    } else if (!polizaService.findAllHistoricoIndividual(numIdpresupuesto, null).isEmpty()) {//Si no hay resultado comprobar fecha
+    } else if (polizaService.getHistoricoIndividual(numIdpresupuesto)) {//Si no hay resultado comprobar fecha
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
     } else {
@@ -61,6 +61,7 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
       if (Instant.now().isAfter(thirtyDaysAfter)) {
         anonimizate(eventoPresupuestoIndvDomain);
         eventoPresupuestoIndvDomain.getPresupuestoIndividual().getFechaYEstado().getFecha().setFecAnonimizacion(Instant.now());
+        eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoIdentificativo().setIndAnonimizado("S");
       }
     }
     return eventoPresupuestoIndvDomain;

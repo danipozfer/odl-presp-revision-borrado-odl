@@ -47,16 +47,17 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
     //Buscar en polizas
 
     //Si hay resultado poner el ind a S
-    if (polizaService.getPolizaColectiva(numIdpresupuesto, null) != null) {
+    if (polizaService.getPolizaColectiva(numIdpresupuesto)) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-    } else if (!polizaService.findAllHistoricoColectiva(numIdpresupuesto, null).isEmpty()) {//Si no hay resultado comprobar fecha
+    } else if (polizaService.getHistoricoColectiva(numIdpresupuesto)) {//Si no hay resultado comprobar fecha
       budget.getDatoIdentificativo().setIndFormalizado("S");
     } else {
       Instant thirtyDaysAfter = budget.getFechaYEstado().getFecha().getFecAlta().plus(30, ChronoUnit.DAYS);
       if (Instant.now().isAfter(thirtyDaysAfter)) {
         anonimizate(eventoPresupuestoColDomain);
         eventoPresupuestoColDomain.getPresupuestoColectivo().getFechaYEstado().getFecha().setFecAnonimizacion(Instant.now());
+        eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoIdentificativo().setIndAnonimizado("S");
       }
 
     }

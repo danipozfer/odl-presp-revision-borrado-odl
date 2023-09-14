@@ -48,12 +48,12 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
     //Buscar en polizas
 
     //Si hay resultado poner el ind a S
-    if (polizaService.getPolizaColectiva(numIdpresupuesto, null) != null ) {
+    if (polizaService.getPolizaColectiva(numIdpresupuesto) ) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
 
 
-    } else if (!polizaService.findAllHistoricoColectiva(numIdpresupuesto, null).isEmpty()) {//Si no hay resultado comprobar fecha
+    } else if (polizaService.getHistoricoColectiva(numIdpresupuesto)) {//Si no hay resultado comprobar fecha
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
 
@@ -62,6 +62,7 @@ public class PrespColProcessor implements ItemProcessor<EventoPresupuestoColDoma
       if (Instant.now().isAfter(thirtyDaysAfter)) {
         eventoPresupuestoColDomain = anonimizate(eventoPresupuestoColDomain);
         eventoPresupuestoColDomain.getPresupuestoColectivo().getFechaYEstado().getFecha().setFecAnonimizacion(Instant.now());
+        eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoIdentificativo().setIndAnonimizado("S");
       }
     }
     return eventoPresupuestoColDomain;
