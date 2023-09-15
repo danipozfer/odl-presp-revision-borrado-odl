@@ -24,6 +24,7 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
 
   private final HistDeclaracionDomainMapper historicoDeclaracionDomainMapper;
   private final HistPresupuestosDeclaracionesApiClient historicoDeclaracionApiClient;//objeto que contiene la peticion get a la api
+
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 

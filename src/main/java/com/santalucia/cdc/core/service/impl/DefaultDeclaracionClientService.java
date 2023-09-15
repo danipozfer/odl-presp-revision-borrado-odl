@@ -1,6 +1,8 @@
 package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
+import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.client.DeclaracionesApiClient;
+import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.PagedModelEntityModelDeclaracionResource;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.mappers.budget.DeclaracionDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.HistDeclaracionDomainMapper;
@@ -23,17 +25,21 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
   // AutoWired
 
   private final DeclaracionDomainMapper declaracionDomainMapper;
-  private final PresupuestosDeclaracionesApiClient declaracionApiClient;//objeto que contiene la peticion get a la api
+  private final DeclaracionesApiClient declaracionApiClient;//objeto que contiene la peticion get a la api
+
+  private final HistDeclaracionDomainMapper histDeclaracionDomainMapper;
+
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
 
   public DefaultDeclaracionClientService(DeclaracionDomainMapper declaracionDomainMapper,
-                                         PresupuestosDeclaracionesApiClient declaracionApiClient,
-                                         PresupuestosUtilsService presupuestosUtils,
+                                         DeclaracionesApiClient declaracionApiClient,
+                                         HistDeclaracionDomainMapper histDeclaracionDomainMapper, PresupuestosUtilsService presupuestosUtils,
                                          AppCustomFeaturesProperties properties) {
     this.declaracionDomainMapper = declaracionDomainMapper;
     this.declaracionApiClient = declaracionApiClient;
+    this.histDeclaracionDomainMapper = histDeclaracionDomainMapper;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
@@ -49,9 +55,9 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
 
     int pageNum = 1;
     List<DeclaracionDomain> declaraciones = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = declaracionApiClient
-      .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(idPresupuestoODL),
+    PagedModelEntityModelDeclaracionResource result = declaracionApiClient
+      .findAllDeclaraciones(presupuestosUtils.getOrSetUUID(null),
+        Optional.of(getMapParamQuery(idPresupuestoODL)),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
 
