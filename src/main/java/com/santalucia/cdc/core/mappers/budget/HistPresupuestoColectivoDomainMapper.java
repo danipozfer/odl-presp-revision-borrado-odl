@@ -9,30 +9,27 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
+@SuppressWarnings("NullAway")
+@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true), uses = OffsetDateTimeMapper.class)
 public interface HistPresupuestoColectivoDomainMapper {
   /**
-   *
    * @param presupuestoColectivoResource
    * @return
    */
-  PresupuestoColectivoDomain toDomain (EntityModelPresupuestoColectivoResource presupuestoColectivoResource);
+  PresupuestoColectivoDomain toDomain(EntityModelPresupuestoColectivoResource presupuestoColectivoResource);
 
   /**
-   *
    * @param presupuestoColectivoDomain
    * @return
    */
-  PresupuestoColectivoRequestBodyResource toResource (PresupuestoColectivoDomain presupuestoColectivoDomain);
+  PresupuestoColectivoRequestBodyResource toResource(PresupuestoColectivoDomain presupuestoColectivoDomain);
 
   /**
-   *
    * @param embedded
    * @return
    */
 
   List<PresupuestoColectivoDomain> toDomainsfromResources(List<EntityModelPresupuestoColectivoResource> embedded);
-
 
 
 }

@@ -90,7 +90,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
     if (individualBudgetId != null) {
       PresupuestoIndividualRequestBodyResource input = historicoPresupuestoIndividualDomainMapper.toResource(individualBudget);
       result = historicoPresupuestoIndividualDomainMapper
-        .toDomainFromEntity(historicoPresupuestoIndividualApiClient.updateHistoricoPresupuestoIndividual(
+        .toDomain(historicoPresupuestoIndividualApiClient.updateHistoricoPresupuestoIndividual(
           presupuestosUtils.getOrSetUUID(null),individualBudgetId, input).getBody());
     }
     return result;

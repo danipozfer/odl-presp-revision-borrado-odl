@@ -1,13 +1,9 @@
 package com.santalucia.cdc.config;
 
 import com.santalucia.cdc.core.domain.EventoPresupuestoIndvDomain;
-import com.santalucia.cdc.core.processors.PrespColProcessor;
 import com.santalucia.cdc.core.processors.PrespIndvProcessor;
-import com.santalucia.cdc.core.readers.PresupuestoColItemReader;
 import com.santalucia.cdc.core.readers.PresupuestoIndvItemReader;
-import com.santalucia.cdc.core.writers.PresupuestoColItemWriter;
 import com.santalucia.cdc.core.writers.PresupuestoIndItemWriter;
-import com.santalucia.cdc.infrastructure.entity.Presupuestos;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;

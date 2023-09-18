@@ -2,7 +2,6 @@ package com.santalucia.cdc.core.mappers.budget;
 
 import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.EntityModelObjetoAseguradoPresupuestoResource;
 import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.ObjetoAseguradoPresupuestoRequestBodyResource;
-import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.PagedModelEntityModelObjetoAseguradoPresupuestoEmbeddedResource;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
@@ -10,11 +9,11 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
+@SuppressWarnings("NullAway")
+@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true), uses = OffsetDateTimeMapper.class)
 public interface HistObjetoAseguradoDomainMapper {
 
   /**
-   *
    * @param body
    * @return
    */
@@ -22,7 +21,6 @@ public interface HistObjetoAseguradoDomainMapper {
   ObjetosAseguradosDomain toDomain(EntityModelObjetoAseguradoPresupuestoResource body);
 
   /**
-   *
    * @param securedObject
    * @return
    */
@@ -31,12 +29,16 @@ public interface HistObjetoAseguradoDomainMapper {
   ObjetoAseguradoPresupuestoRequestBodyResource toResource(ObjetosAseguradosDomain securedObject);
 
   /**
-   *
-   * @param embedded
+   * @param list
    * @return
    */
 
-  List<ObjetosAseguradosDomain> toDomainsfromResources(PagedModelEntityModelObjetoAseguradoPresupuestoEmbeddedResource embedded);
+  List<ObjetosAseguradosDomain> toDomainsfromResources(List<EntityModelObjetoAseguradoPresupuestoResource> list);
+  /**
+   *
+   * @param offsetDateTime
+   * @return
+   */
 
 
 }

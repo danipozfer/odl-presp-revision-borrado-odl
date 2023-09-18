@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
+@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true), uses = OffsetDateTimeMapper.class)
 
 public interface DeclaracionDomainMapper {
   /**
@@ -20,19 +20,22 @@ public interface DeclaracionDomainMapper {
   DeclaracionDomain toDomain(EntityModelDeclaracionResource declaracionResource);
 
   /**
-   *
    * @param declaracionDomain
    * @return
    */
-  DeclaracionRequestBodyResource toResource (DeclaracionDomain declaracionDomain);
+  DeclaracionRequestBodyResource toResource(DeclaracionDomain declaracionDomain);
 
   /**
-   *
    * @param lst
    * @return
    */
 
   List<DeclaracionDomain> toDomainsfromResources(List<EntityModelDeclaracionResource> lst);
+  /**
+   *
+   * @param offsetDateTime
+   * @return
+   */
 
 
 }

@@ -7,11 +7,10 @@ import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
-
-@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
+@SuppressWarnings("NullAway")
+@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true), uses = OffsetDateTimeMapper.class)
 public interface ObjetoAseguradoDomainMapper {
   /**
-   *
    * @param objetoAsegurado
    * @return
    */
@@ -19,7 +18,6 @@ public interface ObjetoAseguradoDomainMapper {
   ObjetosAseguradosDomain toDomain(EntityModelObjetoAseguradoPresupuestoResource objetoAsegurado);
 
   /**
-   *
    * @param securedObject
    * @return
    */
