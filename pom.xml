@@ -63,6 +63,10 @@
     </polizas-colectivas-odl-api-client.version>
     <historico-polizas-colectivas-odl-api-client.version>1.2.0-SNAPSHOT
     </historico-polizas-colectivas-odl-api-client.version>
+    <historico-polizas-colectivas-completas-odl-java-17-feign-api-async-client.version>3.0.0-SNAPSHOT</historico-polizas-colectivas-completas-odl-java-17-feign-api-async-client.version>
+    <historico-polizas-completas-odl-java-17-feign-api-async-client.version>3.0.0-SNAPSHOT</historico-polizas-completas-odl-java-17-feign-api-async-client.version>
+    <polizas-colectivas-completas-odl-java-17-feign-api-async-client.version>3.0.0-SNAPSHOT</polizas-colectivas-completas-odl-java-17-feign-api-async-client.version>
+    <polizas-completas-odl-java-17-feign-api-async-client.version>3.0.0-SNAPSHOT</polizas-completas-odl-java-17-feign-api-async-client.version>
   </properties>
 
   <dependencies>
@@ -212,16 +216,17 @@
     </dependency>
 
     <dependency>
+      <groupId>com.santalucia.arq.ams.odl.presupuestos.historico.colectivo</groupId>
+      <artifactId>historico-presupuesto-colectivo-odl-java-17-feign-api-client</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.santalucia.arq.ams.odl.presupuestos.colectivo</groupId>
       <artifactId>presupuesto-colectivo-odl-java-17-feign-api-client</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.santalucia.arq.ams.odl.presupuestos.historico.colectivo</groupId>
-      <artifactId>historico-presupuesto-colectivo-odl-java-17-feign-api-client</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
 
     <dependency>
       <groupId>com.santalucia.arq.ams.odl.presupuestos.individual</groupId>
@@ -233,6 +238,30 @@
       <groupId>com.santalucia.arq.ams.odl.presupuestos.historico.individual</groupId>
       <artifactId>historico-presupuesto-individual-odl-java-17-feign-api-client</artifactId>
       <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.polizas.individuales</groupId>
+      <artifactId>polizas-completas-odl-java-17-feign-api-async-client</artifactId>
+      <version>${polizas-completas-odl-java-17-feign-api-async-client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.historico.polizas.individuales</groupId>
+      <artifactId>historico-polizas-completas-odl-java-17-feign-api-async-client</artifactId>
+      <version>${historico-polizas-completas-odl-java-17-feign-api-async-client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.polizas.colectivas</groupId>
+      <artifactId>polizas-colectivas-completas-odl-java-17-feign-api-async-client</artifactId>
+      <version>${polizas-colectivas-completas-odl-java-17-feign-api-async-client.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.santalucia.arq.ams.odl.historico.polizas.colectivas</groupId>
+      <artifactId>historico-polizas-colectivas-completas-odl-java-17-feign-api-async-client</artifactId>
+      <version>${historico-polizas-colectivas-completas-odl-java-17-feign-api-async-client.version}</version>
     </dependency>
 
   </dependencies>

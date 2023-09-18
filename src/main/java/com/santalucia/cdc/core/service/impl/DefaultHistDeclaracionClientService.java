@@ -1,6 +1,9 @@
 package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
+import com.santalucia.arq.ams.odl.historico.presupuestos.declaraciones.api.client.HistoricoDeclaracionesApiClient;
+import com.santalucia.arq.ams.odl.historico.presupuestos.declaraciones.api.model.DeclaracionRequestBodyResource;
+import com.santalucia.arq.ams.odl.historico.presupuestos.declaraciones.api.model.PagedModelEntityModelDeclaracionResource;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.mappers.budget.HistDeclaracionDomainMapper;
 import com.santalucia.cdc.core.service.HistDeclaracionClientService;
@@ -23,13 +26,12 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
 
 
   private final HistDeclaracionDomainMapper historicoDeclaracionDomainMapper;
-  private final HistPresupuestosDeclaracionesApiClient historicoDeclaracionApiClient;//objeto que contiene la peticion get a la api
-
+  private final HistoricoDeclaracionesApiClient historicoDeclaracionApiClient;//objeto que contiene la peticion get a la api
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
   public DefaultHistDeclaracionClientService(HistDeclaracionDomainMapper histDeclaracionDomainMapper,
-                                             HistPresupuestosDeclaracionesApiClient histDeclaracionApiClient,
+                                             HistoricoDeclaracionesApiClient histDeclaracionApiClient,
                                              PresupuestosUtilsService presupuestosUtils,
                                              AppCustomFeaturesProperties properties) {
     this.historicoDeclaracionDomainMapper = histDeclaracionDomainMapper;
@@ -41,35 +43,36 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
 
   /**
    * Metodo para buscar declaraciones en el historico con idPresupuestoODL
+   *
    * @param idPresupuestoODL
    * @return
    */
   @Override
-  public List<DeclaracionDomain> findHistoricDeclarationByIdres(String idPresupuestoODL){
+  public List<DeclaracionDomain> findHistoricDeclarationByIdres(String idPresupuestoODL) {
     log.info("Buscando declaraciones historicas con idPresupuestoODL {}", idPresupuestoODL);
 
     int pageNum = 1;
     List<DeclaracionDomain> declarations = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.declaracion.api.model.PagedModelEntityModelDeclaracionResource result = historicoDeclaracionApiClient
-      .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(idPresupuestoODL),
+    PagedModelEntityModelDeclaracionResource result = historicoDeclaracionApiClient
+      .findAllHistoricoDeclaraciones(presupuestosUtils.getOrSetUUID(null),
+        Optional.of(getMapParamQuery(idPresupuestoODL)),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
     boolean end = false;
-    if(result != null) {
+    if (result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+      declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded()));
       while (pageNum < maxPages && !end) {
         result = historicoDeclaracionApiClient
-          .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(idPresupuestoODL),
+          .findAllHistoricoDeclaraciones(presupuestosUtils.getOrSetUUID(null),
+            Optional.of(getMapParamQuery(idPresupuestoODL)),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
         if (result == null) {
           end = true;
-        }else {
+        } else {
           pageNum++;
-          declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaracion()));
+          declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded()));
         }
       }
     }
@@ -87,10 +90,11 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
   public DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
     DeclaracionDomain result = null;
     if (declaracionId != null) {
-      PresupuestosDeclaracionesRequestBodyResource input = historicoDeclaracionDomainMapper.toResource(declaracion);
+
+      DeclaracionRequestBodyResource input = historicoDeclaracionDomainMapper.toResource(declaracion);
       result = historicoDeclaracionDomainMapper
-        .toDomain(historicoDeclaracionApiClient.savePresupuestosDeclaracionUsingPUT(declaracionId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+        .toDomain(historicoDeclaracionApiClient.updateHistoricoDeclaracion(
+          presupuestosUtils.getOrSetUUID(null), declaracionId, input).getBody());
     }
     return result;
   }

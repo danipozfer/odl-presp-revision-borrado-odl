@@ -38,7 +38,7 @@ public class PresupuestoColItemReader extends PaginatedDataItemReader<EventoPres
    */
   @Override
   protected Iterator<EventoPresupuestoColDomain> doPageRead() {
-    List<PresupuestoColectivoDomain> budgets = presupuestoApiClient.findCollectiveBudgets("N", "N");
+    List<PresupuestoColectivoDomain> budgets = presupuestoApiClient.findCollectiveBudgets("N", "N", "0");//preguntar
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
     for (PresupuestoColectivoDomain budget: budgets) {

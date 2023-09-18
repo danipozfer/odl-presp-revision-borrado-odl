@@ -1,7 +1,8 @@
 package com.santalucia.cdc.core.mappers.budget;
 
-/*import com.santalucia.cdc.core.domain.declaracion.DeclaracionDomain;*/
 
+import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.DeclaracionRequestBodyResource;
+import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.EntityModelDeclaracionResource;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
@@ -16,14 +17,14 @@ public interface DeclaracionDomainMapper {
    * @param declaracionResource
    * @return
    */
-  DeclaracionDomain toDomain(DeclaracionResource declaracionResource);
+  DeclaracionDomain toDomain(EntityModelDeclaracionResource declaracionResource);
 
   /**
    *
    * @param declaracionDomain
    * @return
    */
-  /*DeclaracionResource toResource (DeclaracionDomain declaracionDomain);*/
+  DeclaracionRequestBodyResource toResource (DeclaracionDomain declaracionDomain);
 
   /**
    *
@@ -31,6 +32,7 @@ public interface DeclaracionDomainMapper {
    * @return
    */
 
-  List<DeclaracionDomain> toDomainsfromResources(List<DeclaracionResource> lst);
+  List<DeclaracionDomain> toDomainsfromResources(List<EntityModelDeclaracionResource> lst);
+
 
 }

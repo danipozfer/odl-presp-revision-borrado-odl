@@ -1,36 +1,30 @@
 package com.santalucia.cdc.core.mappers.budget;
 
-import com.santalucia.arq.ams.odl.recibos.api.model.ObjetoAseguradoResource;
+import com.santalucia.arq.ams.odl.presupuestos.objeto.asegurado.api.model.EntityModelObjetoAseguradoPresupuestoResource;
+import com.santalucia.arq.ams.odl.presupuestos.objeto.asegurado.api.model.ObjetoAseguradoPresupuestoRequestBodyResource;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
-import java.util.List;
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface ObjetoAseguradoDomainMapper {
-
   /**
    *
-   * @param objetoAseguradoResource
-   * @return
-   */
-  ObjetosAseguradosDomain toDomain (EntityModelObjetoAseguradoResource objetoAseguradoResource);
-
-  /**
-   *
-   * @param objetoAseguradoDomain
-   * @return
-   */
-  //ObjetoAseguradoResource toResource (ObjetoAseguradoDomain objetoAseguradoDomain);
-
-  /**
-   *
-   * @param lst
+   * @param objetoAsegurado
    * @return
    */
 
+  ObjetosAseguradosDomain toDomain(EntityModelObjetoAseguradoPresupuestoResource objetoAsegurado);
 
-  //List<ObjetosAseguradosDomain> toDomainsfromResources(List<ObjetoAseguradoResource> lst);
+  /**
+   *
+   * @param securedObject
+   * @return
+   */
+
+  ObjetoAseguradoPresupuestoRequestBodyResource toResource(ObjetosAseguradosDomain securedObject);
+
+
 }

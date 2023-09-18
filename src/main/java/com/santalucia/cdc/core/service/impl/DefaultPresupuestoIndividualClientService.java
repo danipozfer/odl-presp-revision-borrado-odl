@@ -1,12 +1,14 @@
 package com.santalucia.cdc.core.service.impl;
 
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.client.PresupuestoIndividualApiClient;
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoIndividualResource;
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.PresupuestoIndividualRequestBodyResource;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.mappers.budget.PresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.PresupuestoIndividiualClientService;
 import com.santalucia.cdc.core.service.PresupuestosUtilsService;
 import com.santalucia.cdc.reload.AppCustomFeaturesProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,19 +23,21 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
 
   // AutoWired
   private final PresupuestoIndividualDomainMapper presupuestoIndividualDomainMapper;
-  private final PresupuestosIndividualApiClient presupuestosIndividualApiClient;
+  private final PresupuestoIndividualApiClient presupuestosIndividualApiClient;
 
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
   public DefaultPresupuestoIndividualClientService(PresupuestoIndividualDomainMapper presupuestoIndividualDomainMapper,
-                                                   PresupuestosIndividualApiClient presupuestosIndividualApiClient,
+                                                   PresupuestoIndividualApiClient presupuestosIndividualApiClient,
                                                    PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
     this.presupuestoIndividualDomainMapper = presupuestoIndividualDomainMapper;
     this.presupuestosIndividualApiClient = presupuestosIndividualApiClient;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
+
+
 
   /**
    * Metodo para buscar presupuestos individuales no anonimizados ni formalizados
@@ -50,17 +54,17 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
     int pageNum = 1;
     List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
     PagedModelEntityModelPresupuestoIndividualResource result = presupuestosIndividualApiClient
-      .findAllPresupuestoIndividual(presupuestosUtils.getOrSetUUID(null),
+      .findAllAdvancedPresupuestoIndividuales(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(indAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestos()));
+      presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
       while (pageNum < maxPages && !end) {
         result = presupuestosIndividualApiClient
-          .findAllPresupuestoIndividual(presupuestosUtils.getOrSetUUID(null),
+          .findAllAdvancedPresupuestoIndividuales(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(indAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
@@ -68,47 +72,14 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
           end = true;
         }else {
           pageNum++;
-          presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestos()));
+          presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
         }
       }
     }
 
     return presupuestosIndividuales;
   }
-  /**
-   * Metodo para obtener un presupuesto individual
-   *
-   * @param indAnonimizacion
-   * @param indFormalizado
-  @Override
-  public PresupuestoIndividualDomain getIndividualBudget(String indAnonimizacion, String indFormalizado) {
-    PresupuestoIndividualDomain result = null;
-    EntityModelPresupuestoIndividualResource presupuestoIndividual = findApiSnapshotIndividualBudget(idPresupuestoODL);
-    if (presupuestoIndividual != null) {
-      result = presupuestoIndividualDomainMapper.toDomain(presupuestoIndividual);
-    }
-    return result;
-  }
 
-  *//**
-   * Metodo para obtener la ultima foto de un presupuesto individual
-   *
-   * @param indAnonimizacion
-   * @param indFormalizado
-   *//*
-  @Override
-  public EntityModelPresupuestoIndividualResource findApiSnapshotIndividualBudget(String indAnonimizacion, String indFormalizado){
-    log.info("Buscando presupuesto no anonimizado");
-    EntityModelPresupuestoIndividualResource result = null;
-    PagedModelEntityModelPresupuestoIndividualResource odlResult = presupuestosIndividualApiClient
-      .findAllPresupuestoIndividual(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(indAnonimizacion, indFormalizado), PageRequest.of(0, 1))
-      .getBody();
-    if (odlResult != null && !odlResult.getEmbedded().getPresupuestos().isEmpty()) {
-      result = odlResult.getEmbedded().getPresupuestos().get(0);
-    }
-    return result;
-  }*/
 
   /**
    * Metodo para actualizar un presupuesto individual
@@ -123,8 +94,8 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
     if (individualBudgetId != null) {
       PresupuestoIndividualRequestBodyResource input = presupuestoIndividualDomainMapper.toResource(individualBudget);
       result = presupuestoIndividualDomainMapper
-        .toDomain(presupuestosIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+        .toDomain(presupuestosIndividualApiClient.updatePresupuestoIndividual(
+          presupuestosUtils.getOrSetUUID(null), individualBudgetId,input).getBody());
     }
     return result;
   }

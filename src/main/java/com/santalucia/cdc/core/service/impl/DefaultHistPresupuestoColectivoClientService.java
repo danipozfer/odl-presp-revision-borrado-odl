@@ -1,6 +1,8 @@
 package com.santalucia.cdc.core.service.impl;
 
+import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.client.HistoricoPresupuestoColectivoApiClient;
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource;
+import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.PresupuestoColectivoRequestBodyResource;
 import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoColectivoDomainMapper;
 import com.santalucia.cdc.core.service.HistPresupuestoColectivoClientService;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 @Slf4j
 @Service
 public class DefaultHistPresupuestoColectivoClientService implements HistPresupuestoColectivoClientService {
@@ -20,12 +23,12 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
 
   private final HistPresupuestoColectivoDomainMapper historicoPresupuestoColectivoDomainMapper;
-  private final HistoricoPresupuestosColectivoApiClient historicoPresupuestosColectivoApiClient;
+  private final HistoricoPresupuestoColectivoApiClient historicoPresupuestosColectivoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
   public DefaultHistPresupuestoColectivoClientService(HistPresupuestoColectivoDomainMapper histPresupuestoColectivoDomainMapper,
-                                                      HistoricoPresupuestosColectivoApiClient historicoPresupuestosColectivoApiClient,
+                                                      HistoricoPresupuestoColectivoApiClient historicoPresupuestosColectivoApiClient,
                                                       PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
     this.historicoPresupuestoColectivoDomainMapper = histPresupuestoColectivoDomainMapper;
     this.historicoPresupuestosColectivoApiClient = historicoPresupuestosColectivoApiClient;
@@ -47,26 +50,26 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
     int pageNum = 1;
     List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
     PagedModelEntityModelPresupuestoColectivoResource result = historicoPresupuestosColectivoApiClient
-      .findAllAdvancedHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
+      .findAllAdvancedHistoricoPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(indAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
 
     boolean end = false;
-    if(result != null) {
+    if (result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) historicoPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
+      presupuestosColectivos.addAll(historicoPresupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded()));
       while (pageNum < maxPages && !end) {
         result = historicoPresupuestosColectivoApiClient
-          .findAllAdvancedHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
+          .findAllAdvancedHistoricoPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(indAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
         if (result == null) {
           end = true;
-        }else {
+        } else {
           pageNum++;
-          presupuestosColectivos.addAll((Collection<? extends PresupuestoColectivoDomain>) historicoPresupuestoColectivoDomainMapper.toDomain((com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource) result.getEmbedded().getHistoricoPresupuestos()));
+          presupuestosColectivos.addAll(historicoPresupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded()));
         }
       }
     }
@@ -85,10 +88,10 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
   public PresupuestoColectivoDomain updateHistCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
     PresupuestoColectivoDomain result = null;
     if (collectiveBudgetId != null) {
-      PresupuestosColectivosRequestBodyResource input = historicoPresupuestoColectivoDomainMapper.toResource(collectiveBudget);
+      PresupuestoColectivoRequestBodyResource input = historicoPresupuestoColectivoDomainMapper.toResource(collectiveBudget);
       result = historicoPresupuestoColectivoDomainMapper
-        .toDomain(historicoPresupuestosColectivoApiClient.savePresupuestosColectivosUsingPUT(collectiveBudgetId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+        .toDomain(historicoPresupuestosColectivoApiClient.updateHistoricoPresupuestoColectivo(presupuestosUtils.getOrSetUUID(null),
+          collectiveBudgetId, input).getBody());
     }
     return result;
   }
@@ -98,17 +101,16 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
    *
    * @param indAnonimizacion
    * @param indFormalizado
-   *
    * @return
    */
   private Map<String, List<String>> getMapParamQuery(String indAnonimizacion,
                                                      String indFormalizado) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
 
-    if (StringUtils.isNotBlank(indAnonimizacion)){
+    if (StringUtils.isNotBlank(indAnonimizacion)) {
       mapParams.put("datosIdentificativos.indAnonimizacion", List.of(indAnonimizacion));
     }
-    if (StringUtils.isNotBlank(indFormalizado)){
+    if (StringUtils.isNotBlank(indFormalizado)) {
       mapParams.put("datosIdentificativos.indFormalizado", List.of(indFormalizado));
     }
     return mapParams;

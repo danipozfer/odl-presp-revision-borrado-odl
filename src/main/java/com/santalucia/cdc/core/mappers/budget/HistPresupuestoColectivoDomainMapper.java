@@ -27,9 +27,12 @@ public interface HistPresupuestoColectivoDomainMapper {
 
   /**
    *
-   * @param lst
+   * @param embedded
    * @return
    */
 
-  List<PresupuestoColectivoDomain> toDomainsfromResources(List<PresupuestoIndividualResource> lst);
+  List<PresupuestoColectivoDomain> toDomainsfromResources(List<EntityModelPresupuestoColectivoResource> embedded);
+
+
+
 }

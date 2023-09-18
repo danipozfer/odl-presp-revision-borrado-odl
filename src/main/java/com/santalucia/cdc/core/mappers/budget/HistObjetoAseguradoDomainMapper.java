@@ -1,6 +1,9 @@
 package com.santalucia.cdc.core.mappers.budget;
 
-import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
+import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.EntityModelObjetoAseguradoPresupuestoResource;
+import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.ObjetoAseguradoPresupuestoRequestBodyResource;
+import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.PagedModelEntityModelObjetoAseguradoPresupuestoEmbeddedResource;
+import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -9,23 +12,31 @@ import java.util.List;
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface HistObjetoAseguradoDomainMapper {
-  /**
-   *
-   * @param declaracionResource
-   * @return
-   */
-  /*DeclaracionDomain toDomain (DeclaracionResource declaracionResource);*/
 
   /**
    *
-   * @param declaracionDomain
+   * @param body
    * @return
    */
-  /*DeclaracionResource toResource (DeclaracionDomain declaracionDomain);*/
+
+  ObjetosAseguradosDomain toDomain(EntityModelObjetoAseguradoPresupuestoResource body);
 
   /**
-   * @param lst
+   *
+   * @param securedObject
    * @return
    */
-  List<DeclaracionDomain> toDomainsfromResources(List<DeclaracionResource> lst);
+
+
+  ObjetoAseguradoPresupuestoRequestBodyResource toResource(ObjetosAseguradosDomain securedObject);
+
+  /**
+   *
+   * @param embedded
+   * @return
+   */
+
+  List<ObjetosAseguradosDomain> toDomainsfromResources(PagedModelEntityModelObjetoAseguradoPresupuestoEmbeddedResource embedded);
+
+
 }

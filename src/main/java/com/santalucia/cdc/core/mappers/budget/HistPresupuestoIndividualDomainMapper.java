@@ -1,22 +1,29 @@
 package com.santalucia.cdc.core.mappers.budget;
 
 import com.santalucia.arq.ams.odl.presupuestos.historico.colectivo.api.model.EntityModelPresupuestoColectivoResource;
+import com.santalucia.arq.ams.odl.presupuestos.historico.individual.api.model.EntityModelPresupuestoIndividualResource;
+import com.santalucia.arq.ams.odl.presupuestos.historico.individual.api.model.PresupuestoIndividualRequestBodyResource;
 import com.santalucia.cdc.core.domain.budgets.collectivebudget.PresupuestoColectivoDomain;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface HistPresupuestoIndividualDomainMapper {
+
+
   /**
    *
-   * @param presupuestoIndividualResource
+   * @param body
    * @return
    */
-  PresupuestoIndividualDomain toDomain (PresupuestoIndividualResource presupuestoIndividualResource);
+
+  PresupuestoIndividualDomain toDomain(EntityModelPresupuestoIndividualResource body);
+
 
   /**
    *
@@ -24,14 +31,17 @@ public interface HistPresupuestoIndividualDomainMapper {
    * @return
    */
 
-  PresupuestoIndividualResource toResource(PresupuestoIndividualDomain presupuestoIndividualDomain);
+  PresupuestoIndividualRequestBodyResource toResource(PresupuestoIndividualDomain presupuestoIndividualDomain);
 
   /**
    *
-   * @param lst
+   * @param embedded
    * @return
    */
 
-  List<PresupuestoIndividualDomain> toDomainsfromResources(List<PresupuestoIndividualResource> lst);
+  List< PresupuestoIndividualDomain> toDomainsfromResources(List<EntityModelPresupuestoIndividualResource> embedded);
+
+
+
 
 }

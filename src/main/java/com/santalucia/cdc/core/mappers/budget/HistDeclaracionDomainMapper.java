@@ -1,5 +1,6 @@
 package com.santalucia.cdc.core.mappers.budget;
 
+import com.santalucia.arq.ams.odl.historico.presupuestos.declaraciones.api.model.EntityModelDeclaracionResource;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
@@ -14,20 +15,20 @@ public interface HistDeclaracionDomainMapper {
    * @param declaracionResource
    * @return
    */
-  DeclaracionDomain toDomain (DeclaracionResource declaracionResource);
+  DeclaracionDomain toDomain (com.santalucia.arq.ams.odl.historico.presupuestos.declaraciones.api.model.EntityModelDeclaracionResource declaracionResource);
 
   /**
    *
-   * @param declaracionDomain
+   * @param embedded
    * @return
    */
-  DeclaracionResource toResource (DeclaracionDomain declaracionDomain);
+
+  List<DeclaracionDomain> toDomainsfromResourcesEntityModel(List<com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.EntityModelDeclaracionResource> embedded);
 
   /**
    *
-   * @param lst
+   * @param embedded
    * @return
    */
-
-  List<DeclaracionDomain> toDomainsfromResources(List<DeclaracionResource> lst);
+  List<DeclaracionDomain> toDomainsfromResources(List<EntityModelDeclaracionResource> embedded);
 }

@@ -1,6 +1,10 @@
 package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
+import com.santalucia.arq.ams.odl.presupuestos.objeto.asegurado.api.client.ObjetoAseguradoPresupuestoApiClient;
+import com.santalucia.arq.ams.odl.presupuestos.objeto.asegurado.api.model.EntityModelObjetoAseguradoPresupuestoResource;
+import com.santalucia.arq.ams.odl.presupuestos.objeto.asegurado.api.model.ObjetoAseguradoPresupuestoRequestBodyResource;
+import com.santalucia.arq.ams.odl.presupuestos.objeto.asegurado.api.model.PagedModelEntityModelObjetoAseguradoPresupuestoResource;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
 import com.santalucia.cdc.core.mappers.budget.HistObjetoAseguradoDomainMapper;
 import com.santalucia.cdc.core.mappers.budget.ObjetoAseguradoDomainMapper;
@@ -23,13 +27,13 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   // AutoWired
 
   private final ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper;
-  private final ObjetoAseguradoApiClient objetoAseguradoApiClient;
+  private final ObjetoAseguradoPresupuestoApiClient objetoAseguradoApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
 
   public DefaultObjetoAseguradoClientService(ObjetoAseguradoDomainMapper objetoAseguradoDomainMapper,
-                                             ObjetoAseguradoApiClient objetoAseguradoApiClient,
+                                             ObjetoAseguradoPresupuestoApiClient objetoAseguradoApiClient,
                                              PresupuestosUtilsService presupuestosUtils,
                                              AppCustomFeaturesProperties properties) {
     this.objetoAseguradoDomainMapper = objetoAseguradoDomainMapper;
@@ -48,7 +52,7 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   @Override
   public ObjetosAseguradosDomain getSecuredObject(String idObjetoAseguradoODL) {
     ObjetosAseguradosDomain result = null;
-    EntityModelObjetoAseguradoResource objetoAsegurado = findApiSnapshotSecuredObject(idObjetoAseguradoODL);
+    EntityModelObjetoAseguradoPresupuestoResource objetoAsegurado = findApiSnapshotSecuredObject(idObjetoAseguradoODL);
     if (objetoAsegurado != null) {
       result = objetoAseguradoDomainMapper.toDomain(objetoAsegurado);
     }
@@ -61,15 +65,15 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
    * @param idObjetoAseguradoODL
    */
   @Override
-  public EntityModelObjetoAseguradoResource findApiSnapshotSecuredObject(String idObjetoAseguradoODL) {
+  public EntityModelObjetoAseguradoPresupuestoResource findApiSnapshotSecuredObject(String idObjetoAseguradoODL) {
     log.info("Buscando objeto asegurado con idObjetoAseguradoODL {}", idObjetoAseguradoODL);
-    EntityModelObjetoAseguradoResource result = null;
-    PagedModelEntityModelObjetoAseguradoResource odlResult = objetoAseguradoApiClient
-      .findAllPresupuestosObjetoAseguradoUsingGET(presupuestosUtils.getOrSetUUID(null),
+    EntityModelObjetoAseguradoPresupuestoResource result = null;
+    PagedModelEntityModelObjetoAseguradoPresupuestoResource odlResult = objetoAseguradoApiClient
+      .findAllAdvancedObjetoAseguradoPresupuesto(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idObjetoAseguradoODL), PageRequest.of(0, 1))
       .getBody();
-    if (odlResult != null && !odlResult.getEmbedded().getDeclaracion().isEmpty()) {
-      result = odlResult.getEmbedded().getDeclaracion().get(0);
+    if (odlResult != null && !odlResult.getEmbedded().getObjetoAseguradoPolizas().isEmpty()) {
+      result = odlResult.getEmbedded().getObjetoAseguradoPolizas().get(0);
     }
     return result;
   }
@@ -85,10 +89,11 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
   public ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
     ObjetosAseguradosDomain result = null;
     if (securedObjectId != null) {
-      PresupuestosObjetoAseguradoRequestBodyResource input = objetoAseguradoDomainMapper.toResource(securedObject);
+
+      ObjetoAseguradoPresupuestoRequestBodyResource input = objetoAseguradoDomainMapper.toResource(securedObject);
       result = objetoAseguradoDomainMapper
-        .toDomain(objetoAseguradoApiClient.savePresupuestosObjetoAseguradoUsingPUT(securedObjectId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+        .toDomain(objetoAseguradoApiClient.updateObjetoAseguradoPresupuesto(
+          presupuestosUtils.getOrSetUUID(uuid),securedObjectId, input).getBody());
     }
     return result;
   }

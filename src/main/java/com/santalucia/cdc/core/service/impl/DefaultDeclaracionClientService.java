@@ -2,6 +2,7 @@ package com.santalucia.cdc.core.service.impl;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.client.DeclaracionesApiClient;
+import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.DeclaracionRequestBodyResource;
 import com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.PagedModelEntityModelDeclaracionResource;
 import com.santalucia.cdc.core.domain.declaration.DeclaracionDomain;
 import com.santalucia.cdc.core.mappers.budget.DeclaracionDomainMapper;
@@ -56,18 +57,18 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
     int pageNum = 1;
     List<DeclaracionDomain> declaraciones = new ArrayList<>(DEFAULT_CAPACITY);
     PagedModelEntityModelDeclaracionResource result = declaracionApiClient
-      .findAllDeclaraciones(presupuestosUtils.getOrSetUUID(null),
-        Optional.of(getMapParamQuery(idPresupuestoODL)),
+      .findAllAdvancedDeclaraciones(presupuestosUtils.getOrSetUUID(null),
+        (getMapParamQuery(idPresupuestoODL)),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
 
     boolean end = false;
     if (result != null) {
       Long maxPages = result.getPage().getTotalPages();//busca las declaraciones por id
-      declaraciones.addAll(histDeclaracionDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
+      declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded()));
       while (pageNum < maxPages && !end) {
         result = declaracionApiClient
-          .findAllPresupuestosDeclaracionUsingGET(presupuestosUtils.getOrSetUUID(null),
+          .findAllAdvancedDeclaraciones(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(idPresupuestoODL),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
@@ -75,7 +76,7 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
           end = true;
         } else {
           pageNum++;//añade las declaraciones encontradas
-          declaraciones.addAll(histDeclaracionDomainMapper.toDomain(result.getEmbedded().getDeclaracion()));
+          declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded()));
         }
       }
     }
@@ -95,10 +96,10 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
   public DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
     DeclaracionDomain result = null;
     if (declaracionId != null) {
-      PresupuestosDeclaracionesRequestBodyResource input = declaracionDomainMapper.toResource(declaracion);
+      DeclaracionRequestBodyResource input = declaracionDomainMapper.toResource(declaracion);
       result = declaracionDomainMapper
-        .toDomain(declaracionApiClient.savePresupuestosDeclaracionUsingPUT(declaracionId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+        .toDomain(declaracionApiClient.updateDeclaracion(presupuestosUtils.getOrSetUUID(null),
+          declaracionId, input).getBody());
     }
     return result;
   }

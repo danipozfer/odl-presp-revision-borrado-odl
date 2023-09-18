@@ -1,5 +1,9 @@
 package com.santalucia.cdc.core.service.impl;
 
+import com.santalucia.arq.ams.odl.historico.polizas.individuales.api.model.PagedModelEntityModelHistoricoPolizasIndividualesCertificadosR2EmbeddedResource;
+import com.santalucia.arq.ams.odl.presupuestos.historico.individual.api.client.HistoricoPresupuestoIndividualApiClient;
+import com.santalucia.arq.ams.odl.presupuestos.historico.individual.api.model.PagedModelEntityModelPresupuestoIndividualResource;
+import com.santalucia.arq.ams.odl.presupuestos.historico.individual.api.model.PresupuestoIndividualRequestBodyResource;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
 import com.santalucia.cdc.core.mappers.budget.HistPresupuestoIndividualDomainMapper;
 import com.santalucia.cdc.core.service.HistPresupuestoIndividualClientService;
@@ -44,8 +48,9 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
 
     int pageNum = 1;
     List<PresupuestoIndividualDomain> presupuestosIndividuales = new ArrayList<>(DEFAULT_CAPACITY);
-    com.santalucia.arq.ams.odl.historico.presupuestos.individual.api.model.PagedModelEntityModelPresupuestoIndividualResource result = historicoPresupuestoIndividualApiClient
-      .findAllPresupuestosIndividualUsingGET(presupuestosUtils.getOrSetUUID(null),
+
+    PagedModelEntityModelPresupuestoIndividualResource result = historicoPresupuestoIndividualApiClient
+      .findAllAdvancedHistoricoPresupuestosIndividuales(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(indAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
@@ -53,10 +58,10 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
+      presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
       while (pageNum < maxPages && !end) {
         result = historicoPresupuestoIndividualApiClient
-          .findAllPresupuestosIndividualesUsingGET(presupuestosUtils.getOrSetUUID(null),
+          .findAllAdvancedHistoricoPresupuestosIndividuales(presupuestosUtils.getOrSetUUID(null),
             getMapParamQuery(indAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
@@ -64,7 +69,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
           end = true;
         }else {
           pageNum++;
-          presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestoIndividual()));
+          presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
         }
       }
     }
@@ -85,8 +90,8 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
     if (individualBudgetId != null) {
       PresupuestoIndividualRequestBodyResource input = historicoPresupuestoIndividualDomainMapper.toResource(individualBudget);
       result = historicoPresupuestoIndividualDomainMapper
-        .toDomain(historicoPresupuestoIndividualApiClient.savePresupuestoIndividualUsingPUT(individualBudgetId,
-          presupuestosUtils.getOrSetUUID(uuid), input, Optional.empty(), Optional.empty()).getBody());
+        .toDomainFromEntity(historicoPresupuestoIndividualApiClient.updateHistoricoPresupuestoIndividual(
+          presupuestosUtils.getOrSetUUID(null),individualBudgetId, input).getBody());
     }
     return result;
   }
