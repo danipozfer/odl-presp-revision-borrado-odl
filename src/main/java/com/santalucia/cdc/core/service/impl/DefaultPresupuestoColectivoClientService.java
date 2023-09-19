@@ -16,6 +16,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultPresupuestoColectivoClientService implements PresupuestoColectivoClientService {
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
@@ -43,7 +44,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
    * @return
    */
   @Override
-  public List<PresupuestoColectivoDomain> findCollectiveBudgets(String indAnonimizacion, String indFormalizado, String numIdAgrupacion){
+  public List<PresupuestoColectivoDomain> findCollectiveBudgets(String indAnonimizacion, String indFormalizado){
 
     log.info("Buscando presupuestos historicos no anonimizados ni convertidos en polizas");
 
@@ -51,7 +52,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
     List<PresupuestoColectivoDomain> presupuestosColectivos = new ArrayList<>(DEFAULT_CAPACITY);
     com.santalucia.arq.ams.odl.presupuestos.colectivo.api.model.PagedModelEntityModelPresupuestoColectivoResource result = presupuestosColectivoApiClient
       .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
-        getMapParamQuery(indAnonimizacion, indFormalizado,numIdAgrupacion),
+        getMapParamQuery(indAnonimizacion, indFormalizado),
         PageRequest.of(0, this.properties.getFindallPageSize()))
       .getBody();
     boolean end = false;
@@ -61,7 +62,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
       while (pageNum < maxPages && !end) {
         result = presupuestosColectivoApiClient
           .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
-            getMapParamQuery(indAnonimizacion, indFormalizado,numIdAgrupacion),
+            getMapParamQuery(indAnonimizacion, indFormalizado),
             PageRequest.of(pageNum, this.properties.getFindallPageSize()))
           .getBody();
         if (result == null) {
@@ -85,13 +86,13 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
    * @param uuid
    */
   @Override
-  public PresupuestoColectivoDomain updateCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
+  public PresupuestoColectivoDomain updateCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId) {
     PresupuestoColectivoDomain result = null;
     if (collectiveBudgetId != null) {
       PresupuestoColectivoRequestBodyResource input = presupuestoColectivoDomainMapper.toResource(collectiveBudget);
       result = presupuestoColectivoDomainMapper
         .toDomain(presupuestosColectivoApiClient.updatePresupuestoColectivo(
-          presupuestosUtils.getOrSetUUID(uuid),collectiveBudgetId, input).getBody());
+          presupuestosUtils.getOrSetUUID(null),collectiveBudgetId, input).getBody());
     }
     return result;
   }
@@ -105,16 +106,13 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
    * @return
    */
   private Map<String, List<String>> getMapParamQuery(String indAnonimizacion,
-                                                     String indFormalizado, String numIdAgrupacion) {
+                                                     String indFormalizado) {
     Map<String, List<String>> mapParams = new HashMap<>(DEFAULT_INITIAL_CAPACITY);
 
     if (StringUtils.isNotBlank(indAnonimizacion)){
       mapParams.put("datosIdentificativos.indAnonimizacion", List.of(indAnonimizacion));
     }
     if (StringUtils.isNotBlank(indFormalizado)){
-      mapParams.put("datosIdentificativos.indFormalizado", List.of(indFormalizado));
-    }
-    if (StringUtils.isNotBlank(numIdAgrupacion)){
       mapParams.put("datosIdentificativos.indFormalizado", List.of(indFormalizado));
     }
     return mapParams;

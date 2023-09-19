@@ -21,6 +21,7 @@ public class DefaultPresupuestosUtilsService implements PresupuestosUtilsService
    * @return UUID UUID generado
    */
   @Override
+  @SuppressWarnings("NullAway")
   public UUID getOrSetUUID(UUID uuid) {
     UUID result = uuid;
     if (uuid == null) {

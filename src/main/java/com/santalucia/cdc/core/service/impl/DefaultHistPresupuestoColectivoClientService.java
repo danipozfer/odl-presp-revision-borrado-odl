@@ -17,6 +17,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultHistPresupuestoColectivoClientService implements HistPresupuestoColectivoClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
@@ -85,7 +86,7 @@ public class DefaultHistPresupuestoColectivoClientService implements HistPresupu
    * @param uuid
    */
   @Override
-  public PresupuestoColectivoDomain updateHistCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId, UUID uuid) {
+  public PresupuestoColectivoDomain updateHistCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId) {
     PresupuestoColectivoDomain result = null;
     if (collectiveBudgetId != null) {
       PresupuestoColectivoRequestBodyResource input = historicoPresupuestoColectivoDomainMapper.toResource(collectiveBudget);

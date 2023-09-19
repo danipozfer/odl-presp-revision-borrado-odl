@@ -1,5 +1,6 @@
 package com.santalucia.cdc.core.domain;
 
+import com.santalucia.cdc.core.domain.metadata.AuditoriaDomain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,10 +18,8 @@ public class MetadataDomain {
   private Instant fecSQL;
   private Long numOffsetMDL;
   private Long numOffsetCarga;
-  private Instant fecCreacionRegistro;
-  private String nomUsuarioCreacion;
-  private String nomUsuarioModi;
-  private Instant fecUltimaModi;
+
+  private AuditoriaDomain auditoria;
   private String hash;
   private String xRequestId;
 }

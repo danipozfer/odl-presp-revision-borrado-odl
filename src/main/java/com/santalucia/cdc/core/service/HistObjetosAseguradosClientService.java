@@ -12,5 +12,5 @@ public interface HistObjetosAseguradosClientService {
   List<ObjetosAseguradosDomain> findAllHistoricSecuredObject(String idPresupuestoODL);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid);
+  ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId);
 }

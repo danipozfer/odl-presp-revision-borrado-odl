@@ -38,14 +38,17 @@ public class PresupuestoColItemReader extends PaginatedDataItemReader<EventoPres
    */
   @Override
   protected Iterator<EventoPresupuestoColDomain> doPageRead() {
-    List<PresupuestoColectivoDomain> budgets = presupuestoApiClient.findCollectiveBudgets("N", "N", "0");//preguntar
+    List<PresupuestoColectivoDomain> budgets = presupuestoApiClient.findCollectiveBudgets("N", "N");
     List<EventoPresupuestoColDomain> result = new ArrayList<>();
 
     for (PresupuestoColectivoDomain budget: budgets) {
       EventoPresupuestoColDomain event = new EventoPresupuestoColDomain();
       event.setPresupuestoColectivo(budget);
       List<ObjetosAseguradosDomain> objects = new ArrayList<>();
-      objects.add(objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL()));
+      ObjetosAseguradosDomain obj = objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      if(obj != null) {
+        objects.add(obj);
+      }
       event.setObjetosAsegurados(objects);
       List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
       event.setDeclaracion(declarations);

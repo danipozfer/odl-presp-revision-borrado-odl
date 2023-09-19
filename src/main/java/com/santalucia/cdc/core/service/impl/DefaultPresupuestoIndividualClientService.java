@@ -17,6 +17,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultPresupuestoIndividualClientService implements PresupuestoIndividiualClientService {
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
@@ -89,7 +90,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
    * @param uuid
    */
   @Override
-  public PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid) {
+  public PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId) {
     PresupuestoIndividualDomain result = null;
     if (individualBudgetId != null) {
       PresupuestoIndividualRequestBodyResource input = presupuestoIndividualDomainMapper.toResource(individualBudget);

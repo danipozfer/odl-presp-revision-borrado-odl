@@ -8,22 +8,18 @@ import com.santalucia.cdc.core.service.*;
 import org.springframework.batch.item.ItemWriter;
 
 import java.util.List;
-import java.util.UUID;
 
 public class HistPresupuestoColItemWriter implements ItemWriter<EventoPresupuestoColDomain> {
 
-  private final PresupuestosUtilsService utils;
   private final HistPresupuestoColectivoClientService presupuestoColectivoService;
   private final DeclaracionClientService declaracionService;
   private final ObjetoAseguradoClientService objetoAseguradoService;
 
 
 
-  public HistPresupuestoColItemWriter(PresupuestosUtilsService utils,
-                                      HistPresupuestoColectivoClientService presupuestoColectivoService,
+  public HistPresupuestoColItemWriter(HistPresupuestoColectivoClientService presupuestoColectivoService,
                                   DeclaracionClientService declaracionService,
                                   ObjetoAseguradoClientService objetoAseguradoService) {
-    this.utils = utils;
     this.presupuestoColectivoService = presupuestoColectivoService;
     this.declaracionService = declaracionService;
     this.objetoAseguradoService = objetoAseguradoService;
@@ -37,18 +33,17 @@ public class HistPresupuestoColItemWriter implements ItemWriter<EventoPresupuest
   public void write(List<? extends EventoPresupuestoColDomain> items) {
 
     for (EventoPresupuestoColDomain historicBudgets : items) {
-      UUID uuid = utils.getOrSetUUID(null);
 
       PresupuestoColectivoDomain historicBudget = historicBudgets.getPresupuestoColectivo();
       List<ObjetosAseguradosDomain> historicSecuredObjects = historicBudgets.getObjetosAsegurados();
       List<DeclaracionDomain> historicDeclarations = historicBudgets.getDeclaracion();
-      presupuestoColectivoService.updateHistCollectiveBudget(historicBudget, historicBudget.getId(), uuid);
+      presupuestoColectivoService.updateHistCollectiveBudget(historicBudget, historicBudget.getId());
 
       for (ObjetosAseguradosDomain historicSecuredObject: historicSecuredObjects) {
-        objetoAseguradoService.updateSecuredObject(historicSecuredObject, historicSecuredObject.getId(), uuid);
+        objetoAseguradoService.updateSecuredObject(historicSecuredObject, historicSecuredObject.getId());
       }
       for (DeclaracionDomain historicDeclaration: historicDeclarations) {
-        declaracionService.updateDeclaration(historicDeclaration, historicDeclaration.getId(), uuid);
+        declaracionService.updateDeclaration(historicDeclaration, historicDeclaration.getId());
       }
 
     }

@@ -1,11 +1,14 @@
 package com.santalucia.cdc.core.mappers.budget;
 
+import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.DomicilioResource;
 import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.EntityModelObjetoAseguradoPresupuestoResource;
 import com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.ObjetoAseguradoPresupuestoRequestBodyResource;
 import com.santalucia.cdc.core.domain.securedobjects.ObjetosAseguradosDomain;
+import com.santalucia.cdc.core.domain.securedobjects.characteristics.DomicilioDomain;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -17,15 +20,12 @@ public interface HistObjetoAseguradoDomainMapper {
    * @param body
    * @return
    */
-
   ObjetosAseguradosDomain toDomain(EntityModelObjetoAseguradoPresupuestoResource body);
 
   /**
    * @param securedObject
    * @return
    */
-
-
   ObjetoAseguradoPresupuestoRequestBodyResource toResource(ObjetosAseguradosDomain securedObject);
 
   /**
@@ -34,11 +34,11 @@ public interface HistObjetoAseguradoDomainMapper {
    */
 
   List<ObjetosAseguradosDomain> toDomainsfromResources(List<EntityModelObjetoAseguradoPresupuestoResource> list);
-  /**
-   *
-   * @param offsetDateTime
-   * @return
-   */
 
+  @Mapping(source = "descDomicilio", target = "desDomicilio")
+  DomicilioDomain domOut(com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.DomicilioResource in);
+
+  @Mapping(source = "desDomicilio", target = "descDomicilio")
+  DomicilioResource domOutp(DomicilioDomain in);
 
 }

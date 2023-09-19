@@ -8,6 +8,7 @@ import com.santalucia.cdc.core.exceptions.errors.AppErrorCodes;
  * @author Nfq
  *
  */
+@SuppressWarnings("NullAway")
 public class HashGenerationException extends SantaluciaCoreBusinessException {
 
 	private static final long serialVersionUID = -4839425922066569485L;

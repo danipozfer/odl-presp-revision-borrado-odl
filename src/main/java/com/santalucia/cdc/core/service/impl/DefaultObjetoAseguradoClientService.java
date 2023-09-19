@@ -19,6 +19,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
@@ -86,14 +87,14 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
    * @param uuid
    */
   @Override
-  public ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
+  public ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId) {
     ObjetosAseguradosDomain result = null;
     if (securedObjectId != null) {
 
       ObjetoAseguradoPresupuestoRequestBodyResource input = objetoAseguradoDomainMapper.toResource(securedObject);
       result = objetoAseguradoDomainMapper
         .toDomain(objetoAseguradoApiClient.updateObjetoAseguradoPresupuesto(
-          presupuestosUtils.getOrSetUUID(uuid),securedObjectId, input).getBody());
+          presupuestosUtils.getOrSetUUID(null),securedObjectId, input).getBody());
     }
     return result;
   }

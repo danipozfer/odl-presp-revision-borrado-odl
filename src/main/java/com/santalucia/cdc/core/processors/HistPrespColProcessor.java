@@ -86,7 +86,7 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
     eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setEntidadBancaria(tipoMDLDomainAnonimizado);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrNumCuent(ANONIMO);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrEntidOfic(ANONIMO);
-    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumCuentBanc(ANONIMO);
+    eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumCuentaBanc(ANONIMO);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setTitulCuentBanc(ANONIMO);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodIban(ANONIMO);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodBic(ANONIMO);

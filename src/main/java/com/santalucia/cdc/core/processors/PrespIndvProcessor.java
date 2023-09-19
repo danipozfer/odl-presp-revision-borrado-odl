@@ -84,7 +84,7 @@ public class PrespIndvProcessor implements ItemProcessor<EventoPresupuestoIndvDo
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setEntidadBancaria(tipoMDLDomainAnonimizado);
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrNumCuent(ANONIMO);
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumDigContrEntidOfic(ANONIMO);
-    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumCuentBanc(ANONIMO);
+    eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setNumCuentaBanc(ANONIMO);
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setTitulCuentBanc(ANONIMO);
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodIban(ANONIMO);
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getDatoCobro().getDatoMedioCobro().getDatoCobroBancario().setCodBic(ANONIMO);

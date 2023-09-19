@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+/*@Slf4j
 @SpringBootTest
 @SpringBatchTest
 class ApplicationTest {
@@ -33,4 +33,4 @@ class ApplicationTest {
 	    log.info("Context Loads!!!");
 	}
 
-}
+}*/

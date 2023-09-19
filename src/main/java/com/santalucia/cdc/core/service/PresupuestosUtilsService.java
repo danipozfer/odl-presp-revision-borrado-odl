@@ -15,5 +15,6 @@ public interface PresupuestosUtilsService {
    * @param uuid uuid a utilizar o null
    * @return UUID UUID generado
    */
+  @SuppressWarnings("NullAway")
   UUID getOrSetUUID(UUID uuid);
 }

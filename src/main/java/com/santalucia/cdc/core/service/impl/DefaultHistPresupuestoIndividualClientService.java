@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultHistPresupuestoIndividualClientService implements HistPresupuestoIndividualClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
@@ -85,7 +86,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
    * @param uuid
    */
   @Override
-  public PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid) {
+  public PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId) {
     PresupuestoIndividualDomain result = null;
     if (individualBudgetId != null) {
       PresupuestoIndividualRequestBodyResource input = historicoPresupuestoIndividualDomainMapper.toResource(individualBudget);

@@ -15,6 +15,6 @@ public interface DeclaracionClientService {
   List <DeclaracionDomain> findDeclarationByIdPres(String idPresupuestoODL);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid);
+  DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId);
 
 }

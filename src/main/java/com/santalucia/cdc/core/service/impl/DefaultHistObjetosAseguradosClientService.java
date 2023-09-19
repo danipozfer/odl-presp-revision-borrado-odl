@@ -17,6 +17,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultHistObjetosAseguradosClientService implements HistObjetosAseguradosClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
@@ -82,10 +83,9 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
    *
    * @param securedObject
    * @param securedObjectId
-   * @param uuid
    */
   @Override
-  public ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid) {
+  public ObjetosAseguradosDomain updateHistSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId) {
     ObjetosAseguradosDomain result = null;
     if (securedObjectId != null) {
       ObjetoAseguradoPresupuestoRequestBodyResource input = historicoObjetoAseguradoDomainMapper.toResource(securedObject);

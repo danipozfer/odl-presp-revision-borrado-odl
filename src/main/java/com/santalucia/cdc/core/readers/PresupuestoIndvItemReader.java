@@ -45,7 +45,10 @@ public class PresupuestoIndvItemReader extends PaginatedDataItemReader<EventoPre
       EventoPresupuestoIndvDomain event = new EventoPresupuestoIndvDomain();
       event.setPresupuestoIndividual(budget);
       List<ObjetosAseguradosDomain> objects = new ArrayList<>();
-      objects.add(objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL()));
+      ObjetosAseguradosDomain obj = objetoAseguradoApiClient.getSecuredObject(budget.getDatoIdentificativo().getIdPresupuestoODL());
+      if(obj != null) {
+        objects.add(obj);
+      }
       event.setObjetosAsegurados(objects);
       List<DeclaracionDomain> declarations = declaracionApiClient.findDeclarationByIdPres(budget.getDatoIdentificativo().getIdPresupuestoODL());
       event.setDeclaracion(declarations);

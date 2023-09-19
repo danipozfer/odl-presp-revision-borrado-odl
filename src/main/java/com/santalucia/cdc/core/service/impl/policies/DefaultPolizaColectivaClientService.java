@@ -1,9 +1,9 @@
 package com.santalucia.cdc.core.service.impl.policies;
 
 import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.client.HistoricoPolizasColectivasApiClient;
-import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.CollectionModelHistoricoPolizaColectivaResource;
+import com.santalucia.arq.ams.odl.historico.polizas.colectivas.api.model.PagedModelEntityModelPolizasColectivasHistR2Resource;
 import com.santalucia.arq.ams.odl.polizas.colectivas.api.client.PolizasColectivasApiClient;
-import com.santalucia.arq.ams.odl.polizas.colectivas.api.model.CollectionModelPolizaColectivaResource;
+import com.santalucia.arq.ams.odl.polizas.colectivas.api.model.PagedModelEntityModelPolizasColectivasR2Resource;
 import com.santalucia.cdc.core.service.policies.PolizaColectivaClientService;
 import com.santalucia.cdc.core.service.policies.PolizaUtilsService;
 import lombok.AllArgsConstructor;
@@ -18,11 +18,11 @@ import java.util.*;
  * Cliente general para las distintas APIs CRUD de polizas
  *
  * @author Nfq
- *
  */
 @Slf4j
 @Service
 @AllArgsConstructor
+@SuppressWarnings("NullAway")
 public class DefaultPolizaColectivaClientService implements PolizaColectivaClientService {
 
   private final PolizasColectivasApiClient colectivasApiClient;
@@ -30,9 +30,6 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
   private final PolizaUtilsService polizaUtils;
 
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2; // aka 4
-
-
-
 
 
   /**
@@ -49,8 +46,8 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
       numIdPresupuesto);
     UUID uuid = polizaUtils.getOrSetUUID(null);
 
-    CollectionModelPolizaColectivaResource result = colectivasApiClient
-      .findAllPolizaColectivaUsingGET(uuid, getMapParamQuery(numIdPresupuesto), PageRequest.of(0, 1)).getBody();
+    PagedModelEntityModelPolizasColectivasR2Resource result = colectivasApiClient
+      .findAllPolizaColectivaUsingGET(uuid, Optional.of(getMapParamQuery(numIdPresupuesto)), PageRequest.of(0, 1)).getBody();
 
     if (result == null || result.getEmbedded().getPolizasColectivas().isEmpty()) {
       log.debug("No se encuentra la poliza colectiva");
@@ -70,10 +67,10 @@ public class DefaultPolizaColectivaClientService implements PolizaColectivaClien
   @Override
   public boolean getHistoricoColectiva(String numIdPresupuesto) {
     boolean resultBool = false;
-      CollectionModelHistoricoPolizaColectivaResource result = historicoColectivasApiClient
-        .findAllPolizaColectivaUsingGET(polizaUtils.getOrSetUUID(null), getMapParamQuery(numIdPresupuesto),
-          PageRequest.of(0, 1))
-        .getBody();
+    PagedModelEntityModelPolizasColectivasHistR2Resource result = historicoColectivasApiClient
+      .findAllPolizaColectivaUsingGET(polizaUtils.getOrSetUUID(null), Optional.of(getMapParamQuery(numIdPresupuesto)),
+        PageRequest.of(0, 1))
+      .getBody();
 
     if (result == null || result.getEmbedded().getPolizasColectivas().isEmpty()) {
       log.debug("No se encuentra la poliza colectiva");

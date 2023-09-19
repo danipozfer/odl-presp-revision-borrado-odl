@@ -14,5 +14,5 @@ public interface HistDeclaracionClientService {
   List<DeclaracionDomain> findHistoricDeclarationByIdres(String idPresupuestoODL);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid);
+  DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId);
 }

@@ -1,9 +1,9 @@
 package com.santalucia.cdc.core.service.impl.policies;
 
 import com.santalucia.arq.ams.odl.historico.polizas.individuales.api.client.HistoricoPolizasIndividualesApiClient;
-import com.santalucia.arq.ams.odl.historico.polizas.individuales.api.model.CollectionModelHistoricoPolizaIndividualCertificadoResource;
+import com.santalucia.arq.ams.odl.historico.polizas.individuales.api.model.PagedModelEntityModelHistoricoPolizasIndividualesCertificadosR2Resource;
 import com.santalucia.arq.ams.odl.polizas.individuales.api.client.PolizasIndividualesApiClient;
-import com.santalucia.arq.ams.odl.polizas.individuales.api.model.CollectionModelPolizaIndividualCertificadoResource;
+import com.santalucia.arq.ams.odl.polizas.individuales.api.model.PagedModelEntityModelPolizasIndividualesCertificadosR2Resource;
 import com.santalucia.cdc.core.service.policies.PolizaIndividualClientService;
 import com.santalucia.cdc.core.service.policies.PolizaUtilsService;
 import lombok.AllArgsConstructor;
@@ -15,10 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @AllArgsConstructor
+@SuppressWarnings("NullAway")
 public class DefaultPolizaIndividualClientService implements PolizaIndividualClientService {
 
   private final PolizasIndividualesApiClient individualesApiClient;
@@ -38,8 +40,9 @@ public class DefaultPolizaIndividualClientService implements PolizaIndividualCli
     boolean resultBool = false;
     log.debug("La poliza individual, se busca con numIdPresupuesto {} ",
       numIdPresupuesto);
-    CollectionModelPolizaIndividualCertificadoResource result = individualesApiClient
-      .findAllPolizaUsingGET(polizaUtils.getOrSetUUID(null), getMapParamQuery(numIdPresupuesto), PageRequest.of(0, 1)).getBody();
+    PagedModelEntityModelPolizasIndividualesCertificadosR2Resource result = individualesApiClient
+      .findAllPolizaUsingGET(polizaUtils.getOrSetUUID(null), Optional.of(getMapParamQuery(numIdPresupuesto)),
+        PageRequest.of(0, 1)).getBody();
 
     if (result == null || result.getEmbedded().getPolizasIndividuales().isEmpty()) {
       log.debug("No se encuentra la poliza individual");
@@ -64,9 +67,9 @@ public class DefaultPolizaIndividualClientService implements PolizaIndividualCli
 
     log.debug("Extrayendo historico con numIdPresupuesto: {}", numIdPresupuesto);
 
-    CollectionModelHistoricoPolizaIndividualCertificadoResource result = historicoIndividualesApiClient
+    PagedModelEntityModelHistoricoPolizasIndividualesCertificadosR2Resource result = historicoIndividualesApiClient
       .findAllHistoricoPolizaUsingGET(polizaUtils.getOrSetUUID(null),
-        getMapParamQuery(numIdPresupuesto),
+        Optional.of(getMapParamQuery(numIdPresupuesto)),
         PageRequest.of(0, 1))
       .getBody();
 

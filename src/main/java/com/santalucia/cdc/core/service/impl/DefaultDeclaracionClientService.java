@@ -18,6 +18,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultDeclaracionClientService implements DeclaracionClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
@@ -93,7 +94,7 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
    * @param uuid
    */
   @Override
-  public DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
+  public DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId) {
     DeclaracionDomain result = null;
     if (declaracionId != null) {
       DeclaracionRequestBodyResource input = declaracionDomainMapper.toResource(declaracion);

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface HistPresupuestoIndividualClientService {
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid);
+  PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
   List<PresupuestoIndividualDomain> findAllHistoricIndividualBudget(String indAnonimizacion, String indFormalizado);

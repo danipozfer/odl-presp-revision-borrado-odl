@@ -14,7 +14,7 @@ public class DatoCobroBancarioDomain {
     private TipoMDLDomain entidadBancaria;
     private String numDigContrNumCuent;
     private String numDigContrEntidOfic;
-    private String numCuentBanc;
+    private String numCuentaBanc;
     private String titulCuentBanc;
     private String codIban;
     private String codBic;

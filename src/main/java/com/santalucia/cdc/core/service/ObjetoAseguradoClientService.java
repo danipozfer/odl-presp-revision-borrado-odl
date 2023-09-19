@@ -18,6 +18,6 @@ public interface ObjetoAseguradoClientService {
   EntityModelObjetoAseguradoPresupuestoResource findApiSnapshotSecuredObject(String idObjetoAseguradoODL);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId, UUID uuid);
+  ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId);
 
 }

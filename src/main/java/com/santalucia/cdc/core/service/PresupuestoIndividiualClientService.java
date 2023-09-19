@@ -21,7 +21,7 @@ public interface PresupuestoIndividiualClientService {
   List<PresupuestoIndividualDomain> findIndividualBudgets(String indAnonimizacion, String indFormalizado);
 
   @Retryable(maxAttemptsExpression = "${app.custom.features.retryMaxAttempt}", backoff = @Backoff(delayExpression = "${app.custom.features.retryInterval}"))
-  PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId, UUID uuid);
+  PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId);
 
 
 }

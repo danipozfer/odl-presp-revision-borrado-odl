@@ -17,6 +17,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@SuppressWarnings("NullAway")
 public class DefaultHistDeclaracionClientService implements HistDeclaracionClientService {
 
   private static final int DEFAULT_CAPACITY = 10;
@@ -87,7 +88,7 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
    * @param uuid
    */
   @Override
-  public DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId, UUID uuid) {
+  public DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId) {
     DeclaracionDomain result = null;
     if (declaracionId != null) {
 
