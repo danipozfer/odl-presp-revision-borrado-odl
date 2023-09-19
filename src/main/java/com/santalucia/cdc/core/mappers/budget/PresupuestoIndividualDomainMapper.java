@@ -1,7 +1,9 @@
 package com.santalucia.cdc.core.mappers.budget;
 
-import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.*;
-import com.santalucia.cdc.core.domain.MetadataDomain;
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.DatoIdentificativoResource;
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.DomicilioPersResource;
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.EntityModelPresupuestoIndividualResource;
+import com.santalucia.arq.ams.odl.presupuestos.individual.api.model.PresupuestoIndividualRequestBodyResource;
 import com.santalucia.cdc.core.domain.budgets.common.figure.contactdata.DomicilioPersDomain;
 import com.santalucia.cdc.core.domain.budgets.common.identif.DatoIdentificativoDomain;
 import com.santalucia.cdc.core.domain.budgets.individualbudget.PresupuestoIndividualDomain;
@@ -11,19 +13,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
-import java.util.UUID;
 
 @SuppressWarnings("NullAway")
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true), uses = OffsetDateTimeMapper.class)
 public interface PresupuestoIndividualDomainMapper {
 
-  /*static String uuidToString(UUID uuid) {
-    return uuid.toString();
-  }
-
-  static UUID stringToUuid(String string) {
-    return UUID.fromString(string);
-  }*/
 
   /**
    * @param body
@@ -36,8 +30,6 @@ public interface PresupuestoIndividualDomainMapper {
   @Mapping(source = "datoCobro.datoMedioCobro.datoCobroFisico.localidad.descMDL", target = "datoCobro.datoMedioCobro.datoCobroFisico.localidad.descOrigen")
   @Mapping(source = "estructuraComercial.tipoColaborador.codTMDL", target = "estructuraComercial.tipoColaborador.codMDL")
   @Mapping(source = "estructuraComercial.tipoColaborador.codTMDL", target = "estructuraComercial.tipoColaborador.codMDL")
-
-
   PresupuestoIndividualDomain toDomain(EntityModelPresupuestoIndividualResource body);
 
 
@@ -71,11 +63,6 @@ public interface PresupuestoIndividualDomainMapper {
 
   @Mapping(source = "indOrigRecomendador", target = "indOrigenRecomendador")
   DatoIdentificativoResource datoIdenOutp(DatoIdentificativoDomain in);
-
-  /*@Mapping(source = "xRequestID",target = "xRequestId")
-  MetadataDomain metaOut(MetadataResource in);*/
-
-
 
 
 }
