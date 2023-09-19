@@ -29,7 +29,6 @@ public interface PresupuestoIndividualDomainMapper {
   @Mapping(source = "datoCobro.datoMedioCobro.datoCobroFisico.conEntSingular", target = "datoCobro.datoMedioCobro.datoCobroFisico.codEntSingular")
   @Mapping(source = "datoCobro.datoMedioCobro.datoCobroFisico.localidad.descMDL", target = "datoCobro.datoMedioCobro.datoCobroFisico.localidad.descOrigen")
   @Mapping(source = "estructuraComercial.tipoColaborador.codTMDL", target = "estructuraComercial.tipoColaborador.codMDL")
-  @Mapping(source = "estructuraComercial.tipoColaborador.codTMDL", target = "estructuraComercial.tipoColaborador.codMDL")
   PresupuestoIndividualDomain toDomain(EntityModelPresupuestoIndividualResource body);
 
 
