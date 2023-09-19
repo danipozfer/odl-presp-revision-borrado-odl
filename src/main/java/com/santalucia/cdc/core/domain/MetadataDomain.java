@@ -18,7 +18,6 @@ public class MetadataDomain {
   private Instant fecSQL;
   private Long numOffsetMDL;
   private Long numOffsetCarga;
-
   private AuditoriaDomain auditoria;
   private String hash;
   private String xRequestId;

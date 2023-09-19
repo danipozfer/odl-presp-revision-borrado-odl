@@ -145,8 +145,6 @@ Tsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/figure/FiguraDomain
 Zsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/figure/DatoPersonalDomain.java,e\a\ea5832a679ded4b2bac7f7ed4da20d650b2f111f
 …
 Usrc/main/java/com/santalucia/cdc/core/mappers/budget/EventoPresupuestoIndvMapper.java,1\6\16e6fdf2897f4d95181e39ffb478605f28080ed2
-…
-Usrc/main/java/com/santalucia/cdc/core/mappers/budget/HistDeclaracionDomainMapper.java,c\1\c1df233ce71b4a9ab1199f51569e6c1cb7551b35
 ~
 Nsrc/main/java/com/santalucia/cdc/core/mappers/budget/OffsetDateTimeMapper.java,7\f\7fcc9fc9e6583784374c4b218ac847fb5c595a4f
 p

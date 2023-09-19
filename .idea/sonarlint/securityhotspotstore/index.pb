@@ -149,8 +149,6 @@ Usrc/main/java/com/santalucia/cdc/core/mappers/budget/EventoPresupuestoIndvMappe
 Nsrc/main/java/com/santalucia/cdc/core/mappers/budget/OffsetDateTimeMapper.java,7\f\7fcc9fc9e6583784374c4b218ac847fb5c595a4f
 i
 9src/main/java/com/santalucia/cdc/config/StepPresIndv.java,9\e\9eb8fc6f5d24d96d317cb8c71dfbb0c707a06106
-…
-Usrc/main/java/com/santalucia/cdc/core/mappers/budget/HistDeclaracionDomainMapper.java,c\1\c1df233ce71b4a9ab1199f51569e6c1cb7551b35
 h
 8src/main/java/com/santalucia/cdc/config/StepPresCol.java,a\0\a09d7dad01ab37b573970323f7db57a9a89bb829
 q
