@@ -47,13 +47,11 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
     PresupuestoIndividualDomain budget = eventoPresupuestoIndvDomain.getPresupuestoIndividual();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
-    //Buscar en polizas
 
-    //Si hay resultado poner el ind a S
     if (polizaService.getPolizaIndividual(numIdpresupuesto)) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-    } else if (polizaService.getHistoricoIndividual(numIdpresupuesto)) {//Si no hay resultado comprobar fecha
+    } else if (polizaService.getHistoricoIndividual(numIdpresupuesto)) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
     } else {

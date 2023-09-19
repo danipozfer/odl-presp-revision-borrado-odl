@@ -44,13 +44,11 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
     PresupuestoColectivoDomain budget = eventoPresupuestoColDomain.getPresupuestoColectivo();
 
     String numIdpresupuesto = budget.getDatoIdentificativo().getNumIdentificacion();
-    //Buscar en polizas
 
-    //Si hay resultado poner el ind a S
     if (polizaService.getPolizaColectiva(numIdpresupuesto)) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
 
-    } else if (polizaService.getHistoricoColectiva(numIdpresupuesto)) {//Si no hay resultado comprobar fecha
+    } else if (polizaService.getHistoricoColectiva(numIdpresupuesto)) {
       budget.getDatoIdentificativo().setIndFormalizado("S");
     } else {
       Instant thirtyDaysAfter = budget.getFechaYEstado().getFecha().getFecAlta().plus(30, ChronoUnit.DAYS);
