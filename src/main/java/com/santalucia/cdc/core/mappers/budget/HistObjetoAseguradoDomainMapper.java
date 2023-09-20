@@ -35,9 +35,19 @@ public interface HistObjetoAseguradoDomainMapper {
 
   List<ObjetosAseguradosDomain> toDomainsfromResources(List<EntityModelObjetoAseguradoPresupuestoResource> list);
 
+  /**
+   *
+   * @param in
+   * @return
+   */
   @Mapping(source = "descDomicilio", target = "desDomicilio")
   DomicilioDomain domOut(com.santalucia.arq.ams.odl.historico.presupuestos.objeto.asegurado.api.model.DomicilioResource in);
 
+  /**
+   *
+   * @param in
+   * @return
+   */
   @Mapping(source = "desDomicilio", target = "descDomicilio")
   DomicilioResource domOutp(DomicilioDomain in);
 

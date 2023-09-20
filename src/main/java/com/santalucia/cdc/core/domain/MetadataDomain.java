@@ -20,5 +20,5 @@ public class MetadataDomain {
   private Long numOffsetCarga;
   private AuditoriaDomain auditoria;
   private String hash;
-  private String xRequestId;
+
 }
