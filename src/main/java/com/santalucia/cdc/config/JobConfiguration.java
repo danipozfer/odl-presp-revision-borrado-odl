@@ -30,7 +30,6 @@ public class JobConfiguration {
   private StepBuilderFactory stepBuilderFactory;
 
   /**
-   *
    * @param jobBuilderFactory
    * @param stepPresCol
    * @param stepPresIndv
@@ -57,6 +56,4 @@ public class JobConfiguration {
       .next(stepHistoricPresIndv)
       .build();
   }
-
-
 }

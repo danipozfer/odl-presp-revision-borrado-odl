@@ -73,18 +73,17 @@ public class DefaultObjetoAseguradoClientService implements ObjetoAseguradoClien
       .findAllAdvancedObjetoAseguradoPresupuesto(presupuestosUtils.getOrSetUUID(null),
         getMapParamQuery(idObjetoAseguradoODL), PageRequest.of(0, 1))
       .getBody();
-    if (odlResult != null && !odlResult.getEmbedded().getObjetoAseguradoPolizas().isEmpty()) {
-      result = odlResult.getEmbedded().getObjetoAseguradoPolizas().get(0);
+    if (odlResult != null && !odlResult.getEmbedded().getObjetosAsegurados().isEmpty()) {
+      result = odlResult.getEmbedded().getObjetosAsegurados().get(0);
     }
     return result;
   }
 
   /**
-   * Metodo para actualizar un objeto asegurado
    *
    * @param securedObject
    * @param securedObjectId
-   * @param uuid
+   * @return
    */
   @Override
   public ObjetosAseguradosDomain updateSecuredObject(ObjetosAseguradosDomain securedObject, String securedObjectId) {

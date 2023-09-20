@@ -65,8 +65,8 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
 
     boolean end = false;
     if (result != null) {
-      Long maxPages = result.getPage().getTotalPages();//busca las declaraciones por id
-      declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded()));
+      Long maxPages = result.getPage().getTotalPages();
+      declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded().getDeclaraciones()));
       while (pageNum < maxPages && !end) {
         result = declaracionApiClient
           .findAllAdvancedDeclaraciones(presupuestosUtils.getOrSetUUID(null),
@@ -77,7 +77,7 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
           end = true;
         } else {
           pageNum++;//añade las declaraciones encontradas
-          declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded()));
+          declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded().getDeclaraciones()));
         }
       }
     }
@@ -91,7 +91,7 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
    *
    * @param declaracion
    * @param declaracionId
-   * @param uuid
+   * @param
    */
   @Override
   public DeclaracionDomain updateDeclaration(DeclaracionDomain declaracion, String declaracionId) {

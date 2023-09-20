@@ -59,7 +59,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
+      presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestosIndividuales()));
       while (pageNum < maxPages && !end) {
         result = historicoPresupuestoIndividualApiClient
           .findAllAdvancedHistoricoPresupuestosIndividuales(presupuestosUtils.getOrSetUUID(null),
@@ -70,7 +70,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
           end = true;
         }else {
           pageNum++;
-          presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
+          presupuestosIndividuales.addAll(historicoPresupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestosIndividuales()));
         }
       }
     }
@@ -83,7 +83,7 @@ public class DefaultHistPresupuestoIndividualClientService implements HistPresup
    *
    * @param individualBudget
    * @param individualBudgetId
-   * @param uuid
+   * @param
    */
   @Override
   public PresupuestoIndividualDomain updateHistIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId) {

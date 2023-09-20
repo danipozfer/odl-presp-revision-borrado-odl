@@ -58,7 +58,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded()));
+      presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestosColectivos()));
       while (pageNum < maxPages && !end) {
         result = presupuestosColectivoApiClient
           .findAllAdvancedPresupuestosColectivos(presupuestosUtils.getOrSetUUID(null),
@@ -69,7 +69,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
           end = true;
         }else {
           pageNum++;
-          presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded()));
+          presupuestosColectivos.addAll(presupuestoColectivoDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestosColectivos()));
         }
       }
     }
@@ -83,7 +83,7 @@ public class DefaultPresupuestoColectivoClientService implements PresupuestoCole
    *
    * @param collectiveBudget
    * @param collectiveBudgetId
-   * @param uuid
+   * @param
    */
   @Override
   public PresupuestoColectivoDomain updateCollectiveBudget(PresupuestoColectivoDomain collectiveBudget, String collectiveBudgetId) {

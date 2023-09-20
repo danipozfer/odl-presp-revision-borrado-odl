@@ -62,7 +62,7 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
     boolean end = false;
     if (result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded()));
+      declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaraciones()));
       while (pageNum < maxPages && !end) {
         result = historicoDeclaracionApiClient
           .findAllHistoricoDeclaraciones(presupuestosUtils.getOrSetUUID(null),
@@ -73,7 +73,7 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
           end = true;
         } else {
           pageNum++;
-          declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded()));
+          declarations.addAll(historicoDeclaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaraciones()));
         }
       }
     }
@@ -85,7 +85,7 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
    *
    * @param declaracion
    * @param declaracionId
-   * @param uuid
+   * @param
    */
   @Override
   public DeclaracionDomain updateHistDeclaration(DeclaracionDomain declaracion, String declaracionId) {

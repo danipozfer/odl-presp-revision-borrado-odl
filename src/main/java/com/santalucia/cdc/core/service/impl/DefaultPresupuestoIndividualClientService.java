@@ -62,7 +62,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
+      presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestosIndividuales()));
       while (pageNum < maxPages && !end) {
         result = presupuestosIndividualApiClient
           .findAllAdvancedPresupuestoIndividuales(presupuestosUtils.getOrSetUUID(null),
@@ -73,7 +73,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
           end = true;
         }else {
           pageNum++;
-          presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded()));
+          presupuestosIndividuales.addAll(presupuestoIndividualDomainMapper.toDomainsfromResources(result.getEmbedded().getPresupuestosIndividuales()));
         }
       }
     }
@@ -87,7 +87,7 @@ public class DefaultPresupuestoIndividualClientService implements PresupuestoInd
    *
    * @param individualBudget
    * @param individualBudgetId
-   * @param uuid
+   * @param
    */
   @Override
   public PresupuestoIndividualDomain updateIndividualBudget(PresupuestoIndividualDomain individualBudget, String individualBudgetId) {

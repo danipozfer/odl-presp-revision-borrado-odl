@@ -59,7 +59,7 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
     boolean end = false;
     if(result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      objetosAsegurados.addAll(historicoObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetoAseguradoPolizas()));
+      objetosAsegurados.addAll(historicoObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
       while (pageNum < maxPages && !end) {
         result = historicoObjetoAseguradoApiClient
           .findAllAdvancedHistoricoObjetoAseguradoPresupuesto(presupuestosUtils.getOrSetUUID(null),
@@ -70,7 +70,7 @@ public class DefaultHistObjetosAseguradosClientService implements HistObjetosAse
           end = true;
         }else {
           pageNum++;
-          objetosAsegurados.addAll(historicoObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetoAseguradoPolizas()));
+          objetosAsegurados.addAll(historicoObjetoAseguradoDomainMapper.toDomainsfromResources(result.getEmbedded().getObjetosAsegurados()));
         }
       }
     }

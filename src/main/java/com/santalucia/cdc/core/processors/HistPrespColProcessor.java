@@ -204,7 +204,7 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
     coordenadaDomainAnonimizada.setNumCoordX(0.0);
     coordenadaDomainAnonimizada.setNumCoordY(0.0);
     eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
-    //Para fechas 0001-01-01 y para double 0.0 y para integer 0
+
 
 
     // OBJETO ASEGURADO

@@ -207,7 +207,7 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
     coordenadaDomainAnonimizada.setNumCoordX(0.0);
     coordenadaDomainAnonimizada.setNumCoordY(0.0);
     eventoPresupuestoIndvDomain.getPresupuestoIndividual().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
-    //Para fechas 0001-01-01 y para double 0.0 y para integer 0
+
 
     //OBJETOS ASEGURADOS
 

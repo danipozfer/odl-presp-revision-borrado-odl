@@ -95,6 +95,12 @@
       <groupId>com.santalucia.arq.ams</groupId>
       <artifactId>ams-componentes-retry</artifactId>
     </dependency>
+    <!-- Testing Spring -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-stream-test-support</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <!-- SL Feign components -->
     <!--Borrar en caso de no usar Feign -->
