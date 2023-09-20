@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DatoCobroOtrosMediosDomain {
+public class DatosCobroOtrosMediosDomain {
   String codOrigen;
   String numValor;
   String descOrigen;

@@ -33,10 +33,7 @@ public class HistPrespIndvProcessor implements ItemProcessor<EventoPresupuestoIn
   public static final String ANONIMO = "**********";
 
   /**
-   * Metodo para procesar los presupuestos
    *
-   * @param eventoPresupuestoIndvDomain
-   * @return
    */
   @Autowired
   private PolizaIndividualClientService polizaService;
