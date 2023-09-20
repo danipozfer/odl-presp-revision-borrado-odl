@@ -25,8 +25,18 @@ public interface ObjetoAseguradoDomainMapper {
    */
   ObjetoAseguradoPresupuestoRequestBodyResource toResource(ObjetosAseguradosDomain securedObject);
 
+  /**
+   * @param in
+   * @return
+   */
+
   @Mapping(source = "descDomicilio", target = "desDomicilio")
   DomicilioDomain domOut(DomicilioResource in);
+
+  /**
+   * @param in
+   * @return
+   */
 
   @Mapping(source = "desDomicilio", target = "descDomicilio")
   DomicilioResource domOutp(DomicilioDomain in);
