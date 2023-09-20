@@ -13,6 +13,7 @@ import com.santalucia.cdc.core.domain.securedobjects.pricing.com.ComposicionCara
 import com.santalucia.cdc.core.domain.securedobjects.pricing.com.ComposicionServicioDomain;
 import com.santalucia.cdc.core.domain.securedobjects.pricing.com.DatosPropiosDomain;
 import com.santalucia.cdc.core.domain.securedobjects.pricing.com.PrevisionDomain;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -21,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class HistObjetoAseguradoDomainMapperTest {
 
+  @DisplayName("HistObjetoAsegToResource")
   @Test
   void toDomain() {
 
@@ -371,7 +372,7 @@ class HistObjetoAseguradoDomainMapperTest {
     assertThat(result).isNotNull();
   }
 
-
+  @DisplayName("HistObjetoAsegToResource")
   @Test
   void toResource() {
 
@@ -594,15 +595,5 @@ class HistObjetoAseguradoDomainMapperTest {
 
   }
 
-  @Test
-  void toDomainsfromResources() {
-  }
 
-  @Test
-  void domOut() {
-  }
-
-  @Test
-  void domOutp() {
-  }
 }

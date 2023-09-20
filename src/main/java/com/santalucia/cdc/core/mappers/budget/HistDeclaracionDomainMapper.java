@@ -19,11 +19,13 @@ public interface HistDeclaracionDomainMapper {
   DeclaracionDomain toDomain(com.santalucia.arq.ams.odl.historico.presupuestos.declaraciones.api.model.EntityModelDeclaracionResource declaracionResource);
 
   /**
-   * @param embedded
+   *
+   * @param declaracion
    * @return
    */
 
-  List<DeclaracionDomain> toDomainsfromResourcesEntityModel(List<com.santalucia.arq.ams.odl.presupuestos.declaraciones.api.model.EntityModelDeclaracionResource> embedded);
+  DeclaracionRequestBodyResource toResource(DeclaracionDomain declaracion);
+
 
   /**
    * @param embedded
@@ -31,12 +33,7 @@ public interface HistDeclaracionDomainMapper {
    */
   List<DeclaracionDomain> toDomainsfromResources(List<EntityModelDeclaracionResource> embedded);
 
-  /**
-   * @param declaracion
-   * @return
-   */
 
-  DeclaracionRequestBodyResource toResource(DeclaracionDomain declaracion);
 
 
 }

@@ -7,24 +7,25 @@ import com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.declaration.com.DatoIdentificativoDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.RespuestaDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeclaracionDomainMapperTest {
 
 
+  @DisplayName("declaracionToDomain")
   @Test
   void toDomain() {
 
     EntityModelDeclaracionResource declaracionResource = new EntityModelDeclaracionResource();
     declaracionResource.setId("1");
 
-    DatoIdentificativoResource datoIdentificativoResource= new DatoIdentificativoResource();
+    DatoIdentificativoResource datoIdentificativoResource = new DatoIdentificativoResource();
     datoIdentificativoResource.setIdDeclaracionesODL("1");
     datoIdentificativoResource.setIdMensaje("1");
     TipoDeclaracionResource tipoDeclaracionResource = new TipoDeclaracionResource();
@@ -69,6 +70,8 @@ class DeclaracionDomainMapperTest {
     assertThat(declaracionDomain).isNotNull();
   }
 
+
+  @DisplayName("declaracionToResource")
   @Test
   void toResource() {
     TipoMDLDomain tipoMDLDomain = new TipoMDLDomain();

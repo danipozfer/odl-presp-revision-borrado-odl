@@ -29,9 +29,7 @@ public interface DeclaracionDomainMapper {
    * @param lst
    * @return
    */
-
   List<DeclaracionDomain> toDomainsfromResources(List<EntityModelDeclaracionResource> lst);
-
 
 
 }

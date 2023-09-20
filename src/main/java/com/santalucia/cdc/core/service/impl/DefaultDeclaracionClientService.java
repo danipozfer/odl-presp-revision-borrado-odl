@@ -24,30 +24,23 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
 
-  // AutoWired
 
   private final DeclaracionDomainMapper declaracionDomainMapper;
-  private final DeclaracionesApiClient declaracionApiClient;//objeto que contiene la peticion get a la api
-
-  private final HistDeclaracionDomainMapper histDeclaracionDomainMapper;
-
+  private final DeclaracionesApiClient declaracionApiClient;
   private final PresupuestosUtilsService presupuestosUtils;
   private final AppCustomFeaturesProperties properties;
 
 
-  public DefaultDeclaracionClientService(DeclaracionDomainMapper declaracionDomainMapper,
-                                         DeclaracionesApiClient declaracionApiClient,
-                                         HistDeclaracionDomainMapper histDeclaracionDomainMapper, PresupuestosUtilsService presupuestosUtils,
-                                         AppCustomFeaturesProperties properties) {
+  public DefaultDeclaracionClientService(DeclaracionDomainMapper declaracionDomainMapper, DeclaracionesApiClient declaracionApiClient, PresupuestosUtilsService presupuestosUtils, AppCustomFeaturesProperties properties) {
     this.declaracionDomainMapper = declaracionDomainMapper;
     this.declaracionApiClient = declaracionApiClient;
-    this.histDeclaracionDomainMapper = histDeclaracionDomainMapper;
     this.presupuestosUtils = presupuestosUtils;
     this.properties = properties;
   }
 
   /**
    * Metodo para buscar declaraciones en ultima foto con idPresupuestoOdl
+   *
    * @param idPresupuestoODL
    * @return
    */
@@ -66,7 +59,7 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
     boolean end = false;
     if (result != null) {
       Long maxPages = result.getPage().getTotalPages();
-      declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded().getDeclaraciones()));
+      declaraciones.addAll(declaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaraciones()));
       while (pageNum < maxPages && !end) {
         result = declaracionApiClient
           .findAllAdvancedDeclaraciones(presupuestosUtils.getOrSetUUID(null),
@@ -76,8 +69,8 @@ public class DefaultDeclaracionClientService implements DeclaracionClientService
         if (result == null) {
           end = true;
         } else {
-          pageNum++;//añade las declaraciones encontradas
-          declaraciones.addAll(histDeclaracionDomainMapper.toDomainsfromResourcesEntityModel(result.getEmbedded().getDeclaraciones()));
+          pageNum++;
+          declaraciones.addAll(declaracionDomainMapper.toDomainsfromResources(result.getEmbedded().getDeclaraciones()));
         }
       }
     }

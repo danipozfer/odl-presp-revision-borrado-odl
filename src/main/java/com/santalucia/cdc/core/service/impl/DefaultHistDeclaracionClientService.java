@@ -23,8 +23,6 @@ public class DefaultHistDeclaracionClientService implements HistDeclaracionClien
   private static final int DEFAULT_CAPACITY = 10;
   private static final int DEFAULT_INITIAL_CAPACITY = 1 << 2;
 
-  // AutoWired
-
 
   private final HistDeclaracionDomainMapper historicoDeclaracionDomainMapper;
   private final HistoricoDeclaracionesApiClient historicoDeclaracionApiClient;//objeto que contiene la peticion get a la api

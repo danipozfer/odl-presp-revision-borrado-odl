@@ -8,6 +8,7 @@ import com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain;
 import com.santalucia.cdc.core.domain.declaration.com.DatoIdentificativoDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.RespuestaDomain;
 import com.santalucia.cdc.core.domain.declaration.com.resp.type.TipoMDLDomain;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HistDeclaracionDomainMapperTest {
 
+  @DisplayName("HistDeclaracionToDomain")
   @Test
   void toDomain() {
 
@@ -68,6 +70,7 @@ class HistDeclaracionDomainMapperTest {
     assertThat(declaracionDomain).isNotNull();
   }
 
+  @DisplayName("HistDeclaracionToResource")
   @Test
   void toResource() {
     TipoMDLDomain tipoMDLDomain = new TipoMDLDomain();
@@ -88,6 +91,7 @@ class HistDeclaracionDomainMapperTest {
     datoIdentificativoDomain.setIdDeclaracionesODL("1");
     datoIdentificativoDomain.setIdMensaje("1");
     datoIdentificativoDomain.setTipoDeclaracion(tipoMDLDomain);
+
     //CARACTERISTICA
     List<CaracteristicaDomain> caracteristicaDomainList = new ArrayList<>();
     CaracteristicaDomain caracteristicaDomain = new CaracteristicaDomain();
@@ -110,6 +114,5 @@ class HistDeclaracionDomainMapperTest {
     DeclaracionRequestBodyResource result = mapper.toResource(declaracionDomainTest);
 
     assertThat(result).isNotNull();
-
   }
 }
