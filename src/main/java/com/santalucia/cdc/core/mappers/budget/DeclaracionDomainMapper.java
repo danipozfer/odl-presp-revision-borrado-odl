@@ -31,11 +31,7 @@ public interface DeclaracionDomainMapper {
    */
 
   List<DeclaracionDomain> toDomainsfromResources(List<EntityModelDeclaracionResource> lst);
-  /**
-   *
-   * @param offsetDateTime
-   * @return
-   */
+
 
 
 }

@@ -215,8 +215,6 @@ Osrc/main/java/com/santalucia/cdc/core/domain/declaration/DeclaracionDomain.java
 Vsrc/main/java/com/santalucia/cdc/core/domain/declaration/com/CaracteristicaDomain.java,3\c\3cbfd723b6dc247e86d1e4084ac26ceb28a6af57
 Ü
 Vsrc/main/java/com/santalucia/cdc/core/domain/declaration/com/resp/RespuestaDomain.java,f\2\f28cf313a7ddde7a3ee70c88a0cc71f4295225ed
-Ñ
-Tsrc/main/java/com/santalucia/cdc/core/mappers/budget/EventoPresupuestoColMapper.java,5\8\5860729fdb51a8e642792319e3f1fd8608334fd1
 8
 mvnw.cmd,1\f\1f1763f358c257ea3515417352b82b0165647ad1
 4
@@ -225,8 +223,6 @@ Tsrc/main/java/com/santalucia/cdc/core/mappers/budget/EventoPresupuestoColMapper
 .java-version,9\d\9da53fa412ac1b6bd867faf404980cf6c51a14e6
 ;
 .gitmodules,7\4\7445606fbf8f3683cd42bdc54b05d7a0bc2dfc44
-Ö
-Usrc/main/java/com/santalucia/cdc/core/mappers/budget/HistDeclaracionDomainMapper.java,c\1\c1df233ce71b4a9ab1199f51569e6c1cb7551b35
 ó
 gsrc/main/java/com/santalucia/cdc/core/domain/budgets/common/figure/contactdata/DomicilioPersDomain.java,c\9\c9648bb0c3bb5df7b8f5f3f24e8ff67ab65649fd
 â
@@ -247,14 +243,10 @@ esrc/main/java/com/santalucia/cdc/core/service/impl/DefaultHistPresupuestoIndivi
 `src/main/java/com/santalucia/cdc/core/service/impl/DefaultPresupuestoColectivoClientService.java,4\f\4f3b0297dcc4790edefa80b5a3083afa20186256
 ë
 asrc/main/java/com/santalucia/cdc/core/service/impl/DefaultPresupuestoIndividualClientService.java,2\c\2c251c09d9550e6a7f9974bcf76b5575cfc5f418
-è
-_src/test/groovy/com/santalucia/cdc/core/mappers/budget/HistObjetoAseguradoDomainMapperTest.java,0\7\07048f35926286687def46c2173735c6a15b108e
 {
 Ksrc/main/java/com/santalucia/cdc/core/processors/HistPrespColProcessor.java,f\9\f9c778b23fb30e476a4fc395cab3fa5b6e16d735
 |
 Lsrc/main/java/com/santalucia/cdc/core/processors/HistPrespIndvProcessor.java,4\a\4a4b067a687ea51c3f6c768f1a6d5e78ee222f8e
-é
-^src/main/java/com/santalucia/cdc/core/mappers/budget/HistPresupuestoColectivoDomainMapper.java,5\b\5b30b4fcd87600c4c85bae9691d35772f8dd9ec4
 è
 _src/main/java/com/santalucia/cdc/core/mappers/budget/HistPresupuestoIndividualDomainMapper.java,6\c\6c62f06fc0b9c7c23fc13c73ca712b42d5511d64
 m
