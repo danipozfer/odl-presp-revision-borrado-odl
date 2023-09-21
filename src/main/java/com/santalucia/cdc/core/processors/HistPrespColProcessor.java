@@ -24,7 +24,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoColDomain, EventoPresupuestoColDomain> {
@@ -39,7 +38,7 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
    * @return
    */
   @Override
-  public EventoPresupuestoColDomain process(EventoPresupuestoColDomain eventoPresupuestoColDomain){
+  public EventoPresupuestoColDomain process(EventoPresupuestoColDomain eventoPresupuestoColDomain) {
 
     PresupuestoColectivoDomain budget = eventoPresupuestoColDomain.getPresupuestoColectivo();
 
@@ -68,7 +67,7 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
    * @param eventoPresupuestoColDomain
    * @return
    */
-  private EventoPresupuestoColDomain anonimizate(EventoPresupuestoColDomain eventoPresupuestoColDomain) {
+  public EventoPresupuestoColDomain anonimizate(EventoPresupuestoColDomain eventoPresupuestoColDomain) {
 
     TipoMDLDomain tipoMDLDomainAnonimizado = new TipoMDLDomain();
     LocalDate localDate = LocalDate.of(1, 1, 1);
@@ -140,7 +139,8 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
       datoPersonalDomain.setNacionalidad(tipoMDLDomainAnonimizado);
       datoPersonalDomain.setIndEstadoCivil(ANONIMO);
 
-      DomicilioPersDomain domicilioPersDomainAnonimizado = new DomicilioPersDomain();
+
+      DomicilioPersDomain domicilioPersDomainAnonimizado = datoPersonalDomain.getDomicilioPers();
       domicilioPersDomainAnonimizado.setIdDomicilio(ANONIMO);
       domicilioPersDomainAnonimizado.setPaisDomPers(tipoMDLDomainAnonimizado);
       domicilioPersDomainAnonimizado.setLocalidadDomPers(tipoMDLDomainAnonimizado);
@@ -173,7 +173,7 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
       }
     }
 
-    DomicilioPresupuestoDomain domicilioPresupuestoDomain = new DomicilioPresupuestoDomain();
+    DomicilioPresupuestoDomain domicilioPresupuestoDomain = eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().getDomicilioPresupuesto();
     domicilioPresupuestoDomain.setIdDomicilio(ANONIMO);
     domicilioPresupuestoDomain.setPaisPresup(tipoMDLDomainAnonimizado);
     domicilioPresupuestoDomain.setLocalidadPresup(tipoMDLDomainAnonimizado);
@@ -198,7 +198,7 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
 
     eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setDomicilioPresupuesto(domicilioPresupuestoDomain);
 
-    CoordenadaDomain coordenadaDomainAnonimizada = new CoordenadaDomain();
+    CoordenadaDomain coordenadaDomainAnonimizada = eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().getCoordenada();
     coordenadaDomainAnonimizada.setTipoCoordenada(tipoMDLDomainAnonimizado);
     coordenadaDomainAnonimizada.setIndSistema(ANONIMO);
     coordenadaDomainAnonimizada.setNumCoordX(0.0);
@@ -206,44 +206,46 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
     eventoPresupuestoColDomain.getPresupuestoColectivo().getEstructuraGeografica().setCoordenada(coordenadaDomainAnonimizada);
 
 
-
     // OBJETO ASEGURADO
 
-    List<ObjetosAseguradosDomain> objetosAseguradosDomainList = new ArrayList<>();
+    List<ObjetosAseguradosDomain> objetosAseguradosDomainList = eventoPresupuestoColDomain.getObjetosAsegurados();
 
 
-    for (ObjetosAseguradosDomain obj : eventoPresupuestoColDomain.getObjetosAsegurados()) {
+    for (ObjetosAseguradosDomain obj : objetosAseguradosDomainList) {
 
-      CaracteristicaDomain caracteristicaDomainAnonima = new CaracteristicaDomain();
-      List<DomicilioDomain> domicilioDomains = new ArrayList<>();
-      for (DomicilioDomain domicilios : caracteristicaDomainAnonima.getDomicilios()) {
-        domicilios.setPais(tipoMDLDomainAnonimizado);
-        domicilios.setProvincia(tipoMDLDomainAnonimizado);
-        domicilios.setLocalidad(tipoMDLDomainAnonimizado);
-        domicilios.setCodMunicipio(ANONIMO);
-        domicilios.setCodEntColectiva(ANONIMO);
-        domicilios.setCodEntSingular(ANONIMO);
-        domicilios.setCodNucPobla(ANONIMO);
-        domicilios.setDenomPobla(tipoMDLDomainAnonimizado);
-        domicilios.setCodPostal(ANONIMO);
-        domicilios.setTipoVia(tipoMDLDomainAnonimizado);
-        domicilios.setDesDomicilio(ANONIMO);
-        domicilios.setNumNumero(ANONIMO);
-        domicilios.setNumComplemento(ANONIMO);
-        domicilios.setNumBloque(ANONIMO);
-        domicilios.setNumPortal(ANONIMO);
-        domicilios.setNumEscalera(ANONIMO);
-        domicilios.setNumPiso(ANONIMO);
-        domicilios.setNumPuerta(ANONIMO);
-        domicilios.setIndNormalizado(ANONIMO);
-        domicilios.setDesOtrosDatos(ANONIMO);
+      CaracteristicaDomain caracteristicaDomainAnonima = obj.getCaracteristica();
 
-        domicilioDomains.add(domicilios);
+      List<DomicilioDomain> domicilioDomains = caracteristicaDomainAnonima.getDomicilios();
+
+      for (DomicilioDomain domicilio : domicilioDomains) {
+
+        domicilio.setPais(tipoMDLDomainAnonimizado);
+        domicilio.setProvincia(tipoMDLDomainAnonimizado);
+        domicilio.setLocalidad(tipoMDLDomainAnonimizado);
+        domicilio.setCodMunicipio(ANONIMO);
+        domicilio.setCodEntColectiva(ANONIMO);
+        domicilio.setCodEntSingular(ANONIMO);
+        domicilio.setCodNucPobla(ANONIMO);
+        domicilio.setDenomPobla(tipoMDLDomainAnonimizado);
+        domicilio.setCodPostal(ANONIMO);
+        domicilio.setTipoVia(tipoMDLDomainAnonimizado);
+        domicilio.setDesDomicilio(ANONIMO);
+        domicilio.setNumNumero(ANONIMO);
+        domicilio.setNumComplemento(ANONIMO);
+        domicilio.setNumBloque(ANONIMO);
+        domicilio.setNumPortal(ANONIMO);
+        domicilio.setNumEscalera(ANONIMO);
+        domicilio.setNumPiso(ANONIMO);
+        domicilio.setNumPuerta(ANONIMO);
+        domicilio.setIndNormalizado(ANONIMO);
+        domicilio.setDesOtrosDatos(ANONIMO);
+
+
       }
       obj.getCaracteristica().setDomicilios(domicilioDomains);
 
 
-      List<FiguraDomain> figuraDomainList = new ArrayList<>();
+      List<FiguraDomain> figuraDomainList = caracteristicaDomainAnonima.getFiguras();
 
       for (FiguraDomain figura : caracteristicaDomainAnonima.getFiguras()) {
         figura.setIdPersona(ANONIMO);
@@ -262,14 +264,14 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
         figura.setIndEstadoCivil(ANONIMO);
         figura.setBeneficiario(tipoMDLDomainAnonimizado);
 
-        figuraDomainList.add(figura);
+
       }
 
       obj.getCaracteristica().setFiguras(figuraDomainList);
 
-      List<AnimalDomain> animalDomainsList = new ArrayList<>();
+      List<AnimalDomain> animalDomainsList = caracteristicaDomainAnonima.getAnimales();
 
-      for (AnimalDomain animal : caracteristicaDomainAnonima.getAnimales()) {
+      for (AnimalDomain animal : animalDomainsList) {
         animal.setIndTipoEspecie(ANONIMO);
         animal.setRaza(tipoMDLDomainAnonimizado);
         animal.setIndTipoAnimalComp(ANONIMO);
@@ -285,40 +287,38 @@ public class HistPrespColProcessor implements ItemProcessor<EventoPresupuestoCol
 
       obj.getCaracteristica().setAnimales(animalDomainsList);
       obj.setCaracteristica(caracteristicaDomainAnonima);
-      objetosAseguradosDomainList.add(obj);
+
     }
 
     eventoPresupuestoColDomain.setObjetosAsegurados(objetosAseguradosDomainList);
 
     //DECLARACION
 
-    List<DeclaracionDomain> declaracionDomainList = new ArrayList<>();
+    List<DeclaracionDomain> declaracionDomainList = eventoPresupuestoColDomain.getDeclaracion();
 
-    for (DeclaracionDomain dec : eventoPresupuestoColDomain.getDeclaracion()) {
+    for (DeclaracionDomain dec : declaracionDomainList) {
 
-      List<com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain> caracList = new ArrayList<>();
+      List<com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain> caracList = dec.getCaracteristicas();
 
-      for (com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain caracteristicaDomain : dec.getCaracteristicas()) {
+      for (com.santalucia.cdc.core.domain.declaration.com.CaracteristicaDomain caracteristicaDomain : caracList) {
 
         caracteristicaDomain.setPregunta(tipoMDLDomainAnonimizado);
         caracteristicaDomain.setIndAplicPregunta(ANONIMO);
 
-        List<RespuestaDomain> respuestaDomainList = new ArrayList<>();
-        for (RespuestaDomain res : caracteristicaDomain.getRespuestas()) {
+        List<RespuestaDomain> respuestaDomainList = caracteristicaDomain.getRespuestas();
+        for (RespuestaDomain res : respuestaDomainList) {
           res.setRespFacilitada(tipoMDLDomainAnonimizado);
           res.setIndTipoRespuesta(ANONIMO);
-          respuestaDomainList.add(res);
+
         }
         caracteristicaDomain.setRespuestas(respuestaDomainList);
       }
       dec.setCaracteristicas(caracList);
 
-      declaracionDomainList.add(dec);
     }
 
     eventoPresupuestoColDomain.setDeclaracion(declaracionDomainList);
 
     return eventoPresupuestoColDomain;
   }
-
 }

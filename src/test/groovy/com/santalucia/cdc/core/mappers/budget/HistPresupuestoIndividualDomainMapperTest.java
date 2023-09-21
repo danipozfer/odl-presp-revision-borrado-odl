@@ -624,6 +624,8 @@ class HistPresupuestoIndividualDomainMapperTest {
     datoCobroIndividual.setFormaPago(tipoMDLDomain);
     datoCobroIndividual.setMedioCobroPago(tipoMDLDomain);
     datoCobroIndividual.setDatosOtrosCobPagBanc(datosOtrosCobPagBancLista);
+    datoCobroIndividual.setDatoMedioCobro(datoMedioCobroIndividual);
+
 
     //DatosCobroOtrosMedios
     DatosCobroOtrosMediosDomain datosCobroOtrosMediosDomain = new DatosCobroOtrosMediosDomain("1", "1", "1");

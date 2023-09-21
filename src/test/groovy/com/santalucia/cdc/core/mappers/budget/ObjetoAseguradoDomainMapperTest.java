@@ -570,21 +570,21 @@ class ObjetoAseguradoDomainMapperTest {
     objAseg.setUnidadesTarificacion(unidadTarificacionResources);
     //CAMPANNAS
     List<CampannaDomain> campannaResourceList = new ArrayList<>();
-    CampannaDomain campannaResource = new CampannaDomain();
-    campannaResource.setCampannaComercial(tipoMDLDomain);
-    campannaResource.setCodAplicacion("1");
-    campannaResource.setIdCampanna("1");
-    campannaResource.setTipoCampanna(tipoMDLDomain);
-    campannaResource.setIncentivo(tipoMDLDomain);
-    campannaResource.setIndCaracIncentivo("1");
-    campannaResource.setFecInicio(dateToInstant);
-    campannaResourceList.add(campannaResource);
+    CampannaDomain campannaDomain = new CampannaDomain();
+    campannaDomain.setCampannaComercial(tipoMDLDomain);
+    campannaDomain.setCodAplicacion("1");
+    campannaDomain.setIdCampanna("1");
+    campannaDomain.setTipoCampanna(tipoMDLDomain);
+    campannaDomain.setIncentivo(tipoMDLDomain);
+    campannaDomain.setIndCaracIncentivo("1");
+    campannaDomain.setFecInicio(dateToInstant);
+    campannaResourceList.add(campannaDomain);
     objAseg.setCampannas(campannaResourceList);
 
     //METADATA
-    MetadataDomain metadataResource = new MetadataDomain();
-    metadataResource.setCodVersion("1");
-    objAseg.setMetadata(metadataResource);
+    MetadataDomain metadataDomain = new MetadataDomain();
+    metadataDomain.setCodVersion("1");
+    objAseg.setMetadata(metadataDomain);
 
     ObjetoAseguradoDomainMapper mapp = new ObjetoAseguradoDomainMapperImpl();
 
