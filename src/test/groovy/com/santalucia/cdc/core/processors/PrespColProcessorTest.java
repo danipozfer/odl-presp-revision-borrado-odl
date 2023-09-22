@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -78,22 +79,43 @@ public class PrespColProcessorTest {
 
   @Test
   public void testProcessWithPolizaColectiva() {
-    // Arrange
-    EventoPresupuestoColDomain inputEvent = new EventoPresupuestoColDomain();
-    PresupuestoColectivoDomain budget = new PresupuestoColectivoDomain();
-    DatoIdentificativoDomain datoIdentificativo = new DatoIdentificativoDomain();
-    datoIdentificativo.setNumIdentificacion("123");
-    budget.setDatoIdentificativo(datoIdentificativo);
-    inputEvent.setPresupuestoColectivo(budget);
-
+    EventoPresupuestoColDomain inputEvent = mock(EventoPresupuestoColDomain.class);
+    PresupuestoColectivoDomain presu = mock(PresupuestoColectivoDomain.class);
+    DatoIdentificativoDomain dat = mock(DatoIdentificativoDomain.class);
     when(polizaService.getPolizaColectiva("123")).thenReturn(true);
-
+    when(dat.getNumIdentificacion()).thenReturn("123");
+    when(presu.getDatoIdentificativo()).thenReturn(dat);
+    when(inputEvent.getPresupuestoColectivo()).thenReturn(presu);
     // Act
     EventoPresupuestoColDomain result = prespColProcessor.process(inputEvent);
 
     // Assert
+
     verify(polizaService, times(1)).getPolizaColectiva("123");
     verify(polizaService, never()).getHistoricoColectiva("123");
+
+
+  }
+
+  @Test
+  public void testProcessWithPolizaColectiva2() {
+    EventoPresupuestoColDomain inputEvent = mock(EventoPresupuestoColDomain.class);
+    PresupuestoColectivoDomain presu = mock(PresupuestoColectivoDomain.class);
+    DatoIdentificativoDomain dat = mock(DatoIdentificativoDomain.class);
+    when(polizaService.getHistoricoColectiva("123")).thenReturn(true);
+    when(polizaService.getPolizaColectiva("123")).thenReturn(false);
+
+    when(dat.getNumIdentificacion()).thenReturn("123");
+    when(presu.getDatoIdentificativo()).thenReturn(dat);
+    when(inputEvent.getPresupuestoColectivo()).thenReturn(presu);
+    // Act
+    EventoPresupuestoColDomain result = prespColProcessor.process(inputEvent);
+
+    // Assert
+
+    verify(polizaService, times(1)).getHistoricoColectiva("123");
+    verify(polizaService, times(1)).getPolizaColectiva("123");
+
   }
 
 

@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -80,22 +81,43 @@ class HistPrespIndvProcessorTest {
 
   @Test
   public void testProcessWithPolizaColectiva() {
-    // Arrange
-    EventoPresupuestoIndvDomain inputEvent = new EventoPresupuestoIndvDomain();
-    PresupuestoIndividualDomain budget = new PresupuestoIndividualDomain();
-    DatoIdentificativoDomain datoIdentificativo = new DatoIdentificativoDomain();
-    datoIdentificativo.setNumIdentificacion("123");
-    budget.setDatoIdentificativo(datoIdentificativo);
-    inputEvent.setPresupuestoIndividual(budget);
-
+    EventoPresupuestoIndvDomain inputEvent = mock(EventoPresupuestoIndvDomain.class);
+    PresupuestoIndividualDomain presu = mock(PresupuestoIndividualDomain.class);
+    DatoIdentificativoDomain dat = mock(DatoIdentificativoDomain.class);
     when(polizaService.getPolizaIndividual("123")).thenReturn(true);
-
+    when(dat.getNumIdentificacion()).thenReturn("123");
+    when(presu.getDatoIdentificativo()).thenReturn(dat);
+    when(inputEvent.getPresupuestoIndividual()).thenReturn(presu);
     // Act
     EventoPresupuestoIndvDomain result = histPrespIndvProcessor.process(inputEvent);
 
     // Assert
+
     verify(polizaService, times(1)).getPolizaIndividual("123");
     verify(polizaService, never()).getHistoricoIndividual("123");
+
+
+  }
+
+  @Test
+  public void testProcessWithPolizaColectiva2() {
+    EventoPresupuestoIndvDomain inputEvent = mock(EventoPresupuestoIndvDomain.class);
+    PresupuestoIndividualDomain presu = mock(PresupuestoIndividualDomain.class);
+    DatoIdentificativoDomain dat = mock(DatoIdentificativoDomain.class);
+    when(polizaService.getHistoricoIndividual("123")).thenReturn(true);
+    when(polizaService.getPolizaIndividual("123")).thenReturn(false);
+
+    when(dat.getNumIdentificacion()).thenReturn("123");
+    when(presu.getDatoIdentificativo()).thenReturn(dat);
+    when(inputEvent.getPresupuestoIndividual()).thenReturn(presu);
+    // Act
+    EventoPresupuestoIndvDomain result = histPrespIndvProcessor.process(inputEvent);
+
+    // Assert
+
+    verify(polizaService, times(1)).getHistoricoIndividual("123");
+    verify(polizaService, times(1)).getPolizaIndividual("123");
+
   }
 
   @Test

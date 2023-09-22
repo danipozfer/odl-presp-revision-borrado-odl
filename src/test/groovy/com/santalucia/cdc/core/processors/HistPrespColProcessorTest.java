@@ -120,27 +120,43 @@ class HistPrespColProcessorTest {
 
   }
 
-  @Test
+ /* @Test
   public void testProcessWithPolizaColectivaAnon() {
 
 
-    /*EventoPresupuestoColDomain inputEvent = mock(EventoPresupuestoColDomain.class);
+    Instant fech = Instant.now().plus(30, ChronoUnit.DAYS);
+
+    EventoPresupuestoColDomain inputEvent = mock(EventoPresupuestoColDomain.class);
     PresupuestoColectivoDomain presu = mock(PresupuestoColectivoDomain.class);
     DatoIdentificativoDomain dat = mock(DatoIdentificativoDomain.class);
-    FechaYEstadoDomain fechaYEstadoDomain = mock(FechaYEstadoDomain.class);
+    FechaYEstadoDomain fechaYEstado = mock(FechaYEstadoDomain.class);
     FechaDomain fecha = mock(FechaDomain.class);
 
-    // Configurar comportamiento de mocks
-    when(inputEvent.getPresupuestoColectivo()).thenReturn(presu);
-    when(presu.getFechaYEstado()).thenReturn(fechaYEstadoDomain);
-    when(fechaYEstadoDomain.getFecha()).thenReturn(fecha);
-    when(fecha.getFecAlta()).thenReturn(Instant.now().plus(30, ChronoUnit.DAYS));
-    when(dat.getNumIdentificacion()).thenReturn("123");
+
     when(polizaService.getHistoricoColectiva("123")).thenReturn(false);
-    when(polizaService.getPolizaColectiva("123")).thenReturn(false);*/
+    when(polizaService.getPolizaColectiva("123")).thenReturn(false);
+
+    when(dat.getNumIdentificacion()).thenReturn("123");
+    when(presu.getDatoIdentificativo()).thenReturn(dat);
+    when(presu.getFechaYEstado().getFecha().getFecAlta()).thenReturn(fech);
+    when(fechaYEstado.getFecha()).thenReturn(fecha);
+    when(presu.getFechaYEstado()).thenReturn(fechaYEstado);
+    when(inputEvent.getPresupuestoColectivo()).thenReturn(presu);
+
+    when(prespColProcessor.process(inputEvent)).thenReturn(null);
+    // Act
+    EventoPresupuestoColDomain result = prespColProcessor.process(inputEvent);
 
 
-    /*EventoPresupuestoColDomain event = mock(EventoPresupuestoColDomain.class);
+    // Assert
+
+    verify(polizaService, times(1)).getHistoricoColectiva("123");
+    verify(polizaService, times(1)).getPolizaColectiva("123");
+    //assert result != null;
+    verify(prespColProcessor,times(1)).anonimizate(inputEvent);
+
+
+    *//*EventoPresupuestoColDomain event = mock(EventoPresupuestoColDomain.class);
     PresupuestoColectivoDomain pres = mock(PresupuestoColectivoDomain.class);
     FechaYEstadoDomain fechaYEstado = mock(FechaYEstadoDomain.class);
     FechaDomain fecha = mock(FechaDomain.class);
@@ -149,10 +165,10 @@ class HistPrespColProcessorTest {
     when(fecha.getFecAlta()).thenReturn(thirtyDaysAfter);
     when(fechaYEstado.getFecha()).thenReturn(fecha);
     when(pres.getFechaYEstado()).thenReturn(fechaYEstado);
-    when(event.getPresupuestoColectivo()).thenReturn(pres);*/
+    when(event.getPresupuestoColectivo()).thenReturn(pres);*//*
 
 
-    /*EventoPresupuestoColDomain eventoPresupuestoColDomain = mock(EventoPresupuestoColDomain.class);
+    *//*EventoPresupuestoColDomain eventoPresupuestoColDomain = mock(EventoPresupuestoColDomain.class);
     PresupuestoColectivoDomain presupCol = mock(PresupuestoColectivoDomain.class);
     DatoCobroDomain datoCobro = mock(DatoCobroDomain.class);
     DatoMedioCobroDomain datoMedioCobroDomain = mock(DatoMedioCobroDomain.class);
@@ -161,18 +177,10 @@ class HistPrespColProcessorTest {
     when(datoMedioCobroDomain.getDatoCobroBancario()).thenReturn(datoCobroBancarioDomain);
     when(datoCobro.getDatoMedioCobro()).thenReturn(datoMedioCobroDomain);
     when(presupCol.getDatoCobro()).thenReturn(datoCobro);
-    when(eventoPresupuestoColDomain.getPresupuestoColectivo()).thenReturn(presupCol);*/
+    when(eventoPresupuestoColDomain.getPresupuestoColectivo()).thenReturn(presupCol);*//*
 
 
-    // Act
-    /*EventoPresupuestoColDomain result = prespColProcessor.process(inputEvent);
-
-    // Assert
-    verify(prespColProcessor,times(1)).anonimizate(result);
-    verify(polizaService, times(1)).getHistoricoColectiva("123");
-    verify(polizaService, times(1)).getPolizaColectiva("123");*/
-
-  }
+  }*/
 
 
 
